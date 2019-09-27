@@ -1,10 +1,9 @@
+import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
-import org.junit.After
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import kotlin.test.Test
 
 class QualityPluginFunctionalTest {
 
