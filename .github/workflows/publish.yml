@@ -1,9 +1,9 @@
-name: Java CI
+name: Publish project
 
 on:
   push:
-    branches:    
-      - 'release/*'   # Push events to branches matching refs/heads/releases/*
+    branches:
+      - master
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build with Gradle
+    - name: Build app with Gradle
       run: ./gradlew build
     - name: Publish to Github Package Registry
       run: ./gradlew publish -DGH_TOKEN=${{ secrets.GITHUB_TOKEN }}
