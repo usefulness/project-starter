@@ -33,10 +33,15 @@ publishing {
             }
         }
     }
+    publications {
+        register("jar", MavenPublication) {
+            from(components.java)
+        }
+    }
 }
 gradlePlugin {
     plugins {
-        greeting {
+        quality {
             id = 'com.starter.quality'
             implementationClass = 'com.project.starter.quality.plugins.QualityPlugin'
         }

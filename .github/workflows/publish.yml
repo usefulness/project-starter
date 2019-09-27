@@ -3,7 +3,7 @@ name: Publish project
 on:
   push:
     branches:
-      - master
+      - 'release/*'
 
 jobs:
   build:
@@ -19,4 +19,4 @@ jobs:
     - name: Build app with Gradle
       run: ./gradlew build
     - name: Publish to Github Package Registry
-      run: ./gradlew publish -DGH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+      run: ./gradlew publish -PGH_TOKEN=${{ secrets.GITHUB_TOKEN }} --continue
