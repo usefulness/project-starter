@@ -1,4 +1,4 @@
-package com.starter.quality.tasks
+package com.project.starter.quality.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project

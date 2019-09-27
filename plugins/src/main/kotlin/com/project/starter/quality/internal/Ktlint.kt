@@ -1,6 +1,6 @@
-package com.starter.quality.internal
+package com.project.starter.quality.internal
 
-import com.starter.quality.tasks.ProjectCodeStyleTask
+import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import org.gradle.api.Project
 import org.jmailen.gradle.kotlinter.KotlinterExtension
 import org.jmailen.gradle.kotlinter.KotlinterPlugin

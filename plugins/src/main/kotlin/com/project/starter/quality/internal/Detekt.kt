@@ -1,11 +1,10 @@
-package com.starter.quality.internal
+package com.project.starter.quality.internal
 
-import com.starter.quality.tasks.ProjectCodeStyleTask
+import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
-
 
 internal fun Project.configureDetekt() {
     pluginManager.apply(DetektPlugin::class.java)
