@@ -27,6 +27,10 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
                 plugins {
                     id('plugin-library.kotlin')
                 }
+                
+                libraryConfig {
+                    javaFilesAllowed = false
+                }
             """.trimIndent()
                 resolve("build.gradle").writeText(buildScript)
                 main = resolve("src/main").apply {
@@ -66,7 +70,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
     }
 
     @Test
-    fun `task fails for main sources`() {
+    fun `task fails on main sources`() {
         main.resolve("java/JavaClass.java").apply {
             parentFile.mkdirs()
             writeText(javaClass("JavaClass"))
@@ -79,7 +83,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
     }
 
     @Test
-    fun `task fails for test sources`() {
+    fun `task fails on test sources`() {
         test.resolve("java/JavaTest.java").apply {
             parentFile.mkdirs()
             writeText(javaClass("JavaTest"))
@@ -94,6 +98,18 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
     @Test
     fun `task is cacheable`() {
         runTask("assemble")
+
+        val secondRun = runTask("assemble")
+
+        assertThat(secondRun.task(":module1:forbidJavaFiles")?.outcome).isNotEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `doesn't check generated files`() {
+        rootDirectory.resolve("build/generated/source/apollo/classes/main/JavaTest.java").apply {
+            parentFile.mkdirs()
+            writeText(javaClass("JavaTest"))
+        }
 
         val secondRun = runTask("assemble")
 

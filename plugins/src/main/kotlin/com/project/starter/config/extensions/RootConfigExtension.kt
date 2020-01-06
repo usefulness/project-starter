@@ -7,7 +7,7 @@ import org.gradle.util.ConfigureUtil
 
 open class RootConfigExtension(
     var javaVersion: JavaVersion = JavaVersion.VERSION_1_8,
-    var javaFilesAllowed: Boolean = false
+    var javaFilesAllowed: Boolean = true
 ) {
 
     val quality = QualityPluginConfig()
