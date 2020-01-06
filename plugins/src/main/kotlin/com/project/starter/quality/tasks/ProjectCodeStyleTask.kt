@@ -9,8 +9,8 @@ open class ProjectCodeStyleTask : DefaultTask() {
 
         const val TASK_NAME = "projectCodeStyle"
 
-        fun Project.addProjectCodeStyleTask() {
-            tasks.register(TASK_NAME)
+        fun Project.addProjectCodeStyleTask(action: (ProjectCodeStyleTask) -> Unit = {}) {
+            tasks.register(TASK_NAME, ProjectCodeStyleTask::class.java, action)
         }
     }
 

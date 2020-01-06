@@ -1,23 +1,33 @@
 package com.project.starter.quality.internal
 
+import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import java.net.JarURLConnection
 import org.gradle.api.Project
 
-internal fun Project.configureDetekt() {
+internal object Loader
+
+internal fun Project.configureDetekt(config: RootConfigExtension) {
     pluginManager.apply(DetektPlugin::class.java)
 
     extensions.configure(DetektExtension::class.java) {
-        it.reports.html {
-            enabled = false
+        it.reports.apply {
+            html.enabled = false
+            xml.enabled = false
+            txt.enabled = false
         }
-        it.reports.xml {
-            enabled = false
-        }
-        val loader = this::javaClass.javaClass.classLoader
-        it.config.setFrom(loader.getResource("detekt-config.yml"))
+        val configFile = Loader::class.java.classLoader.getResource("detekt-config.yml")
+        logger.info("Detekt config: $configFile")
+
+        it.config.setFrom(
+            when (val jar = configFile?.openConnection()) {
+                is JarURLConnection -> resources.text.fromArchiveEntry(jar.jarFileURL, jar.entryName)
+                else -> configFile
+            }
+        )
     }
     tasks.named("detekt", Detekt::class.java) {
         it.exclude(".*/resources/.*", ".*/build/.*")
@@ -25,6 +35,7 @@ internal fun Project.configureDetekt() {
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {
         it.dependsOn("$path:detekt")
     }
+    tasks.withType(Detekt::class.java) {
+        it.jvmTarget = config.javaVersion.toString()
+    }
 }
-
-object Detekt
