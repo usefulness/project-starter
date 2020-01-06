@@ -1,10 +1,16 @@
 build:
   maxIssues: 1
+  excludeCorrectable: false
   weights:
   # complexity: 2
   # LongParameterList: 1
   # style: 1
   # comments: 1
+
+config:
+  validation: true
+  # when writing own rules with new properties, exclude the property path e.g.: "my_rule_set,.*>.*>[my_property]"
+  excludes: ""
 
 processors:
   active: false
@@ -23,7 +29,7 @@ console-reports:
   #  - 'ComplexityReport'
   #  - 'NotificationReport'
   #  - 'FindingsReport'
-  #  - 'FileBasedFindingsReport'
+    - 'FileBasedFindingsReport'
   #  - 'BuildFailureReport'
 
 comments:
@@ -44,6 +50,8 @@ comments:
     searchInInnerInterface: true
   UndocumentedPublicFunction:
     active: false
+  UndocumentedPublicProperty:
+    active: false
 
 complexity:
   active: true
@@ -59,6 +67,8 @@ complexity:
     threshold: 10
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
+    ignoreNestingFunctions: false
+    nestingFunctions: run,let,apply,with,also,use,forEach,isNotNull,ifNull
   LabeledExpression:
     active: false
     ignoredLabels: ""
@@ -146,6 +156,7 @@ exceptions:
     active: false
   ReturnFromFinally:
     active: false
+    ignoreLabeled: false
   SwallowedException:
     active: false
     ignoredExceptionTypes: 'InterruptedException,NumberFormatException,ParseException,MalformedURLException'
@@ -294,6 +305,7 @@ naming:
     parameterPattern: '[a-z][A-Za-z0-9]*'
     privateParameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
+    ignoreOverridden: false
   EnumNaming:
     active: true
     excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
@@ -382,38 +394,44 @@ potential-bugs:
   DuplicateCaseInWhenExpression:
     active: true
   EqualsAlwaysReturnsTrueOrFalse:
-    active: false
+    active: true
   EqualsWithHashCodeExist:
     active: true
   ExplicitGarbageCollectionCall:
     active: true
+  HasPlatformType:
+    active: false
+  ImplicitDefaultLocale:
+    active: false
   InvalidRange:
-    active: false
+    active: true
   IteratorHasNextCallsNextMethod:
-    active: false
+    active: true
   IteratorNotThrowingNoSuchElementException:
-    active: false
+    active: true
   LateinitUsage:
     active: false
     excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
     excludeAnnotatedProperties: ""
     ignoreOnClassesPattern: ""
+  MapGetWithNotNullAssertionOperator:
+    active: false
   MissingWhenCase:
     active: true
   RedundantElseInWhen:
-    active: false
+    active: true
   UnconditionalJumpStatementInLoop:
     active: false
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
-    active: false
+    active: true
   UnsafeCast:
     active: false
   UselessPostfixExpression:
     active: false
   WrongEqualsTypeParameter:
-    active: false
+    active: true
 
 style:
   active: true
@@ -423,9 +441,9 @@ style:
     active: false
     conversionFunctionPrefix: 'to'
   DataClassShouldBeImmutable:
-    active: true
-  EqualsNullCall:
     active: false
+  EqualsNullCall:
+    active: true
   EqualsOnSignatureLine:
     active: false
   ExplicitItLambdaParameter:
@@ -440,18 +458,26 @@ style:
   ForbiddenImport:
     active: false
     imports: ''
+    forbiddenPatterns: ""
+  ForbiddenMethodCall:
+    active: false
+    methods: ''
+  ForbiddenPublicDataClass:
+    active: false
+    ignorePackages: '*.internal,*.internal.*'
   ForbiddenVoid:
     active: false
     ignoreOverridden: false
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
-    active: false
+    active: true
     ignoreOverridableFunction: true
     excludedFunctions: 'describeContents'
+    excludeAnnotatedFunction: "dagger.Provides"
   LibraryCodeMustSpecifyReturnType:
-    active: false
+    active: true
   LoopWithTooManyJumpStatements:
-    active: false
+    active: true
     maxJumpCount: 1
   MagicNumber:
     active: true
@@ -459,6 +485,7 @@ style:
     ignoreNumbers: '-100,-1,0,1,2,100'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
+    ignoreLocalVariableDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreAnnotation: false
@@ -474,7 +501,7 @@ style:
     excludeImportStatements: true
     excludeCommentStatements: false
   MayBeConst:
-    active: false
+    active: true
   ModifierOrder:
     active: true
   NestedClassesVisibility:
@@ -519,12 +546,14 @@ style:
     active: false
     acceptableDecimalLength: 5
   UnnecessaryAbstractClass:
-    active: false
+    active: true
     excludeAnnotatedClasses: "dagger.Module"
+  UnnecessaryAnnotationUseSiteTarget:
+    active: false
   UnnecessaryApply:
     active: false
   UnnecessaryInheritance:
-    active: false
+    active: true
   UnnecessaryLet:
     active: false
   UnnecessaryParentheses:
@@ -534,12 +563,12 @@ style:
   UnusedImports:
     active: false
   UnusedPrivateClass:
-    active: false
+    active: true
   UnusedPrivateMember:
     active: false
     allowedNames: "(_|ignored|expected|serialVersionUID)"
   UseArrayLiteralsInAnnotations:
-    active: true
+    active: false
   UseCheckOrError:
     active: false
   UseDataClass:
@@ -551,9 +580,9 @@ style:
   UseRequire:
     active: false
   UselessCallOnNotNull:
-    active: false
+    active: true
   UtilityClassWithPublicConstructor:
-    active: false
+    active: true
   VarCouldBeVal:
     active: false
   WildcardImport:
