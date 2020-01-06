@@ -1,6 +1,7 @@
 package com.project.starter.modules
 
 import com.project.starter.WithGradleTest
+import com.project.starter.javaClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -128,5 +129,34 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
 
         assertThat(result.task(":module1:lint")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":module2:lint")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `does not fail on java files by default`() {
+        module2Root.resolve("src/main/java/JavaClass.java").apply {
+            parentFile.mkdirs()
+            writeText(javaClass("JavaClass"))
+        }
+
+        val result = runTask(":module2:assemble")
+
+        assertThat(result.task(":module2:assemble")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `fail on java files if failing enabled`() {
+        module2Root.resolve("build.gradle").appendText("""
+            libraryConfig {
+                javaFilesAllowed = false
+            }
+        """.trimIndent())
+        module2Root.resolve("src/main/java/JavaClass.java").apply {
+            parentFile.mkdirs()
+            writeText(javaClass("JavaClass"))
+        }
+
+        val result = runTask(":module2:assemble", shouldFail = true)
+
+        assertThat(result.task(":module2:forbidJavaFiles")!!.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 }

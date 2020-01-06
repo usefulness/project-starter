@@ -2,6 +2,7 @@ package com.project.starter.modules.plugins
 
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
+import com.project.starter.modules.extensions.KotlinLibraryConfigExtension
 import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.addForbidJavaFilesTask
 import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.addProjectCoverageTask
 import com.project.starter.modules.tasks.ProjectLintTask.Companion.addProjectLintTask
@@ -16,6 +17,8 @@ class KotlinLibraryPlugin : Plugin<Project> {
         pluginManager.apply("kotlin")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
+        extensions.create("libraryConfig", KotlinLibraryConfigExtension::class.java)
+
         addProjectTestTask {
             it.dependsOn("test")
         }
@@ -29,9 +32,16 @@ class KotlinLibraryPlugin : Plugin<Project> {
                 projectLint.dependsOn("$path:lint")
             }
         }
-
-        if (!rootConfig.javaFilesAllowed) {
-            tasks.named("compileKotlin").dependsOn(addForbidJavaFilesTask())
+        withExtension { config ->
+            val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed
+            if (!javaFilesAllowed) {
+                tasks.named("compileKotlin").dependsOn(addForbidJavaFilesTask())
+            }
         }
     }
+
+    private fun Project.withExtension(action: Project.(KotlinLibraryConfigExtension) -> Unit) =
+        afterEvaluate {
+            it.action(it.extensions.getByType(KotlinLibraryConfigExtension::class.java))
+        }
 }

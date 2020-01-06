@@ -224,29 +224,10 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     }
 
     @Test
-    fun `fails the build if java files present`() {
-        module2Root.resolve("src/main/java/JavaNotAllowed.java").apply {
+    fun `does not fail on java sources by default`() {
+        module2Root.resolve("src/main/java/JavaAllowed.java").apply {
             parentFile.mkdirs()
-            writeText(javaClass(className = "JavaNotAllowed"))
-        }
-
-        val result = runTask(":module2:assembleDebug", shouldFail = true)
-
-        assertThat(result.task(":module2:forbidJavaFiles")?.outcome).isEqualTo(TaskOutcome.FAILED)
-    }
-
-    @Test
-    fun `compiles java source files if enabled at project level`() {
-        @Language("groovy") val config = """
-            libraryConfig {
-                javaFilesAllowed = true
-            }
-            
-        """.trimIndent()
-        module2Root.resolve("build.gradle").appendText(config)
-        module2Root.resolve("src/main/java/JavaFile.java").apply {
-            parentFile.mkdirs()
-            writeText(javaClass(className = "JavaFile"))
+            writeText(javaClass(className = "JavaAllowed"))
         }
 
         val result = runTask(":module2:assembleDebug")
@@ -255,7 +236,14 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     }
 
     @Test
-    fun `fails on java sources by default`() {
+    fun `fail on java files if settings enabled at project level`() {
+        @Language("groovy") val config = """
+            libraryConfig {
+                javaFilesAllowed = false
+            }
+            
+        """.trimIndent()
+        module2Root.resolve("build.gradle").appendText(config)
         module2Root.resolve("src/main/java/JavaFile.java").apply {
             parentFile.mkdirs()
             writeText(javaClass(className = "JavaFile"))
