@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 internal class AndroidApplicataionPluginTest : WithGradleTest() {
@@ -146,14 +145,16 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
     }
 
     @Test
-    @Ignore("Android coverage not implemented yet")
     fun `projectCoverage runs coverage for all modules`() {
         val result = runTask("projectCoverage")
 
-        assertThat(result.task(":module1:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(module1Root.resolve("build/reports/jacoco/test")).isDirectoryContaining {
-            it.name == "jacocoTestReport.xml"
+        assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:testDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(module1Root.resolve("build/reports/jacoco/jacocoDemoDebugTestReport")).isDirectoryContaining {
+            it.name.startsWith("jacoco") && it.name.endsWith(".xml")
+        }
+        assertThat(module2Root.resolve("build/reports/jacoco/jacocoDebugTestReport")).isDirectoryContaining {
+            it.name.startsWith("jacoco") && it.name.endsWith(".xml")
         }
     }
 
