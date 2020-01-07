@@ -76,6 +76,11 @@ gradlePlugin {
             displayName = 'Android Library Plugin'
             implementationClass = "com.project.starter.modules.plugins.AndroidLibraryPlugin"
         }
+        androidApplication {
+            id = 'com.starter.application.android'
+            displayName = 'Android Applicataion Plugin'
+            implementationClass = "com.project.starter.modules.plugins.AndroidApplicationPlugin"
+        }
         commonConfig {
             id = "com.starter.config"
             displayName = 'Common Configuration Plugin'
