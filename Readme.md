@@ -1,6 +1,10 @@
 ## Starter
 ___
 
+[![codecov](https://codecov.io/gh/mateuszkwiecinski/project-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/mateuszkwiecinski/project-starter)
+&nbsp;[![codecov](https://github.com/mateuszkwiecinski/project-starter/workflows/Build%20project/badge.svg)](https://github.com/mateuszkwiecinski/project-starter/actions)
+&nbsp;[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
+
 ## Motivation
 
 Multi-Module projects. Copied code. BuildSrc. Use it in your own setup.
@@ -80,4 +84,4 @@ and from the other side, the `testDebug` skips executing tests in kotlin only mo
 Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project.
 
 ## License
-[MIT](/LICENSE)
+[MIT License](/LICENSE)
