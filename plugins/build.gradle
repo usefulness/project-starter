@@ -18,6 +18,9 @@ repositories {
 
 tasks.named("jacocoTestReport") {
     dependsOn "test", "generateJacocoTestKitProperties"
+    reports {
+        xml.enabled true
+    }
 }
 
 tasks.withType(KotlinCompile) {
