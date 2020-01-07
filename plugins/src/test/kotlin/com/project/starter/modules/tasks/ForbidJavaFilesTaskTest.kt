@@ -28,7 +28,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
                     id('com.starter.library.kotlin')
                 }
                 
-                libraryConfig {
+                projectConfig {
                     javaFilesAllowed = false
                 }
             """.trimIndent()

@@ -16,7 +16,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
         pluginManager.apply("kotlin-android")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
-        extensions.create("applicationConfig", AndroidApplicationConfigExtension::class.java)
+        extensions.create("projectConfig", AndroidApplicationConfigExtension::class.java)
 
         val android = extensions.getByType<AppExtension>(AppExtension::class.java).apply {
             configureAndroidPlugin(rootConfig)

@@ -17,7 +17,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
         pluginManager.apply(ConfigurationPlugin::class.java)
 
         val rootConfig = this.rootConfig
-        extensions.create("libraryConfig", AndroidLibraryConfigExtension::class.java)
+        extensions.create("projectConfig", AndroidLibraryConfigExtension::class.java)
 
         val android = extensions.getByType<LibraryExtension>(LibraryExtension::class.java).apply {
             configureAndroidPlugin(rootConfig)

@@ -17,7 +17,7 @@ class KotlinLibraryPlugin : Plugin<Project> {
         pluginManager.apply("kotlin")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
-        extensions.create("libraryConfig", KotlinLibraryConfigExtension::class.java)
+        extensions.create("projectConfig", KotlinLibraryConfigExtension::class.java)
 
         addProjectTestTask {
             it.dependsOn("test")

@@ -171,7 +171,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     @Test
     fun `contains BuildConfig file if generation enabled`() {
         @Language("groovy") val config = """
-            libraryConfig {
+            projectConfig {
                 generateBuildConfig = true
             }
             
@@ -190,7 +190,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
         @Language("groovy") val config = """
-            libraryConfig {
+            projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
             }
             
@@ -210,7 +210,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     @Test
     fun `configures android library extension`() {
         @Language("groovy") val config = """
-            libraryConfig {
+            projectConfig {
                 generateBuildConfig = false
                 javaFilesAllowed = false
                 defaultVariants = ["demoDebug", "fullRelease"]
@@ -238,7 +238,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
     @Test
     fun `fail on java files if settings enabled at project level`() {
         @Language("groovy") val config = """
-            libraryConfig {
+            projectConfig {
                 javaFilesAllowed = false
             }
             

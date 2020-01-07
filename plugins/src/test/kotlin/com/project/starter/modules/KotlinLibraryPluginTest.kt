@@ -146,7 +146,7 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
     @Test
     fun `fail on java files if failing enabled`() {
         module2Root.resolve("build.gradle").appendText("""
-            libraryConfig {
+            projectConfig {
                 javaFilesAllowed = false
             }
         """.trimIndent())

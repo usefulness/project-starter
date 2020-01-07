@@ -46,7 +46,7 @@ dependencies {
     ``` groovy
     apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
 
-    libraryConfig {
+    projectConfig {
         javaFilesAllowed = false
         generateBuildConfig = false
         defaultVariants = ["fullDebug", "freeDebug"]
@@ -66,11 +66,11 @@ dependencies {
 After applying plugins there are appropriate tasks added:
 - `projectTest`  
 Runs tests for all modules using either predefined tasks (i.e. `test` for kotlin modules or `testDebugUnitTest` for android libraries) or use customized values.
-- `projectLint`
+- `projectLint`  
 Runs Android lint checks against all modules (if custom lint checks are applied then for Kotlin modules too)
-- `projectCodeStyle`
+- `projectCodeStyle`  
 Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint) and [`Detekt`](https://github.com/arturbosch/detekt) with predefined config.
-- ~`projectCoverage`~
+- ~`projectCoverage`~  
 Automatically generates test coverage reports for all modules using [`Jacoco`](https://github.com/jacoco/jacoco)
 
 Those tasks allows you to run tests efficiently for all modules typing single task.
