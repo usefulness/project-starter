@@ -39,7 +39,9 @@ internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out Base
 
 private val databinding = listOf(
     "android/databinding/**/*.class",
-    "**/android/databinding/*Binding.class",
+    "androidx/databinding/**/*.class",
+    "**/databinding/*Binding.class",
+    "**/databinding/*BindingImpl.class",
     "**/BR.*",
     "**/IssuesRegistry.*"
 )
