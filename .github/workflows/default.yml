@@ -10,7 +10,8 @@ on:
 
 jobs:
   build:
-
+    env:
+      github_token: ${{ secrets.CODECOV_TOKEN }}
     runs-on: ubuntu-latest
     
     steps:
@@ -19,5 +20,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build app with Gradle
-      run: ./gradlew build
+    - name: Code style
+      run: ./gradlew lintKotlin
+    - name: Assemble
+      run: ./gradlew assemble
+    - name: Jacoco test report
+      run: ./gradlew jacocoTestReport
+    - name: Codecov report upload
+      run: bash <(curl -s https://codecov.io/bash)
