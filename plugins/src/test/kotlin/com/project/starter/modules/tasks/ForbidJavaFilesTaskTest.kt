@@ -25,7 +25,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleTest() {
                 @Language("groovy")
                 val buildScript = """
                 plugins {
-                    id('plugin-library.kotlin')
+                    id('com.starter.library.kotlin')
                 }
                 
                 libraryConfig {

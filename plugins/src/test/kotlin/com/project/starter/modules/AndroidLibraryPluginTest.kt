@@ -27,7 +27,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
                 mkdirs()
                 @Language("groovy") val buildScript = """
                         plugins {
-                            id('plugin-library.android')
+                            id('com.starter.library.android')
                         }
                         
                         android {
@@ -86,7 +86,7 @@ internal class AndroidLibraryPluginTest : WithGradleTest() {
                 mkdirs()
                 resolve("build.gradle").writeText("""
                         plugins {
-                            id('plugin-library.android')
+                            id('com.starter.library.android')
                         }
                         
                         dependencies {

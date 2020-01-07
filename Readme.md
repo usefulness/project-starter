@@ -3,11 +3,11 @@ ___
 
 ## Motivation
 
-Multimodule projects. Copied code. BuildSrc. Use it in your own setup.
+Multi-Module projects. Copied code. BuildSrc. Use it in your own setup.
 
 ## Content
 
-Modules + Quality + TODO(~Versioning~) + TODO(~Publishing~)
+Modules + Quality + ~Versioning~ + ~Publishing~
 
 ### Getting started
 
@@ -16,12 +16,7 @@ Modules + Quality + TODO(~Versioning~) + TODO(~Publishing~)
  `/buildSrc/build.gradle`:
 ``` groovy
 repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/mateuszkwiecinski/project-starter")
-    }
-    mavenContent {
-        includeGroup("com.project.starter")
-    }
+    gradlePluginPortal()
 }
 dependencies {
     implementation 'com.project.starter:plugins:0.2.0'
@@ -33,14 +28,14 @@ dependencies {
     Apply plugin in project level `build.gradle`
 
     ``` groovy
-    apply plugin: 'plugin-library.kotlin'
+    apply plugin: 'com.starter.library.kotlin'
     ```
 
 1. Android Application/Library Plugin
     - Minimal setup for Android Library requires adding in project level `build.gradle`:  
-    `apply plugin: 'plugin-library.android'`
+    `apply plugin: 'com.starter.library.android'`
     or for Android Application
-    `apply plugin: 'plugin-application.android'`
+    `apply plugin: 'com.starter.application.android'`
     - Advanced setup
         - `javaFilesAllowed` - defines if project can contain java files, `false` by default
         - `generateBuildConfig` - defines if `BuildConfig.java` class will be generated, `false` by default
@@ -49,7 +44,7 @@ dependencies {
         - `coverageExclusions` - defines jacoco coverage exclusions for specific module, `[]` by default
 
     ``` groovy
-    apply plugin: 'plugin-library.android' // or 'plugin-application.android'
+    apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
 
     libraryConfig {
         javaFilesAllowed = false

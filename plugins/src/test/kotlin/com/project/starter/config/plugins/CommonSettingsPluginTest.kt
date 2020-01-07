@@ -43,7 +43,7 @@ internal class CommonSettingsPluginTest : WithGradleTest() {
     fun `configures common config extension`() {
         @Language("groovy") val buildscript = """
             plugins {
-                id('plugin-config')
+                id('com.starter.config')
             }
             
             commonConfig {
@@ -69,13 +69,13 @@ internal class CommonSettingsPluginTest : WithGradleTest() {
     fun `throws exception if not applied to the root project`() {
         @Language("groovy") val buildscript = """
             plugins {
-                id('plugin-config')
+                id('com.starter.config')
             }
         """.trimIndent()
         module1Root.resolve("build.gradle").appendText(buildscript)
 
         val result = runTask("build", shouldFail = true)
 
-        assertThat(result.output).contains("Failed to apply plugin [id 'plugin-config']")
+        assertThat(result.output).contains("Failed to apply plugin [id 'com.starter.config']")
     }
 }

@@ -25,7 +25,7 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
                 mkdirs()
                 resolve("build.gradle").writeText("""
                         plugins {
-                            id('plugin-library.kotlin')
+                            id('com.starter.library.kotlin')
                         }
                         
                         dependencies {
@@ -56,7 +56,7 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
                 mkdirs()
                 resolve("build.gradle").writeText("""
                         plugins {
-                            id('plugin-library.kotlin')
+                            id('com.starter.library.kotlin')
                         }
                         
                         dependencies {

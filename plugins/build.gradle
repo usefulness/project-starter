@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id "com.gradle.plugin-publish" version "0.10.1"
     id 'java-gradle-plugin'
     id 'org.jetbrains.kotlin.jvm' version '1.3.61'
     id 'maven-publish'
@@ -51,22 +52,33 @@ publishing {
         }
     }
 }
+pluginBundle {
+    website = 'https://github.com/mateuszkwiecinski/project-starter/'
+    vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter/'
+    description = 'Set of useful plugins that might be useful for Multi-Module Android projects.'
+    tags = ['android', 'kotlin', 'quickstart', 'codestyle', 'library']
+}
+
 gradlePlugin {
     plugins {
         quality {
-            id = 'plugin-quality'
+            id = 'com.starter.quality'
+            displayName = 'Code Quality Plugin'
             implementationClass = 'com.project.starter.quality.plugins.QualityPlugin'
         }
         kotlinLibrary {
-            id = 'plugin-library.kotlin'
+            id = 'com.starter.library.kotlin'
+            displayName = 'Kotlin Library Plugin'
             implementationClass = 'com.project.starter.modules.plugins.KotlinLibraryPlugin'
         }
         androidLibrary {
-            id = 'plugin-library.android'
+            id = 'com.starter.library.android'
+            displayName = 'Android Library Plugin'
             implementationClass = "com.project.starter.modules.plugins.AndroidLibraryPlugin"
         }
         commonConfig {
-            id = "plugin-config"
+            id = "com.starter.config"
+            displayName = 'Common Configuration Plugin'
             implementationClass = 'com.project.starter.config.plugins.CommonSettingsPlugin'
         }
     }
