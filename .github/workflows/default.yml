@@ -10,8 +10,6 @@ on:
 
 jobs:
   build:
-    env:
-      github_token: ${{ secrets.CODECOV_TOKEN }}
     runs-on: ubuntu-latest
     
     steps:
@@ -27,4 +25,4 @@ jobs:
     - name: Jacoco test report
       run: ./gradlew jacocoTestReport
     - name: Codecov report upload
-      run: bash <(curl -s https://codecov.io/bash)
+      run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
