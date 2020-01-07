@@ -18,67 +18,109 @@ Each module consists of configuration code most commonly used in Android project
 
 #### Add buildscript dependency
 
- `/buildSrc/build.gradle`:
+Add root project `build.gradle`:
 ``` groovy
-repositories {
-    gradlePluginPortal()
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
 }
 ```
 
 ### Plugins Configuration
 1. Kotlin Library Plugin  
-    Apply plugin in project level `build.gradle`
+Apply plugin to project level `build.gradle`
 
-    ``` groovy
-    apply plugin: 'com.starter.library.kotlin'
-    ```
+``` groovy
+apply plugin: 'com.starter.library.kotlin'
+
+// optional config with default values
+projectConfig {
+    javaFilesAllowed = false
+}
+```
+
+- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
 
 1. Android Application/Library Plugin
-    - Minimal setup for Android Library requires adding in project level `build.gradle`:  
-    `apply plugin: 'com.starter.library.android'`
-    or for Android Application
-    `apply plugin: 'com.starter.application.android'`
-    - Advanced setup
-        - `javaFilesAllowed` - defines if project can contain java files, `false` by default
-        - `generateBuildConfig` - defines if `BuildConfig.java` class will be generated, `false` by default
-        - `defaultVariants` - defines build variants used for common `projectXXX` tasks.  
-         for example setting `fullDebug` as default varian would make `testFullDebugUnitTest.` as a dependency for `projectTest` task. \["debug"\]` by default
-        - `coverageExclusions` - defines jacoco coverage exclusions for specific module, `[]` by default
+- Android Library plugin requires adding to project level `build.gradle`:
 
-    ``` groovy
-    apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
+``` groovy
+apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
 
-    projectConfig {
-        javaFilesAllowed = false
-        generateBuildConfig = false
-        defaultVariants = ["fullDebug", "freeDebug"]
-        coverageExclusions = ["*_GeneratedFile.*"]
+// optional config with default values
+projectConfig {
+    javaFilesAllowed = false
+    generateBuildConfig = false
+    defaultVariants = ["debug"]
+    coverageExclusions = [""]
+}
+
+// overriden settings for single project
+android {
+    defaultConfig {
+        minSdkVersion 21
     }
-    
-    android {
-        defaultConfig {
-            minSdkVersion 21
-        }
+}
+```
+
+- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
+- `generateBuildConfig` - defines if `BuildConfig.java` class will be generated
+- `defaultVariants` - defines build variants used for common `projectXXX` tasks.  
+for example setting `fullDebug` as default varian would make `testFullDebugUnitTest.` as a dependency for `projectTest` task.
+- `coverageExclusions` - defines jacoco coverage exclusions for specific module
+
+2. Quality Plugin
+
+Apply plugin to project level `build.gradle`
+```
+ apply plugin: 'com.starter.quality'
+```
+which applies and configures `ktlint` and `detekt` tasks automatically.  
+To execute run: `./gradlew projectCodeStyle`
+
+3. Global configuration
+
+Additional default configuration can be applied by adding to **root project** `build.gradle`.
+All submodules will use this config as default
+
+``` groovy
+apply plugin: 'com.starter.config'
+ 
+commonConfig {
+    javaVersion = JavaVersion.VERSION_1_8
+    javaFilesAllowed = true
+    androidPlugin {
+        compileSdkVersion = 29
+        minSdkVersion = 23
+        targetSdkVersion = 29
     }
-    ```
-1. Quality Plugin
+    qualityPlugin {
+        formatOnCompile = false
+    }
+}
+```
 
-1. Global configuration
+- `javaVersion` - defines which java version source code is compatible to
+- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
+- `androidPlugin`:
+    - contains values passed to Android Gradle Plugin
+- `qualityPlugin`:
+    - `formatOnCompile` - defines if ktlint should format source code on every compilation
 
-### Daily use
-After applying plugins there are appropriate tasks added:
-- `projectTest`  
+### Daily basis use
+After applying library/application plugin there are appropriate tasks added:
+- `./gradlew projectTest`  
 Runs tests for all modules using either predefined tasks (i.e. `test` for kotlin modules or `testDebugUnitTest` for android libraries) or use customized values.
-- `projectLint`  
+- `./gradlew projectLint`  
 Runs Android lint checks against all modules (if custom lint checks are applied then for Kotlin modules too)
-- `projectCodeStyle`  
+- `./gradlew projectCodeStyle`  
 Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint) and [`Detekt`](https://github.com/arturbosch/detekt) with predefined config.
-- ~`projectCoverage`~  
+- `./gradlew projectCoverage`  
 Automatically generates test coverage reports for all modules using [`Jacoco`](https://github.com/jacoco/jacoco)
 
-Those tasks allows you to run tests efficiently for all modules typing single task.
-That solves an issue when for example `test` task unnecessarily executes tests for all build variants where there is only single variant needed
-and from the other side, the `testDebug` skips executing tests in kotlin only modules.
+Those tasks allows you to run tests efficiently for all modules by typing just a single task.
+That solves an issue when for example `test` task unnecessarily executes tests for all build variants and more strict `testDebug` skips executing tests in kotlin only modules.
 
 ## Sample project
 Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project.
