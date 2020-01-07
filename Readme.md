@@ -7,7 +7,8 @@ Multi-Module projects. Copied code. BuildSrc. Use it in your own setup.
 
 ## Content
 
-Modules + Quality + ~Versioning~ + ~Publishing~
+Repository consists of several plugins group: Modules, Quality, ~Versioning~ and ~Publishing~.
+Each module consists of configuration code most commonly used in Android projects.
 
 ### Getting started
 
@@ -17,9 +18,6 @@ Modules + Quality + ~Versioning~ + ~Publishing~
 ``` groovy
 repositories {
     gradlePluginPortal()
-}
-dependencies {
-    implementation 'com.project.starter:plugins:0.2.0'
 }
 ```
 
@@ -60,7 +58,8 @@ dependencies {
     }
     ```
 1. Quality Plugin
-2. Global configuration
+
+1. Global configuration
 
 ### Daily use
 After applying plugins there are appropriate tasks added:
@@ -78,7 +77,7 @@ That solves an issue when for example `test` task unnecessarily executes tests f
 and from the other side, the `testDebug` skips executing tests in kotlin only modules.
 
 ## Sample project
-[Github Browser](https://github.com/mateuszkwiecinski/github_browser)
+Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project.
 
 ## License
 [MIT](/LICENSE)
