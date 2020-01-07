@@ -24,7 +24,7 @@ internal class QualityPluginTest : WithGradleTest() {
                 mkdirs()
                 resolve("build.gradle").writeText("""
                     plugins {
-                        id('plugin-quality')
+                        id('com.starter.quality')
                         id('kotlin')
                     }
                 """.trimIndent())
@@ -47,7 +47,7 @@ internal class QualityPluginTest : WithGradleTest() {
                 mkdirs()
                 resolve("build.gradle").writeText("""
                     plugins {
-                        id('plugin-quality')
+                        id('com.starter.quality')
                         id('com.android.library')
                         id('kotlin-android')
                     }
@@ -110,7 +110,7 @@ internal class QualityPluginTest : WithGradleTest() {
     fun `formatOnCompile option enables failing builds if code style errors found`() {
         @Language("groovy") val buildscript = """
             plugins {
-                id('plugin-config')
+                id('com.starter.config')
             }
             
             commonConfig {
