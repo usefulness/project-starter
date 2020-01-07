@@ -160,7 +160,7 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
         @Language("groovy") val config = """
-            applicationConfig {
+            projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
             }
             
@@ -180,7 +180,7 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
     @Test
     fun `configures android library extension`() {
         @Language("groovy") val config = """
-            applicationConfig {
+            projectConfig {
                 javaFilesAllowed = false
                 defaultVariants = ["demoDebug", "fullRelease"]
                 coverageExclusions = ["**/view/**"]
@@ -207,7 +207,7 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
     @Test
     fun `fail on java files if settings enabled at project level`() {
         @Language("groovy") val config = """
-            applicationConfig {
+            projectConfig {
                 javaFilesAllowed = false
             }
             
