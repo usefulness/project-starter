@@ -78,6 +78,7 @@ That solves an issue when for example `test` task unnecessarily executes tests f
 and from the other side, the `testDebug` skips executing tests in kotlin only modules.
 
 ## Sample project
-[link]
+[Github Browser](https://github.com/mateuszkwiecinski/github_browser)
 
 ## License
+[MIT](/LICENSE)
