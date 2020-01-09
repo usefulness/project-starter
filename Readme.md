@@ -2,17 +2,26 @@
 ___
 
 [![codecov](https://codecov.io/gh/mateuszkwiecinski/project-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/mateuszkwiecinski/project-starter)
-&nbsp;[![codecov](https://github.com/mateuszkwiecinski/project-starter/workflows/Build%20project/badge.svg)](https://github.com/mateuszkwiecinski/project-starter/actions)
+&nbsp;[![build](https://github.com/mateuszkwiecinski/project-starter/workflows/Build%20project/badge.svg)](https://github.com/mateuszkwiecinski/project-starter/actions)
 &nbsp;[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 ## Motivation
 
-Multi-Module projects. Copied code. BuildSrc. Use it in your own setup.
+Maintaining multiple multi-module Android project often requires **copying project configuration across different projects**.
+Same custom tasks, same _Android Gradle Plugin_ configuration. Same set of common settings.  
+Even when project reached more advanced stage it is still required to put non minimal effort to maintain its configuration.
+Things like new _kapt_ optimizations, new _Android Gradle Plugin_ features. New version of code style tools you were using.
+Furthermore, starting a new project, from the scratch, **takes more than a day to configure every tool** you usually want to use.  
+Some people create project templates, but they are up-to-date only when pulling them at the beginning and are not maintained further.
+Another way of keeping your project configuration in a good shape was using `buildSrc` plugins.
+Less code written, ease of sharing between projects but still some part of the code needed to be copied.  
+This project addresses that issues and **exposes set of plugins** useful when approaching multi-module setup with _Gradle_ build system.  
+It behaves as a **facade** for all most commonly used tools in Android development and makes easier to create CI pipelines knowing always which tasks should be executed.
 
 ## Content
 
-Repository consists of several plugins group: Modules, Quality, ~Versioning~ and ~Publishing~.
-Each module consists of configuration code most commonly used in Android projects.
+Repository consists of several plugins that makes initial project configuration effortless and easily extensible.
+Each module consists of configuration code most commonly used in Android project configuration.
 
 ### Getting started
 
@@ -24,11 +33,15 @@ buildscript {
     repositories {
         gradlePluginPortal()
     }
+    
+    dependencies {
+        implementation "com.project.starter:plugins:0.4.0"
+    }
 }
 ```
 
 ### Plugins Configuration
-1. Kotlin Library Plugin  
+#### Kotlin Library Plugin
 Apply plugin to project level `build.gradle`
 
 ``` groovy
@@ -42,7 +55,7 @@ projectConfig {
 
 - `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
 
-1. Android Application/Library Plugin
+#### Android Application/Library Plugin
 - Android Library plugin requires adding to project level `build.gradle`:
 
 ``` groovy
@@ -56,7 +69,7 @@ projectConfig {
     coverageExclusions = [""]
 }
 
-// overriden settings for single project
+// overridden settings for single project
 android {
     defaultConfig {
         minSdkVersion 21
@@ -64,13 +77,16 @@ android {
 }
 ```
 
-- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
-- `generateBuildConfig` - defines if `BuildConfig.java` class will be generated
-- `defaultVariants` - defines build variants used for common `projectXXX` tasks.  
-for example setting `fullDebug` as default varian would make `testFullDebugUnitTest.` as a dependency for `projectTest` task.
+- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise.  
+(Useful in large projects where you want to enforce new code written in new modules to be written in Java.)
+- `generateBuildConfig` - defines if `BuildConfig.java` class should be generated or not.  
+General suggestion is to prefer Dependency injection over Android's flavor setup for libraries
+- `defaultVariants` - defines build variants used as a dependency for common `projectXXX` tasks.  
+for example setting `fullDebug` as default variant would make `testFullDebugUnitTest.` as a dependency for `projectTest` task.
+`["freeRelease", "fullRelease"]` would make add `testFreeReleaseUnitTest` to `projectTest` and `testFreeReleaseLint` to `projectLint`.
 - `coverageExclusions` - defines jacoco coverage exclusions for specific module
 
-2. Quality Plugin
+#### Quality Plugin
 
 Apply plugin to project level `build.gradle`
 ```
@@ -79,7 +95,7 @@ Apply plugin to project level `build.gradle`
 which applies and configures `ktlint` and `detekt` tasks automatically.  
 To execute run: `./gradlew projectCodeStyle`
 
-3. Global configuration
+#### Global configuration
 
 Additional default configuration can be applied by adding to **root project** `build.gradle`.
 All submodules will use this config as default
@@ -101,10 +117,10 @@ commonConfig {
 }
 ```
 
-- `javaVersion` - defines which java version source code is compatible to
-- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
+- `javaVersion` - defines which java version source code is compatible with
+- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise.
 - `androidPlugin`:
-    - contains values passed to Android Gradle Plugin
+    - contains values passed to _Android Gradle Plugin_
 - `qualityPlugin`:
     - `formatOnCompile` - defines if ktlint should format source code on every compilation
 
