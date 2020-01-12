@@ -55,6 +55,7 @@ internal class CommonSettingsPluginTest : WithGradleTest() {
                     targetSdkVersion = 29
                 }
                 qualityPlugin {
+                    enabled = true
                     formatOnCompile = true
                 }
             }

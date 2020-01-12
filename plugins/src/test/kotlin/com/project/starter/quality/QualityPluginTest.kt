@@ -1,6 +1,7 @@
 package com.project.starter.quality
 
 import com.project.starter.WithGradleTest
+import com.project.starter.javaClass
 import java.io.File
 import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
@@ -35,12 +36,20 @@ internal class QualityPluginTest : WithGradleTest() {
                         
                     """.trimIndent())
                 }
+                resolve("src/main/java/ValidJava1.java").apply {
+                    parentFile.mkdirs()
+                    writeText(javaClass("ValidJava1"))
+                }
                 resolve("src/test/kotlin/ValidKotlinTest1.kt").apply {
                     parentFile.mkdirs()
                     writeText("""
                         object ValidKotlinTest1
                         
                     """.trimIndent())
+                }
+                resolve("src/test/java/ValidJavaTest1.java").apply {
+                    parentFile.mkdirs()
+                    writeText(javaClass("ValidJavaTest1"))
                 }
             }
             module2Root = resolve("module2").apply {
@@ -77,12 +86,20 @@ internal class QualityPluginTest : WithGradleTest() {
                         
                     """.trimIndent())
                 }
+                resolve("src/main/java/ValidJava2.java").apply {
+                    parentFile.mkdirs()
+                    writeText(javaClass("ValidJava2"))
+                }
                 resolve("src/test/java/ValidKotlinTest2.kt").apply {
                     parentFile.mkdirs()
                     writeText("""
                         object ValidKotlinTest2
                         
                     """.trimIndent())
+                }
+                resolve("src/test/java/ValidJavaTest2.java").apply {
+                    parentFile.mkdirs()
+                    writeText(javaClass("ValidJavaTest2"))
                 }
             }
         }
@@ -92,8 +109,8 @@ internal class QualityPluginTest : WithGradleTest() {
     fun `projectCodeStyle runs Detekt`() {
         val result = runTask("projectCodeStyle")
 
-        assertThat(result.task(":module1:detekt")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:detekt")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:detekt")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:detekt")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
@@ -132,5 +149,36 @@ internal class QualityPluginTest : WithGradleTest() {
 
         assertThat(result.task(":module1:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":module2:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `projectCodeStyle fails if Checkstyle violation found`() {
+        module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java").apply {
+            parentFile.mkdirs()
+            @Language("java")
+            val javaClass = """
+                public class JavaFileWithCheckstyleIssues {
+                    
+                    
+                    int test() {
+                        int variable = System.in.read();
+                        if(variable % 2 == 1){
+                            return 2;
+                        } else {
+                            return 3;
+                        }
+                    }
+                }
+            """.trimIndent()
+            writeText(javaClass)
+        }
+
+        val result = runTask("projectCodeStyle", shouldFail = true)
+
+        assertThat(result.task(":module1:checkstyle")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:checkstyleTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
+        assertThat(result.output)
+            .contains("WhitespaceAround: 'if' is not followed by whitespace.")
+            .contains("WhitespaceAround: '{' is not preceded with whitespace")
     }
 }

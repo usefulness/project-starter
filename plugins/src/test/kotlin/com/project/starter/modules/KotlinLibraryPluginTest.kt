@@ -5,6 +5,7 @@ import com.project.starter.javaClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
+import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Test
 
@@ -158,5 +159,34 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
         val result = runTask(":module2:assemble", shouldFail = true)
 
         assertThat(result.task(":module2:forbidJavaFiles")!!.outcome).isEqualTo(TaskOutcome.FAILED)
+    }
+
+    @Test
+    fun `configures quality plugin by default`() {
+        val qualityEnabled = runTask("projectCodeStyle")
+
+        assertThat(qualityEnabled.task(":module1:projectCodeStyle")?.outcome).isNotNull()
+        assertThat(qualityEnabled.task(":module2:projectCodeStyle")?.outcome).isNotNull()
+    }
+
+    @Test
+    fun `does not configured quality plugin if disable using configuration plugin`() {
+        @Language("groovy")
+        val qualityScript = """
+            plugins {
+                id('com.starter.config')
+            }
+            
+            commonConfig {
+                qualityPlugin {
+                    enabled = false
+                }
+            }
+        """.trimIndent()
+        rootBuildScript.appendText(qualityScript)
+
+        val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
+
+        assertThat(qualityDisabled.output).contains("Task 'projectCodeStyle' not found ")
     }
 }

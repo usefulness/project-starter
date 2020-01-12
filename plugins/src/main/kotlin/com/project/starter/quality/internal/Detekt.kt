@@ -5,10 +5,7 @@ import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
-import java.net.JarURLConnection
 import org.gradle.api.Project
-
-internal object Loader
 
 internal fun Project.configureDetekt(config: RootConfigExtension) {
     pluginManager.apply(DetektPlugin::class.java)
@@ -19,15 +16,10 @@ internal fun Project.configureDetekt(config: RootConfigExtension) {
             xml.enabled = false
             txt.enabled = false
         }
-        val configFile = Loader::class.java.classLoader.getResource("detekt-config.yml")
+        val configFile = loadFromResources("detekt-config.yml")
         logger.info("Detekt config: $configFile")
 
-        it.config.setFrom(
-            when (val jar = configFile?.openConnection()) {
-                is JarURLConnection -> resources.text.fromArchiveEntry(jar.jarFileURL, jar.entryName)
-                else -> configFile
-            }
-        )
+        it.config.setFrom(configFile)
     }
     tasks.named("detekt", Detekt::class.java) {
         it.exclude(".*/resources/.*", ".*/build/.*")

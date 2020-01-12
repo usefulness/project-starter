@@ -58,7 +58,7 @@ publishing {
 pluginBundle {
     website = 'https://github.com/mateuszkwiecinski/project-starter/'
     vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter/'
-    description = 'Set of useful plugins that might be useful for Multi-Module Android projects.'
+    description = 'Set of plugins that might be useful for Multi-Module Android projects.'
     tags = ['android', 'kotlin', 'quickstart', 'codestyle', 'library']
 }
 
