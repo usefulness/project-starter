@@ -31,19 +31,53 @@ open class RootConfigExtension(
 
     fun versioningPlugin(action: Action<VersioningPluginConfig>) =
         action.execute(versioning)
+
+    fun javaVersion(value: JavaVersion) {
+        javaVersion = value
+    }
+
+    fun javaFilesAllowed(value: Boolean) {
+        javaFilesAllowed = value
+    }
 }
 
 open class QualityPluginConfig(
     var formatOnCompile: Boolean = false,
     var enabled: Boolean = true
-)
+) {
+    fun formatOnCompile(value: Boolean) {
+        formatOnCompile = value
+    }
+
+    fun enabled(value: Boolean) {
+        enabled = value
+    }
+}
 
 open class AndroidPluginConfig(
     var compileSdkVersion: Int = 29,
     var minSdkVersion: Int = 23,
     var targetSdkVersion: Int? = null
-)
+) {
+
+    fun compileSdkVersion(value: Int) {
+        compileSdkVersion = value
+    }
+
+    fun minSdkVersion(value: Int) {
+        minSdkVersion = value
+    }
+
+    fun targetSdkVersion(value: Int) {
+        targetSdkVersion = value
+    }
+}
 
 open class VersioningPluginConfig(
     var enabled: Boolean = true
-)
+) {
+
+    fun enabled(value: Boolean) {
+        enabled = value
+    }
+}

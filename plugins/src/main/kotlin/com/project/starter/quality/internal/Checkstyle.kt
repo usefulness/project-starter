@@ -27,7 +27,9 @@ internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
                 }
             }
         } else {
-            configureKotlinCheckstyle()
+            if (rootConfig.javaFilesAllowed) {
+                configureKotlinCheckstyle()
+            }
         }
     }
     pluginManager.withPlugin("com.android.library") {
@@ -39,7 +41,9 @@ internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
                 }
             }
         } else {
-            configureAndroidCheckstyle(android)
+            if (rootConfig.javaFilesAllowed) {
+                configureAndroidCheckstyle(android)
+            }
         }
     }
     pluginManager.withPlugin("com.android.application") {
@@ -51,20 +55,22 @@ internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
                 }
             }
         } else {
-            configureAndroidCheckstyle(android)
+            if (rootConfig.javaFilesAllowed) {
+                configureAndroidCheckstyle(android)
+            }
         }
     }
-    tasks.named(ProjectCodeStyleTask.TASK_NAME).dependsOn("$path:checkstyle")
 }
 
 private fun Project.configureKotlinCheckstyle() {
     applyCheckstyle()
     tasks.named("checkstyleMain", Checkstyle::class.java, ::configureTask)
     tasks.named("checkstyleTest", Checkstyle::class.java, ::configureTask)
-    tasks.register("checkstyle") {
+    val checkstyle = tasks.register("checkstyle") {
         it.dependsOn("checkstyleMain", "checkstyleTest")
     }
     addGenerateCheckstyleBaselineTask()
+    tasks.named(ProjectCodeStyleTask.TASK_NAME).dependsOn(checkstyle)
 }
 
 private fun Project.configureAndroidCheckstyle(android: BaseExtension) {
@@ -83,6 +89,8 @@ private fun Project.configureAndroidCheckstyle(android: BaseExtension) {
             checkstyle.dependsOn(variantCheck)
         }
     }
+    tasks.named(ProjectCodeStyleTask.TASK_NAME).dependsOn(checkstyle)
+
     addGenerateCheckstyleBaselineTask()
 }
 

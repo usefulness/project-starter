@@ -6,12 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [0.4.0] - 2020-01-12
+
+### Added
 - Add _Checkstyle_ checks for _Java_ source files
-- Enable Quality Plugin by default for all Module plugins
 - Add _Checkstyle_ baseline generation using `./gradlew generateCheckstyleBaseline` task
 - Add support for pre-AndroidX dependencies
+- Add Versioning Plugin `com.starter.versioning`
+
+### Changed
+- Enable Quality Plugin by default for all Module plugins
+- Update `Detekt` version to _1.4.0_
+
+### Fixed
 - Fix Robolectric support for `./gradlew projectCoverage` task.
-- Add Versioning Plugin
 
 ## [0.3.0] - 2020-01-07
 
@@ -31,3 +41,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add Quality Plugin - `com.starter.quality`
+
+[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.4.0...HEAD
+[0.4.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.3.0.../release/0.4.0
+[0.3.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.2.0.../release/0.3.0
+[0.2.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.1.0.../release/0.2.0
+[0.1.0]: https://github.com/mateuszkwiecinski/project-starter/releases/tag/release/0.1.0

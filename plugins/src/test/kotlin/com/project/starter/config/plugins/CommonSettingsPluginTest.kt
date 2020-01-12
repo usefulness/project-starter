@@ -40,7 +40,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `configures common config extension`() {
+    fun `configures common config extension using property syntax`() {
         @Language("groovy") val buildscript = """
             plugins {
                 id('com.starter.config')
@@ -69,6 +69,37 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
         assertThat(result.tasks).noneMatch { it.outcome == TaskOutcome.FAILED }
     }
+    @Test
+    fun `configures common config extension using function syntax`() {
+        @Language("groovy") val buildscript = """
+            plugins {
+                id('com.starter.config')
+            }
+            
+            commonConfig {
+                javaVersion JavaVersion.VERSION_1_8
+                javaFilesAllowed false
+                androidPlugin {
+                    compileSdkVersion 29
+                    minSdkVersion 23
+                    targetSdkVersion 29
+                }
+                qualityPlugin {
+                    enabled true
+                    formatOnCompile true
+                }
+                versioningPlugin {
+                    enabled true
+                }
+            }
+        """.trimIndent()
+        rootBuildScript.appendText(buildscript)
+
+        val result = runTask("help")
+
+        assertThat(result.tasks).noneMatch { it.outcome == TaskOutcome.FAILED }
+    }
+
     @Test
     fun `throws exception if not applied to the root project`() {
         @Language("groovy") val buildscript = """

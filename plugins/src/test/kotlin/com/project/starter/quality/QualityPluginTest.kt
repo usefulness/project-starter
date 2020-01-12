@@ -185,4 +185,24 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             .contains("WhitespaceAround: 'if' is not followed by whitespace.")
             .contains("WhitespaceAround: '{' is not preceded with whitespace")
     }
+
+    @Test
+    fun `projectCodeStyle is not present if java files are not allowed`() {
+        @Language("groovy") val buildscript = """
+            plugins {
+                id('com.starter.config')
+            }
+            
+            commonConfig {
+                javaFilesAllowed false
+            }
+            
+        """.trimIndent()
+        rootDirectory.resolve("build.gradle").appendText(buildscript)
+
+        val result = runTask("projectCodeStyle")
+
+        assertThat(result.task(":module1:checkstyle")).isNull()
+        assertThat(result.task(":module2:checkstyle")).isNull()
+    }
 }
