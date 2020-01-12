@@ -9,7 +9,7 @@ class CommonSettingsPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         if (this != rootProject) {
-            throw GradleException("Common configuration can be applied to root project only")
+            throw GradleException("Common configuration can be applied to the root project only")
         }
         extensions.create("commonConfig", RootConfigExtension::class.java)
     }

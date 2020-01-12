@@ -1,8 +1,10 @@
 package com.project.starter.modules.plugins
 
+import com.android.build.gradle.internal.dsl.LintOptions
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.KotlinLibraryConfigExtension
+import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.withExtension
 import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.addForbidJavaFilesTask
 import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.addProjectCoverageTask
@@ -32,6 +34,8 @@ class KotlinLibraryPlugin : Plugin<Project> {
             addProjectLintTask { projectLint ->
                 projectLint.dependsOn("$path:lint")
             }
+
+            configureAndroidLint(extensions.getByType(LintOptions::class.java))
         }
         withExtension<KotlinLibraryConfigExtension> { config ->
             val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed

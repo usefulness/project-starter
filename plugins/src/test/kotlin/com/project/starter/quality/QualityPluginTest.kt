@@ -1,6 +1,6 @@
 package com.project.starter.quality
 
-import com.project.starter.WithGradleTest
+import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import java.io.File
 import kotlin.test.Test
@@ -9,7 +9,7 @@ import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.Before
 
-internal class QualityPluginTest : WithGradleTest() {
+internal class QualityPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File

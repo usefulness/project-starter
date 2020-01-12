@@ -1,6 +1,6 @@
 package com.project.starter.modules
 
-import com.project.starter.WithGradleTest
+import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +9,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Test
 
-internal class KotlinLibraryPluginTest : WithGradleTest() {
+internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
@@ -170,7 +170,7 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
     }
 
     @Test
-    fun `does not configured quality plugin if disable using configuration plugin`() {
+    fun `does not configure quality plugin if disabled using configuration plugin`() {
         @Language("groovy")
         val qualityScript = """
             plugins {
@@ -188,5 +188,36 @@ internal class KotlinLibraryPluginTest : WithGradleTest() {
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
 
         assertThat(qualityDisabled.output).contains("Task 'projectCodeStyle' not found ")
+    }
+
+    @Test
+    fun `configures versioning plugin by default`() {
+        tag("release/1.2.2")
+        commit("random commit")
+
+        val versioningEnabled = runTask("currentVersion")
+
+        assertThat(versioningEnabled.output).contains("version: 1.2.3-SNAPSHOT")
+    }
+
+    @Test
+    fun `does not configure versioning plugin if disabled using configuration plugin`() {
+        @Language("groovy")
+        val versioningScript = """
+            plugins {
+                id('com.starter.config')
+            }
+            
+            commonConfig {
+                versioningPlugin {
+                    enabled = false
+                }
+            }
+        """.trimIndent()
+        rootBuildScript.appendText(versioningScript)
+
+        val versioningDisabled = runTask("currentVersion", shouldFail = true)
+
+        assertThat(versioningDisabled.output).contains("Task 'currentVersion' not found ")
     }
 }

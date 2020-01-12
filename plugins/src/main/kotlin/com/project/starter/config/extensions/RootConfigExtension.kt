@@ -12,6 +12,7 @@ open class RootConfigExtension(
 
     val quality = QualityPluginConfig()
     val android = AndroidPluginConfig()
+    val versioning = VersioningPluginConfig()
 
     fun qualityPlugin(c: Closure<QualityPluginConfig>) =
         ConfigureUtil.configure(c, quality)
@@ -24,6 +25,12 @@ open class RootConfigExtension(
 
     fun androidPlugin(action: Action<AndroidPluginConfig>) =
         action.execute(android)
+
+    fun versioningPlugin(c: Closure<VersioningPluginConfig>) =
+        ConfigureUtil.configure(c, versioning)
+
+    fun versioningPlugin(action: Action<VersioningPluginConfig>) =
+        action.execute(versioning)
 }
 
 open class QualityPluginConfig(
@@ -35,4 +42,8 @@ open class AndroidPluginConfig(
     var compileSdkVersion: Int = 29,
     var minSdkVersion: Int = 23,
     var targetSdkVersion: Int? = null
+)
+
+open class VersioningPluginConfig(
+    var enabled: Boolean = true
 )

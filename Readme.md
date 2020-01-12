@@ -11,9 +11,9 @@ Maintaining multiple multi-module Android project often requires **copying proje
 Even when project reaches more advanced stage it is still required to put non minimal effort to maintain its configuration.  
 Starting a new project, from the scratch, **takes more than a day** to configure every tool you usually want to use.
 Sometimes people create template project or another way of keeping your project configuration in a good shape is using `buildSrc` plugins.
-Less code written, ease of sharing between projects but still some part of the code needed to be copied.  
-This project goes further and addresses that issue and **exposes set of plugins** useful when approaching multi-module setup with _Gradle_ build system.  
-It behaves as a **facade** for all most commonly used tools in Android development and makes easier to create CI pipelines knowing always which tasks should be executed.
+Less code written, ease of sharing between projects but still some part of the code needed to be copied.
+
+This project goes further and addresses that issue by **exposing set of plugins** useful when approaching multi-module setup with _Gradle_ build system.
 
 ## Content
 
@@ -85,13 +85,43 @@ for example setting `fullDebug` as default variant would make `testFullDebugUnit
 
 #### Quality Plugin
 
-Quality plugin is applied automatically to _Module plugin_, but there is a possibility to use it as a standalone plugin.
+Quality plugin is applied automatically by a _Module plugin_, but there is a possibility to use it as a standalone plugin.
 Apply plugin to project level `build.gradle`
 ```
  apply plugin: 'com.starter.quality'
 ```
 which applies and configures code style tasks for the project automatically.  
 To execute run: `./gradlew projectCodeStyle`
+
+##### Generating baselines
+
+When integrating code style checks into large projects it is almost forbidden to introduce large sets of changes.  
+It is possible to generate baseline for every quality tool available in the project.
+- `Android Lint`  
+    Type `rm **/lint-*.xml ; ./gradlew projectLint -PrefreshBaseline --continue` into console
+- `Detekt`  
+    Create baseline using [provided configuration](https://github.com/arturbosch/detekt/blob/master/docs/pages/baseline.md)
+- `Checkstyle`
+    Execute `./gradlew generateCheckstyleBaseline`
+- `ktlint`
+    Unfortunately it is not possible to generate `ktlint` baseline.
+    Proper code style may be achieved by using `./gradlew formatKotlin` task.
+
+#### Versioning Plugin
+
+Applied automatically.
+Uses tag-based versioning backed by the [allegro/axion-release-plugin](https://github.com/allegro/axion-release-plugin) (view a [full documentation](https://github.com/allegro/axion-release-plugin))
+
+To enable it as a standalone plugin, apply plugin to root project `build.gradle`
+```
+ apply plugin: 'com.starter.versioning'
+```
+Can be disabled using [Global Configuration](#global-configuration)
+
+Regular flow relies on calling
+- `./gradlew cV` or `./gradlew currentVersion`
+- `./gradlew markNextVersion -Prelease.version=1.0.0`
+- `./gradlew release` (which pushes proper tags to remote server)
 
 #### Global configuration
 
@@ -113,6 +143,9 @@ commonConfig {
         enabled = true
         formatOnCompile = false
     }
+    versioningPlugin {
+        enabled = true
+    }
 }
 ```
 
@@ -121,7 +154,11 @@ commonConfig {
 - `androidPlugin`:
     - contains values passed to _Android Gradle Plugin_
 - `qualityPlugin`:
+    - `enabled` - enables/disables [Quality Plugin](#quality-plugin)
     - `formatOnCompile` - defines if ktlint should format source code on every compilation
+- `versioningPlugin`:
+    - `enabled` - enables/disables [Versioning Plugin](#versioning-plugin)
+    - `enabled` - defines if ktlint should format source code on every compilation
 
 ### Daily basis use
 After applying library/application plugin there are appropriate tasks added:
@@ -138,7 +175,7 @@ Those tasks allows you to run tests efficiently for all modules by typing just a
 That solves an issue when for example `test` task unnecessarily executes tests for all build variants and more strict `testDebug` skips executing tests in kotlin only modules.
 
 ## Sample project
-Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project.
+Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project - a customized, `buildSrc` based plugin application.
 
 ## License
-[MIT License](/LICENSE)
+Library is licensed on [MIT License](/LICENSE)
