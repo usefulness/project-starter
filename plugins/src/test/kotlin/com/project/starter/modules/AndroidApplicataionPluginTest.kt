@@ -206,7 +206,7 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
     }
 
     @Test
-    fun `fail on java files if settings enabled at project level`() {
+    fun `fails on java files if settings enabled at project level`() {
         @Language("groovy") val config = """
             projectConfig {
                 javaFilesAllowed = false
@@ -222,5 +222,34 @@ internal class AndroidApplicataionPluginTest : WithGradleTest() {
         val result = runTask(":module2:assembleDebug", shouldFail = true)
 
         assertThat(result.task(":module2:forbidJavaFiles")?.outcome).isEqualTo(TaskOutcome.FAILED)
+    }
+
+    @Test
+    fun `configures quality plugin by default`() {
+        val qualityEnabled = runTask("projectCodeStyle")
+
+        assertThat(qualityEnabled.task(":module1:projectCodeStyle")?.outcome).isNotNull()
+        assertThat(qualityEnabled.task(":module2:projectCodeStyle")?.outcome).isNotNull()
+    }
+
+    @Test
+    fun `does not configured quality plugin if disable using configuration plugin`() {
+        @Language("groovy")
+        val qualityScript = """
+            plugins {
+                id('com.starter.config')
+            }
+            
+            commonConfig {
+                qualityPlugin {
+                    enabled = false
+                }
+            }
+        """.trimIndent()
+        rootBuildScript.appendText(qualityScript)
+
+        val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
+
+        assertThat(qualityDisabled.output).contains("Task 'projectCodeStyle' not found ")
     }
 }

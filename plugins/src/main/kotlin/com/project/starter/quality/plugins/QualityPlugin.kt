@@ -2,6 +2,7 @@ package com.project.starter.quality.plugins
 
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
+import com.project.starter.quality.internal.configureCheckstyle
 import com.project.starter.quality.internal.configureDetekt
 import com.project.starter.quality.internal.configureKtlint
 import com.project.starter.quality.tasks.ProjectCodeStyleTask.Companion.addProjectCodeStyleTask
@@ -15,6 +16,7 @@ class QualityPlugin : Plugin<Project> {
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt(rootConfig)
+        configureCheckstyle(rootConfig)
 
         val config = rootConfig.quality
         if (config.formatOnCompile) {

@@ -27,7 +27,8 @@ open class RootConfigExtension(
 }
 
 open class QualityPluginConfig(
-    var formatOnCompile: Boolean = false
+    var formatOnCompile: Boolean = false,
+    var enabled: Boolean = true
 )
 
 open class AndroidPluginConfig(
