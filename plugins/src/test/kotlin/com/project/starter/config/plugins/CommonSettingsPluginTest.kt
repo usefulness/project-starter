@@ -1,6 +1,6 @@
 package com.project.starter.config.plugins
 
-import com.project.starter.WithGradleTest
+import com.project.starter.WithGradleProjectTest
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -8,7 +8,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Test
 
-internal class CommonSettingsPluginTest : WithGradleTest() {
+internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
@@ -57,6 +57,9 @@ internal class CommonSettingsPluginTest : WithGradleTest() {
                 qualityPlugin {
                     enabled = true
                     formatOnCompile = true
+                }
+                versioningPlugin {
+                    enabled = true
                 }
             }
         """.trimIndent()

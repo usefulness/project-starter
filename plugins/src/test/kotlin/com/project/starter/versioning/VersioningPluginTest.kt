@@ -1,18 +1,16 @@
 package com.project.starter.versioning
 
-import com.project.starter.WithGradleTest
+import com.project.starter.WithGradleProjectTest
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
-import org.eclipse.jgit.api.Git
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-internal class VersioningPluginTest : WithGradleTest() {
+internal class VersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
-    private lateinit var git: Git
 
     @Before
     fun setUp() {
@@ -42,15 +40,6 @@ internal class VersioningPluginTest : WithGradleTest() {
                 """.trimIndent())
             }
         }
-        git = Git.init().apply {
-            setDirectory(rootDirectory)
-        }.call()
-        rootDirectory.resolve(".gitignore").writeText("""
-            .gradle
-            **/build/
-            """.trimIndent())
-        commit("init")
-        tag("release/1.1.0")
     }
 
     @After
@@ -102,25 +91,5 @@ internal class VersioningPluginTest : WithGradleTest() {
         runTask("release")
 
         assertThat(runTask("currentVersion").output).contains("1.3.0")
-    }
-
-    private fun commit(commitMessage: String) {
-        module1Root.resolve("File.txt").appendText("""
-            | Text
-            """.trimMargin())
-        git.add().apply {
-            addFilepattern(".")
-        }.call()
-        git.commit().apply {
-            setAll(true)
-            message = commitMessage
-        }.call()
-    }
-
-    private fun tag(tagName: String) {
-        git.tag().apply {
-            name = tagName
-            isAnnotated = false
-        }.call()
     }
 }

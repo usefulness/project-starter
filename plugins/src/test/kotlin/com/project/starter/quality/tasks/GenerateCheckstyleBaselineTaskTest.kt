@@ -1,6 +1,6 @@
 package com.project.starter.quality.tasks
 
-import com.project.starter.WithGradleTest
+import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +9,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.Before
 import org.junit.Test
 
-internal class GenerateCheckstyleBaselineTaskTest : WithGradleTest() {
+internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
     private lateinit var moduleRoot: File
 
