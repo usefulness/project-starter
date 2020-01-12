@@ -103,9 +103,9 @@ It is possible to generate baseline for every quality tool available in the proj
     Type `rm **/lint-*.xml ; ./gradlew projectLint -PrefreshBaseline --continue` into console
 - `Detekt`  
     Create baseline using [provided configuration](https://github.com/arturbosch/detekt/blob/master/docs/pages/baseline.md)
-- `Checkstyle`
-    Execute `./gradlew generateCheckstyleBaseline`
-- `ktlint`
+- `Checkstyle`  
+    Execute `./gradlew generateCheckstyleBaseline` task.
+- `ktlint`  
     Unfortunately it is not possible to generate `ktlint` baseline.
     Proper code style may be achieved by using `./gradlew formatKotlin` task.
 
@@ -162,7 +162,7 @@ commonConfig {
     - `enabled` - enables/disables [Versioning Plugin](#versioning-plugin)
     - `enabled` - defines if ktlint should format source code on every compilation
 
-### Daily basis use
+### Day-to-day use
 After applying library/application plugin there are appropriate tasks added:
 - `./gradlew projectTest`  
 Runs tests for all modules using either predefined tasks (i.e. `test` for kotlin modules or `testDebugUnitTest` for android libraries) or use customized values.
@@ -180,4 +180,4 @@ That solves an issue when for example `test` task unnecessarily executes tests f
 Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project - a customized, `buildSrc` based plugin application.
 
 ## License
-Library is licensed on [MIT License](/LICENSE)
+Library is available under [MIT License](/LICENSE)
