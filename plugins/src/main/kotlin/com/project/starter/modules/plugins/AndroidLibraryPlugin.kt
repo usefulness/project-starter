@@ -3,6 +3,7 @@ package com.project.starter.modules.plugins
 import com.android.build.gradle.LibraryExtension
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.AndroidLibraryConfigExtension
+import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
 import com.project.starter.modules.internal.withExtension
@@ -21,6 +22,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
         val android = extensions.getByType<LibraryExtension>(LibraryExtension::class.java).apply {
             configureAndroidPlugin(rootConfig)
+            configureAndroidLint(lintOptions)
         }
 
         withExtension<AndroidLibraryConfigExtension> { projectConfig ->
