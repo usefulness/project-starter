@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Enable Quality Plugin by default for all Module plugins
+- Update `Detekt` version to _1.4.0_
 
 ### Fixed
 - Fix Robolectric support for `./gradlew projectCoverage` task.
