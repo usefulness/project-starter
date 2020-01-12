@@ -1,6 +1,9 @@
 package com.project.starter.quality.internal
 
-import com.android.build.gradle.TestedExtension
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.api.AndroidSourceSet
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
@@ -10,8 +13,10 @@ import com.project.starter.modules.internal.withExtension
 import com.project.starter.quality.tasks.GenerateCheckstyleBaselineTask.Companion.addGenerateCheckstyleBaselineTask
 import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import org.gradle.api.Project
+import org.gradle.api.file.FileTree
 import org.gradle.api.plugins.quality.Checkstyle
 import org.gradle.api.plugins.quality.CheckstyleExtension
+import org.jmailen.gradle.kotlinter.id
 
 internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
     pluginManager.withPlugin("kotlin") {
@@ -26,7 +31,7 @@ internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
         }
     }
     pluginManager.withPlugin("com.android.library") {
-        val android = extensions.getByType(TestedExtension::class.java)
+        val android = extensions.getByType(LibraryExtension::class.java)
         if (pluginManager.hasPlugin("com.starter.library.android")) {
             withExtension<AndroidLibraryConfigExtension> { config ->
                 if (config.javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
@@ -34,11 +39,11 @@ internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
                 }
             }
         } else {
-            configureAndroidCheckstyle(extensions.getByType(TestedExtension::class.java))
+            configureAndroidCheckstyle(android)
         }
     }
     pluginManager.withPlugin("com.android.application") {
-        val android = extensions.getByType(TestedExtension::class.java)
+        val android = extensions.getByType(AppExtension::class.java)
         if (pluginManager.hasPlugin("com.starter.application.android")) {
             withExtension<AndroidApplicationConfigExtension> { config ->
                 if (config.javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
@@ -62,31 +67,35 @@ private fun Project.configureKotlinCheckstyle() {
     addGenerateCheckstyleBaselineTask()
 }
 
-private fun Project.configureAndroidCheckstyle(android: TestedExtension) {
+private fun Project.configureAndroidCheckstyle(android: BaseExtension) {
     applyCheckstyle()
-    tasks.register("checkstyleMain", Checkstyle::class.java) { task ->
-        configureTask(task)
-        task.classpath = files(buildDir)
-        android.sourceSets.all { sourceSet ->
-            if (sourceSet.name == "main") {
-                task.source(sourceSet.java.sourceFiles, sourceSet.res.sourceFiles)
+    val checkstyle = tasks.register("checkstyle")
+    android.sourceSets.all { sourceSet ->
+        val id = sourceSet.name.id
+        val files = getJavaFiles(sourceSet) + getResourceFiles(sourceSet)
+        if (files.isNotEmpty()) {
+            val variantCheck = tasks.register("checkstyle${id.capitalize()}", Checkstyle::class.java) { task ->
+                configureTask(task)
+                task.classpath = files(buildDir)
+
+                task.source(files)
             }
+            checkstyle.dependsOn(variantCheck)
         }
-    }
-    tasks.register("checkstyleTest", Checkstyle::class.java) { task ->
-        configureTask(task)
-        task.classpath = files(buildDir)
-        android.sourceSets.all { sourceSet ->
-            if (sourceSet.name == "test") {
-                task.source(sourceSet.java.sourceFiles, sourceSet.res.sourceFiles)
-            }
-        }
-    }
-    tasks.register("checkstyle") {
-        it.dependsOn("checkstyleMain", "checkstyleTest")
     }
     addGenerateCheckstyleBaselineTask()
 }
+
+private fun Project.getJavaFiles(sourceSet: AndroidSourceSet) = sourceSet.java.srcDirs.map { dir ->
+    fileTree(dir) {
+        it.include("**/*.java")
+    }
+}.reduce { merged: FileTree, tree ->
+    merged.plus(tree)
+}.files
+
+private fun Project.getResourceFiles(sourceSet: AndroidSourceSet) = sourceSet.res.srcDirs
+    .filterNot { fileTree(it).isEmpty }
 
 private fun Project.applyCheckstyle() {
     pluginManager.apply("checkstyle")
@@ -104,7 +113,7 @@ private fun Project.configureTask(task: Checkstyle) {
         "suppressions.global.file" to suppressions,
         "suppressions.local.file" to project.file("checkstyle-baseline.xml")
     )
-    task.configFile = config
+    config?.let { task.configFile = it } ?: logger.warn("Missing Checkstyle configuration file")
 
     task.reports { report ->
         report.html.isEnabled = false

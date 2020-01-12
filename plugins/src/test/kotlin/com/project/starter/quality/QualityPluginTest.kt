@@ -40,6 +40,10 @@ internal class QualityPluginTest : WithGradleTest() {
                     parentFile.mkdirs()
                     writeText(javaClass("ValidJava1"))
                 }
+                resolve("src/debug/java/DebugJava.java").apply {
+                    parentFile.mkdirs()
+                    writeText(javaClass("DebugJava"))
+                }
                 resolve("src/test/kotlin/ValidKotlinTest1.kt").apply {
                     parentFile.mkdirs()
                     writeText("""
@@ -158,8 +162,7 @@ internal class QualityPluginTest : WithGradleTest() {
             @Language("java")
             val javaClass = """
                 public class JavaFileWithCheckstyleIssues {
-                    
-                    
+    
                     int test() {
                         int variable = System.in.read();
                         if(variable % 2 == 1){
@@ -169,6 +172,7 @@ internal class QualityPluginTest : WithGradleTest() {
                         }
                     }
                 }
+                
             """.trimIndent()
             writeText(javaClass)
         }

@@ -25,15 +25,20 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
         val all = violations.flatMap { readViolationFile(it) }
 
         val baseline = project.file("checkstyle-baseline.xml")
-        baseline.writeText("""
-            <?xml version="1.0"?>
-            <!DOCTYPE suppressions PUBLIC
-                "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-                "https://checkstyle.org/dtds/suppressions_1_2.dtd">
-            <suppressions>
-            ${all.joinToString(separator = "", prefix = "\t")}
-            </suppressions>
-        """.trimIndent())
+        if (all.isEmpty()) {
+            baseline.delete()
+        } else {
+            baseline.writeText("""
+            |<?xml version="1.0"?>
+            |<!DOCTYPE suppressions PUBLIC
+            |    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+            |    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+            |<suppressions>
+            |${all.joinToString(separator = "") { "\t$it\n" }}
+            |</suppressions>
+            |
+        """.trimMargin())
+        }
     }
 
     private fun readViolationFile(source: File): List<String> {
