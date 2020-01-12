@@ -3,6 +3,7 @@ package com.project.starter.versioning
 import com.project.starter.WithGradleProjectTest
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
+import org.eclipse.jgit.api.ListBranchCommand.ListMode
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -88,8 +89,13 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
         assertThat(runTask("currentVersion").output).contains("1.3.0-SNAPSHOT")
 
+        git.push().call()
         runTask("release")
 
         assertThat(runTask("currentVersion").output).contains("1.3.0")
+        val branches = git.branchList().apply {
+            setListMode(ListMode.ALL)
+        }.call()
+        assertThat(branches.map { it.name }).contains("refs/remotes/origin/release/1.3.0")
     }
 }
