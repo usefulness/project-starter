@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add _Checkstyle_ checks for _Java_ source files
 - Enable Quality Plugin by default for all Module plugins
 - Add _Checkstyle_ baseline generation using `./gradlew generateCheckstyleBaseline` task
+- Add support for pre-AndroidX dependencies
+- Fix Robolectric support for `./gradlew projectCoverage` task.
 
 ## [0.3.0] - 2020-01-07
 

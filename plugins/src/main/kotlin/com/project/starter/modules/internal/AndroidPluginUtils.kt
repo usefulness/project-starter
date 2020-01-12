@@ -68,12 +68,8 @@ internal inline fun <reified T> Project.withExtension(crossinline action: Projec
     }
 
 private fun BaseExtension.addKotlinSourceSets() {
-    sourceSets.all { set ->
+    sourceSets.whenObjectAdded { set ->
         val withKotlin = set.java.srcDirs.map { it.path.replace("java", "kotlin") }
         set.java.setSrcDirs(set.java.srcDirs + withKotlin)
     }
-    // triggers info that source sets were changed
-    val copy = sourceSets.toList()
-    sourceSets.clear()
-    sourceSets.addAll(copy)
 }
