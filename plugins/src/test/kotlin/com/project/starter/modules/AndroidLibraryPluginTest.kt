@@ -2,6 +2,8 @@ package com.project.starter.modules
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
+import com.project.starter.kotlinClass
+import com.project.starter.kotlinTestClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -22,8 +24,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
             rootBuildScript = resolve("build.gradle")
-            module1Root = resolve("module1").apply {
-                mkdirs()
+            module1Root = resolve("module1") {
                 @Language("groovy") val buildScript = """
                         plugins {
                             id('com.starter.library.android')
@@ -47,30 +48,22 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                     """.trimIndent()
-                resolve("build.gradle").writeText(buildScript)
-                resolve("src/main/AndroidManifest.xml").apply {
-                    parentFile.mkdirs()
+                resolve("build.gradle") {
+                    writeText(buildScript)
+                }
+                resolve("src/main/AndroidManifest.xml") {
                     writeText("""
                         <manifest package="com.example.module1" />
                         
                     """.trimIndent())
                 }
-                resolve("src/main/kotlin/ValidKotlinFile1.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ValidKotlinFile1(val name: String)
-                            
-                        """.trimIndent())
+                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/release/kotlin/ReleaseModel.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ReleaseModel(val name: String)
-                            
-                        """.trimIndent())
+                resolve("src/release/kotlin/ReleaseModel.kt") {
+                    writeText(kotlinClass("ReleaseModel"))
                 }
-                resolve("src/test/kotlin/Test1.kt").apply {
-                    parentFile.mkdirs()
+                resolve("src/test/kotlin/Test1.kt") {
                     writeText("""
                             class Test1 {
                             
@@ -81,9 +74,9 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent())
                 }
             }
-            module2Root = resolve("module2").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
+            module2Root = resolve("module2") {
+                resolve("build.gradle") {
+                    writeText("""
                         plugins {
                             id('com.starter.library.android')
                         }
@@ -93,30 +86,18 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                     """.trimIndent())
-                resolve("src/main/AndroidManifest.xml").apply {
-                    parentFile.mkdirs()
+                }
+                resolve("src/main/AndroidManifest.xml") {
                     writeText("""
                         <manifest package="com.example.module1" />
                         
                     """.trimIndent())
                 }
-                resolve("src/main/kotlin/ValidKotlinFile2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ValidKotlinFile2(val name: String)
-                            
-                        """.trimIndent())
+                resolve("src/main/kotlin/ValidKotlinFile2.kt") {
+                    writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/test/kotlin/Test2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            class Test2 {
-                            
-                                @org.junit.Test
-                                fun test2() = Unit
-                            }
-                            
-                        """.trimIndent())
+                resolve("src/test/kotlin/Test2.kt") {
+                    writeText(kotlinTestClass("Test2"))
                 }
             }
         }
@@ -227,8 +208,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `does not fail on java sources by default`() {
-        module2Root.resolve("src/main/java/JavaAllowed.java").apply {
-            parentFile.mkdirs()
+        module2Root.resolve("src/main/java/JavaAllowed.java") {
             writeText(javaClass(className = "JavaAllowed"))
         }
 
@@ -246,8 +226,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             
         """.trimIndent()
         module2Root.resolve("build.gradle").appendText(config)
-        module2Root.resolve("src/main/java/JavaFile.java").apply {
-            parentFile.mkdirs()
+        module2Root.resolve("src/main/java/JavaFile.java") {
             writeText(javaClass(className = "JavaFile"))
         }
 

@@ -2,6 +2,8 @@ package com.project.starter.modules
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
+import com.project.starter.kotlinClass
+import com.project.starter.kotlinTestClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -22,9 +24,9 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
             rootBuildScript = resolve("build.gradle")
-            module1Root = resolve("module1").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
+            module1Root = resolve("module1") {
+                resolve("build.gradle") {
+                    writeText("""
                         plugins {
                             id('com.starter.library.kotlin')
                         }
@@ -34,28 +36,17 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                     """.trimIndent())
-                resolve("src/main/kotlin/ValidKotlinFile1.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ValidKotlinFile1(val name: String)
-                            
-                        """.trimIndent())
                 }
-                resolve("src/test/kotlin/Test1.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            class Test1 {
-                            
-                                @org.junit.Test
-                                fun test1() = Unit
-                            }
-                            
-                        """.trimIndent())
+                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinFile1"))
+                }
+                resolve("src/test/kotlin/Test1.kt") {
+                    writeText(kotlinTestClass("Test1"))
                 }
             }
-            module2Root = resolve("module2").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
+            module2Root = resolve("module2") {
+                resolve("build.gradle") {
+                    writeText("""
                         plugins {
                             id('com.starter.library.kotlin')
                         }
@@ -65,23 +56,12 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                     """.trimIndent())
-                resolve("src/main/kotlin/ValidKotlinFile2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ValidKotlinFile2(val name: String)
-                            
-                        """.trimIndent())
                 }
-                resolve("src/test/kotlin/Test2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            class Test2 {
-                            
-                                @org.junit.Test
-                                fun test2() = Unit
-                            }
-                            
-                        """.trimIndent())
+                resolve("src/main/kotlin/ValidKotlinFile2.kt") {
+                    writeText(kotlinClass("ValidKotlinFile2"))
+                }
+                resolve("src/test/kotlin/Test2.kt") {
+                    writeText(kotlinTestClass("Test2"))
                 }
             }
         }
@@ -134,8 +114,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `does not fail on java files by default`() {
-        module2Root.resolve("src/main/java/JavaClass.java").apply {
-            parentFile.mkdirs()
+        module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }
 
@@ -151,8 +130,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                 javaFilesAllowed = false
             }
         """.trimIndent())
-        module2Root.resolve("src/main/java/JavaClass.java").apply {
-            parentFile.mkdirs()
+        module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }
 

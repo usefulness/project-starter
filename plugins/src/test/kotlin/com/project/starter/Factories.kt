@@ -10,3 +10,18 @@ internal fun javaClass(className: String) =
         }
             
         """.trimIndent()
+
+@Language("kotlin")
+internal fun kotlinClass(className: String) = """
+    object $className
+
+""".trimIndent()
+@Language("kotlin")
+internal fun kotlinTestClass(className: String) = """
+    class $className {
+    
+        @org.junit.Test
+        fun ${className.toLowerCase()}() = Unit
+    }
+
+""".trimIndent()
