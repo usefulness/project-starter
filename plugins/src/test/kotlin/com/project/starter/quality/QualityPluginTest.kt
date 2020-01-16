@@ -2,6 +2,7 @@ package com.project.starter.quality
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
+import com.project.starter.kotlinClass
 import java.io.File
 import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
@@ -19,46 +20,36 @@ internal class QualityPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            resolve("build.gradle").writeText("""
-            """.trimIndent())
-            module1Root = resolve("module1").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
-                    plugins {
-                        id('com.starter.quality')
-                        id('kotlin')
-                    }
-                """.trimIndent())
-                resolve("src/main/kotlin/ValidKotlinFile1.kt").apply {
-                    parentFile.mkdirs()
+            resolve("build.gradle").createNewFile()
+            module1Root = resolve("module1") {
+                resolve("build.gradle") {
                     writeText("""
-                        object ValidKotlinFile1
-                        
+                        plugins {
+                            id('com.starter.quality')
+                            id('kotlin')
+                        }
                     """.trimIndent())
                 }
-                resolve("src/main/java/ValidJava1.java").apply {
-                    parentFile.mkdirs()
+                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinFile1"))
+                }
+                resolve("src/main/java/ValidJava1.java") {
                     writeText(javaClass("ValidJava1"))
                 }
-                resolve("src/debug/java/DebugJava.java").apply {
-                    parentFile.mkdirs()
+                resolve("src/debug/java/DebugJava.java") {
                     writeText(javaClass("DebugJava"))
                 }
-                resolve("src/test/kotlin/ValidKotlinTest1.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                        object ValidKotlinTest1
-                        
-                    """.trimIndent())
+                resolve("src/test/kotlin/ValidKotlinTest1.kt") {
+                    writeText(kotlinClass("ValidKotlinTest1"))
                 }
-                resolve("src/test/java/ValidJavaTest1.java").apply {
-                    parentFile.mkdirs()
+                resolve("src/test/java/ValidJavaTest1.java") {
                     writeText(javaClass("ValidJavaTest1"))
                 }
             }
             module2Root = resolve("module2").apply {
                 mkdirs()
-                resolve("build.gradle").writeText("""
+                @Language("groovy")
+                val script = """
                     plugins {
                         id('com.starter.quality')
                         id('com.android.library')
@@ -76,33 +67,23 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                         }
                     }
                     
-                """.trimIndent())
-                resolve("src/main/AndroidManifest.xml").apply {
-                    parentFile.mkdirs()
+                """.trimIndent()
+                resolve("build.gradle").writeText(script)
+                resolve("src/main/AndroidManifest.xml") {
                     writeText("""
                          <manifest package="com.example.module2" />
                     """.trimIndent())
                 }
-                resolve("src/main/java/ValidKotlinFile2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                        object ValidKotlinFile2
-                        
-                    """.trimIndent())
+                resolve("src/main/java/ValidKotlinFile2.kt") {
+                    writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/main/java/ValidJava2.java").apply {
-                    parentFile.mkdirs()
+                resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }
-                resolve("src/test/java/ValidKotlinTest2.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                        object ValidKotlinTest2
-                        
-                    """.trimIndent())
+                resolve("src/test/java/ValidKotlinTest2.kt") {
+                    writeText(kotlinClass("ValidKotlinTest2"))
                 }
-                resolve("src/test/java/ValidJavaTest2.java").apply {
-                    parentFile.mkdirs()
+                resolve("src/test/java/ValidJavaTest2.java") {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }
@@ -129,7 +110,8 @@ internal class QualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `formatOnCompile option enables failing builds if code style errors found`() {
-        @Language("groovy") val buildscript = """
+        val enableFormatOnCompile = {
+            @Language("groovy") val buildscript = """
             plugins {
                 id('com.starter.config')
             }
@@ -140,25 +122,28 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 }
             }
         """.trimIndent()
-        rootDirectory.resolve("build.gradle").appendText(buildscript)
-        module1Root.resolve("src/main//kotlin/WrongFileName.kt").apply {
-            parentFile.mkdirs()
-            writeText("""
-                object DifferentClassName
-                
-            """.trimIndent())
+            rootDirectory.resolve("build.gradle").appendText(buildscript)
         }
 
-        val result = runTask("assemble")
+        module1Root.resolve("src/main//kotlin/WrongFileName.kt") {
+            writeText(kotlinClass("DifferentClassName"))
+        }
 
-        assertThat(result.task(":module1:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        val formatOnCompileOff = runTask("assemble")
+
+        assertThat(formatOnCompileOff.task(":module1:formatKotlin")?.outcome).isNull()
+        assertThat(formatOnCompileOff.task(":module2:formatKotlin")?.outcome).isNull()
+
+        enableFormatOnCompile()
+        val formatOnCompileOn = runTask("assemble")
+
+        assertThat(formatOnCompileOn.task(":module1:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(formatOnCompileOn.task(":module2:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
-        module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java").apply {
-            parentFile.mkdirs()
+        module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
             @Language("java")
             val javaClass = """
                 public class JavaFileWithCheckstyleIssues {

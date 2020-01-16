@@ -105,4 +105,10 @@ internal abstract class WithGradleProjectTest {
             isAnnotated = false
         }.call()
     }
+
+    protected fun File.resolve(relative: String, receiver: File.() -> Unit): File =
+        resolve(relative).apply {
+            parentFile.mkdirs()
+            receiver()
+        }
 }

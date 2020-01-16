@@ -1,6 +1,7 @@
 package com.project.starter.config.plugins
 
 import com.project.starter.WithGradleProjectTest
+import com.project.starter.kotlinClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -16,24 +17,20 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
     @Before
     fun setUp() {
         rootDirectory.apply {
-            mkdirs()
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
             rootBuildScript = resolve("build.gradle")
-            module1Root = resolve("module1").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
+            module1Root = resolve("module1") {
+                resolve("build.gradle") {
+                    writeText("""
                         plugins {
                             id('kotlin')
                         }
                       
                     """.trimIndent())
-                resolve("src/main/kotlin/ValidKotlinFile1.kt").apply {
-                    parentFile.mkdirs()
-                    writeText("""
-                            data class ValidKotlinFile1(val name: String)
-                            
-                        """.trimIndent())
+                }
+                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinFile1"))
                 }
             }
         }
@@ -69,6 +66,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
         assertThat(result.tasks).noneMatch { it.outcome == TaskOutcome.FAILED }
     }
+
     @Test
     fun `configures common config extension using function syntax`() {
         @Language("groovy") val buildscript = """

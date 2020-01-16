@@ -24,21 +24,23 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                 }
                 
                 """.trimIndent())
-            module1Root = resolve("module1").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
-                    plugins {
-                        id 'kotlin'
-                    }
-                """.trimIndent())
+            module1Root = resolve("module1") {
+                resolve("build.gradle") {
+                    writeText("""
+                        plugins {
+                            id 'kotlin'
+                        }
+                    """.trimIndent())
+                }
             }
-            module2Root = resolve("module1").apply {
-                mkdirs()
-                resolve("build.gradle").writeText("""
-                    plugins {
-                        id 'kotlin'
-                    }
-                """.trimIndent())
+            module2Root = resolve("module1") {
+                resolve("build.gradle") {
+                    writeText("""
+                        plugins {
+                            id 'kotlin'
+                        }
+                    """.trimIndent())
+                }
             }
         }
     }

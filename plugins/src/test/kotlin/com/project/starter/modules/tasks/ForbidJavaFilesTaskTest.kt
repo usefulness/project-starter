@@ -2,6 +2,7 @@ package com.project.starter.modules.tasks
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
+import com.project.starter.kotlinClass
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -20,44 +21,31 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
             mkdirs()
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            resolve("module1").apply {
-                mkdirs()
+            resolve("module1") {
                 @Language("groovy")
                 val buildScript = """
-                plugins {
-                    id('com.starter.library.kotlin')
-                }
-                
-                projectConfig {
-                    javaFilesAllowed = false
-                }
-            """.trimIndent()
-                resolve("build.gradle").writeText(buildScript)
-                main = resolve("src/main").apply {
-                    parentFile.mkdirs()
-                    resolve("kotlin/ValidKotlin.kt").apply {
-                        parentFile.mkdirs()
-                        writeText("""
-                            object ValidKotlin
-                            
-                        """.trimIndent())
+                    plugins {
+                        id('com.starter.library.kotlin')
                     }
-                    resolve("java/KotlinInJavaDir.kt").apply {
-                        parentFile.mkdirs()
-                        writeText("""
-                            object KotlinInJavaDir
-                            
-                        """.trimIndent())
+                    
+                    projectConfig {
+                        javaFilesAllowed = false
+                    }
+                """.trimIndent()
+                resolve("build.gradle") {
+                    writeText(buildScript)
+                }
+                main = resolve("src/main") {
+                    resolve("kotlin/ValidKotlin.kt") {
+                        writeText(kotlinClass("ValidKotlin"))
+                    }
+                    resolve("java/KotlinInJavaDir.kt") {
+                        writeText(kotlinClass("KotlinInJavaDir"))
                     }
                 }
-                test = resolve("src/test").apply {
-                    parentFile.mkdirs()
-                    resolve("kotlin/Test1.kt").apply {
-                        parentFile.mkdirs()
-                        writeText("""
-                            object Test1
-                            
-                        """.trimIndent())
+                test = resolve("src/test") {
+                    resolve("kotlin/Test1.kt") {
+                        writeText(kotlinClass("Test1"))
                     }
                 }
             }
@@ -71,8 +59,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `task fails on main sources`() {
-        main.resolve("java/JavaClass.java").apply {
-            parentFile.mkdirs()
+        main.resolve("java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }
 
@@ -84,8 +71,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `task fails on test sources`() {
-        test.resolve("java/JavaTest.java").apply {
-            parentFile.mkdirs()
+        test.resolve("java/JavaTest.java") {
             writeText(javaClass("JavaTest"))
         }
 
@@ -106,8 +92,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `doesn't check generated files`() {
-        rootDirectory.resolve("build/generated/source/apollo/classes/main/JavaTest.java").apply {
-            parentFile.mkdirs()
+        rootDirectory.resolve("build/generated/source/apollo/classes/main/JavaTest.java") {
             writeText(javaClass("JavaTest"))
         }
 
