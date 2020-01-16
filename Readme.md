@@ -169,7 +169,7 @@ Runs tests for all modules using either predefined tasks (i.e. `test` for kotlin
 - `./gradlew projectLint`  
 Runs Android lint checks against all modules (if custom lint checks are applied then for Kotlin modules too)
 - `./gradlew projectCodeStyle`  
-Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint), [`Detekt`](https://github.com/arturbosch/detekt) or [Checkstyle](https://checkstyle.org/) with predefined config.
+Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint), [`Detekt`](https://github.com/arturbosch/detekt) or [`Checkstyle`](https://checkstyle.org/) with predefined config.
 - `./gradlew projectCoverage`  
 Automatically generates test coverage reports for all modules using [`Jacoco`](https://github.com/jacoco/jacoco)
 
