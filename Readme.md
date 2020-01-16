@@ -180,4 +180,9 @@ That solves an issue when for example `test` task unnecessarily executes tests f
 Sample [Github Browser](https://github.com/mateuszkwiecinski/github_browser) project - a customized, `buildSrc` based plugin application.
 
 ## License
-Library is available under [MIT License](/LICENSE)
+The library is available under [MIT License](/LICENSE) and highly benefits from binary dependencies:
+- `Kotlinter Gradle` - [License](https://github.com/jeremymailen/kotlinter-gradle/blob/master/LICENSE)
+- `axion-relese-plugin` - [License](https://github.com/allegro/axion-release-plugin/blob/master/LICENSE)
+- `Kotlin Gradle Plugin` - [License](https://github.com/JetBrains/kotlin#license)
+- `Android Gradle Plugin` - [License](https://developer.android.com/license)
+- `Detekt` - [License](https://github.com/arturbosch/detekt/blob/master/LICENSE)
