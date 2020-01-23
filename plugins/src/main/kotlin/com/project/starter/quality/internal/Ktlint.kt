@@ -13,7 +13,7 @@ internal fun Project.configureKtlint() {
         it.indentSize = 4
         it.continuationIndentSize = 4
         it.experimentalRules = true
-        it.reporters = arrayOf("checkstyle", "plain")
+        it.reporters = emptyArray()
         it.disabledRules = arrayOf("import-ordering")
     }
 
