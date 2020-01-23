@@ -160,7 +160,6 @@ commonConfig {
     - `formatOnCompile` - defines if ktlint should format source code on every compilation
 - `versioningPlugin`:
     - `enabled` - enables/disables [Versioning Plugin](#versioning-plugin)
-    - `enabled` - defines if ktlint should format source code on every compilation
 
 ### Day-to-day use
 After applying library/application plugin there are appropriate tasks added:

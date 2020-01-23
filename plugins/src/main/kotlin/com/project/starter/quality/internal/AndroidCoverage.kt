@@ -63,7 +63,8 @@ private val dagger = listOf(
     "**/*_MembersInjector.class",
     "**/Dagger*Component.class",
     "**/Dagger*Component${"$"}Builder.class",
-    "**/*Module_*Factory.class"
+    "**/*_*Factory.class",
+    "**/*_Factory.class"
 )
 
 private val excludes = databinding + framework + butterKnife + dagger

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2020-01-23
+
+### Changed
+- Disable _ktlint_ reports by default
+- Add less strict coverage exclusions
+
+## Fixed
+- Fix setting `/src/*/kotlin/` source sets.
 
 ## [0.4.0] - 2020-01-12
 
@@ -42,7 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.4.0...HEAD
+[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.5.0...HEAD
+[0.5.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.4.0.../release/0.5.0
 [0.4.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.3.0.../release/0.4.0
 [0.3.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.2.0.../release/0.3.0
 [0.2.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.1.0.../release/0.2.0
