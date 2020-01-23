@@ -31,10 +31,11 @@ Add root project `build.gradle`:
 buildscript {
     repositories {
         gradlePluginPortal()
+        google()
     }
     
     dependencies {
-        implementation "com.project.starter:plugins:0.4.0"
+        implementation "com.project.starter:plugins:0.5.0"
     }
 }
 ```
@@ -62,10 +63,10 @@ apply plugin: 'com.starter.library.android' // or 'com.starter.application.andro
 
 // optional config with default values
 projectConfig {
-    javaFilesAllowed = false
-    generateBuildConfig = false // for library plugin only 
-    defaultVariants = ["debug"]
-    coverageExclusions = [""]
+    javaFilesAllowed false
+    generateBuildConfig false // for library plugin only 
+    defaultVariants ["debug"]
+    coverageExclusions [""]
 }
 
 // overridden settings for single project
@@ -134,19 +135,19 @@ All submodules will use this config as default
 apply plugin: 'com.starter.config'
  
 commonConfig {
-    javaVersion = JavaVersion.VERSION_1_8
-    javaFilesAllowed = true
+    javaVersion JavaVersion.VERSION_1_8
+    javaFilesAllowed true
     androidPlugin {
-        compileSdkVersion = 29
-        minSdkVersion = 23
-        targetSdkVersion = 29
+        compileSdkVersion 29
+        minSdkVersion 23
+        targetSdkVersion 29
     }
     qualityPlugin {
-        enabled = true
-        formatOnCompile = false
+        enabled true
+        formatOnCompile false
     }
     versioningPlugin {
-        enabled = true
+        enabled true
     }
 }
 ```
