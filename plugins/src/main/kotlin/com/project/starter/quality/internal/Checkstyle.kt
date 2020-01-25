@@ -1,8 +1,6 @@
 package com.project.starter.quality.internal
 
-import com.android.build.gradle.AppExtension
-import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.AndroidConfig
 import com.android.build.gradle.api.AndroidSourceSet
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.extensions.RootConfigExtension
@@ -18,45 +16,53 @@ import org.gradle.api.plugins.quality.Checkstyle
 import org.gradle.api.plugins.quality.CheckstyleExtension
 import org.jmailen.gradle.kotlinter.id
 
+private val pluginsWithConfgiuration = listOf(
+    Config(
+        plugin = "kotlin",
+        starterPlugin = "com.starter.library.kotlin",
+        checkIfJavaAllowed = { callback ->
+            withExtension<KotlinLibraryConfigExtension> { callback(it.javaFilesAllowed) }
+        },
+        configuration = Project::configureKotlinCheckstyle
+    ),
+    Config(
+        plugin = "com.android.library",
+        starterPlugin = "com.starter.library.android",
+        checkIfJavaAllowed = { callback ->
+            withExtension<AndroidLibraryConfigExtension> { callback(it.javaFilesAllowed) }
+        },
+        configuration = Project::configureAndroidCheckstyle
+    ),
+    Config(
+        plugin = "com.android.application",
+        starterPlugin = "com.starter.application.android",
+        checkIfJavaAllowed = { callback ->
+            withExtension<AndroidApplicationConfigExtension> { callback(it.javaFilesAllowed) }
+        },
+        configuration = Project::configureAndroidCheckstyle
+    )
+)
+
+private data class Config(
+    val plugin: String,
+    val starterPlugin: String,
+    val checkIfJavaAllowed: Project.((Boolean?) -> Unit) -> Unit,
+    val configuration: Project.() -> Unit
+)
+
 internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
-    pluginManager.withPlugin("kotlin") {
-        if (pluginManager.hasPlugin("com.starter.library.kotlin")) {
-            withExtension<KotlinLibraryConfigExtension> { config ->
-                if (config.javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
-                    configureKotlinCheckstyle()
+    pluginsWithConfgiuration.forEach { (plugin, starterPlugin, checkIfJavaAllowed, configuration) ->
+        pluginManager.withPlugin(plugin) {
+            if (pluginManager.hasPlugin(starterPlugin)) {
+                checkIfJavaAllowed { javaFilesAllowed ->
+                    if (javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
+                        configuration()
+                    }
                 }
-            }
-        } else {
-            if (rootConfig.javaFilesAllowed) {
-                configureKotlinCheckstyle()
-            }
-        }
-    }
-    pluginManager.withPlugin("com.android.library") {
-        val android = extensions.getByType(LibraryExtension::class.java)
-        if (pluginManager.hasPlugin("com.starter.library.android")) {
-            withExtension<AndroidLibraryConfigExtension> { config ->
-                if (config.javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
-                    configureAndroidCheckstyle(android)
+            } else {
+                if (rootConfig.javaFilesAllowed) {
+                    configuration()
                 }
-            }
-        } else {
-            if (rootConfig.javaFilesAllowed) {
-                configureAndroidCheckstyle(android)
-            }
-        }
-    }
-    pluginManager.withPlugin("com.android.application") {
-        val android = extensions.getByType(AppExtension::class.java)
-        if (pluginManager.hasPlugin("com.starter.application.android")) {
-            withExtension<AndroidApplicationConfigExtension> { config ->
-                if (config.javaFilesAllowed ?: rootConfig.javaFilesAllowed) {
-                    configureAndroidCheckstyle(android)
-                }
-            }
-        } else {
-            if (rootConfig.javaFilesAllowed) {
-                configureAndroidCheckstyle(android)
             }
         }
     }
@@ -73,7 +79,8 @@ private fun Project.configureKotlinCheckstyle() {
     tasks.named(ProjectCodeStyleTask.TASK_NAME).dependsOn(checkstyle)
 }
 
-private fun Project.configureAndroidCheckstyle(android: BaseExtension) {
+private fun Project.configureAndroidCheckstyle() {
+    val android = extensions.getByName("android") as AndroidConfig
     applyCheckstyle()
     val checkstyle = tasks.register("checkstyle")
     android.sourceSets.all { sourceSet ->

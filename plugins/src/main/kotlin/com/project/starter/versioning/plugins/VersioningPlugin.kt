@@ -31,6 +31,7 @@ class VersioningPlugin : Plugin<Project> {
                         }
                     }
                 )
+
                 postReleaseHooks.add(
                     ReleaseHookAction {
                         try {
@@ -40,7 +41,7 @@ class VersioningPlugin : Plugin<Project> {
                                 .setPushTags()
                                 .setRemote(repository.remote)
                                 .call()
-                        } catch (error: Throwable) {
+                        } catch (@Suppress("TooGenericExceptionCaught") error: Throwable) {
                             logger.error("Couldn't push. Run `git push --tags --all` manually.", error)
                         }
                     }

@@ -1,5 +1,6 @@
 package com.project.starter.modules.extensions
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class AndroidExtension {
     var javaFilesAllowed: Boolean? = null
     var defaultVariants: List<String> = emptyList()

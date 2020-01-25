@@ -9,9 +9,6 @@ internal fun Project.configureKtlint() {
     pluginManager.apply(KotlinterPlugin::class.java)
 
     extensions.configure(KotlinterExtension::class.java) {
-        it.ignoreFailures = false
-        it.indentSize = 4
-        it.continuationIndentSize = 4
         it.experimentalRules = true
         it.reporters = emptyArray()
         it.disabledRules = arrayOf("import-ordering")
