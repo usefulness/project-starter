@@ -1,19 +1,2 @@
-plugins {
-    id "pl.allegro.tech.build.axion-release" version "1.10.3"
-}
-
-scmVersion {
-    localOnly = true
-    ignoreUncommittedChanges = true
-    tag {
-        prefix = "release"
-        versionSeparator = "/"
-    }
-}
-
-allprojects {
-    version = scmVersion.version
-}
-
 tasks.register('noOp')
 defaultTasks 'noOp'

@@ -8,8 +8,8 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
@@ -17,7 +17,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     lateinit var module1Root: File
     lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
@@ -26,7 +26,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('com.starter.library.kotlin')
                         }
@@ -35,7 +36,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
@@ -46,7 +48,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
             }
             module2Root = resolve("module2") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('com.starter.library.kotlin')
                         }
@@ -55,7 +58,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
@@ -99,12 +103,16 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectLint runs coverage for all modules`() {
-        module1Root.resolve("build.gradle").appendText("""
+        module1Root.resolve("build.gradle").appendText(
+            """
             apply plugin: "com.android.lint"
-        """.trimIndent())
-        module2Root.resolve("build.gradle").appendText("""
+            """.trimIndent()
+        )
+        module2Root.resolve("build.gradle").appendText(
+            """
             apply plugin: "com.android.lint"
-        """.trimIndent())
+            """.trimIndent()
+        )
 
         val result = runTask("projectLint")
 
@@ -125,11 +133,13 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `fail on java files if failing enabled`() {
-        module2Root.resolve("build.gradle").appendText("""
+        module2Root.resolve("build.gradle").appendText(
+            """
             projectConfig {
                 javaFilesAllowed = false
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
         module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }
@@ -150,7 +160,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     @Test
     fun `does not configure quality plugin if disabled using configuration plugin`() {
         @Language("groovy")
-        val qualityScript = """
+        val qualityScript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -160,7 +171,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                     enabled = false
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(qualityScript)
 
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
@@ -181,7 +192,8 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     @Test
     fun `does not configure versioning plugin if disabled using configuration plugin`() {
         @Language("groovy")
-        val versioningScript = """
+        val versioningScript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -191,7 +203,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                     enabled = false
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(versioningScript)
 
         val versioningDisabled = runTask("currentVersion", shouldFail = true)

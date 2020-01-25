@@ -4,58 +4,66 @@ import com.project.starter.WithGradleProjectTest
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class VersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            resolve("build.gradle").writeText("""
+            resolve("build.gradle").writeText(
+                """
                 plugins {
                     id 'com.starter.versioning'
                 }
                 
-                """.trimIndent())
+                """.trimIndent()
+            )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id 'kotlin'
                         }
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
             }
             module2Root = resolve("module1") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id 'kotlin'
                         }
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
             }
         }
     }
 
-    @After
+    @AfterEach
     internal fun tearDown() {
         git.close()
     }
 
     @Test
     fun `fails if not applied to root project`() {
-        module1Root.resolve("build.gradle").writeText("""
+        module1Root.resolve("build.gradle").writeText(
+            """
             apply plugin: "com.starter.versioning"
             
-        """.trimIndent())
+            """.trimIndent()
+        )
 
         val result = runTask("help", shouldFail = true)
 

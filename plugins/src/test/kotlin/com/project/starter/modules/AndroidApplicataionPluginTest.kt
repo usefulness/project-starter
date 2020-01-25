@@ -8,8 +8,8 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
@@ -17,44 +17,48 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     lateinit var module1Root: File
     lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
-                @Language("groovy") val buildScript = """
-                        plugins {
-                            id('com.starter.application.android')
+                @Language("groovy")
+                val buildScript =
+                    """
+                    plugins {
+                        id('com.starter.application.android')
+                    }
+                    
+                    android {
+                        buildTypes {
+                            debug { }
+                            superType { }
+                            release { }
                         }
-                        
-                        android {
-                            buildTypes {
-                                debug { }
-                                superType { }
-                                release { }
-                            }
-                            flavorDimensions "version"
-                            productFlavors {
-                                demo { }
-                                full { }
-                            }
+                        flavorDimensions "version"
+                        productFlavors {
+                            demo { }
+                            full { }
                         }
-                        
-                        dependencies {
-                            testImplementation 'junit:junit:4.13'
-                        }
-                        
+                    }
+                    
+                    dependencies {
+                        testImplementation 'junit:junit:4.13'
+                    }
+                    
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(buildScript)
                 }
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
+                    writeText(
+                        """
                         <manifest package="com.example.module1" />
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
@@ -68,7 +72,8 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
             }
             module2Root = resolve("module2") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('com.starter.application.android')
                         }
@@ -77,13 +82,16 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
+                    writeText(
+                        """
                         <manifest package="com.example.module1" />
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
@@ -133,12 +141,14 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module1Root.resolve("build.gradle").appendText(config)
 
         val result = runTask("module1:projectTest", "module1:projectLint", "module1:projectCoverage")
@@ -153,14 +163,16 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures android library extension`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 javaFilesAllowed = false
                 defaultVariants = ["demoDebug", "fullRelease"]
                 coverageExclusions = ["**/view/**"]
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module1Root.resolve("build.gradle").appendText(config)
 
         runTask("help")
@@ -179,12 +191,14 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `fails on java files if settings enabled at project level`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 javaFilesAllowed = false
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module2Root.resolve("build.gradle").appendText(config)
         module2Root.resolve("src/main/java/JavaFile.java") {
             writeText(javaClass(className = "JavaFile"))
@@ -206,7 +220,8 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     @Test
     fun `does not configured quality plugin if disable using configuration plugin`() {
         @Language("groovy")
-        val qualityScript = """
+        val qualityScript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -216,7 +231,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
                     enabled = false
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(qualityScript)
 
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)

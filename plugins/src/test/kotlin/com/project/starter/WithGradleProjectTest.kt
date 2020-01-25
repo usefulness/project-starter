@@ -1,7 +1,5 @@
 package com.project.starter
 
-import java.io.File
-import java.io.InputStream
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE
@@ -9,30 +7,25 @@ import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.URIish
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Before
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.io.TempDir
+import java.io.File
+import java.io.InputStream
 
 internal abstract class WithGradleProjectTest {
 
-    @get:Rule
-    var folder = TemporaryFolder()
+    @TempDir
+    lateinit var rootDirectory: File
+
+    @TempDir
+    lateinit var origin: File
 
     lateinit var git: Git
         private set
-    lateinit var rootDirectory: File
-        private set
-    private lateinit var origin: File
 
-    @Before
+    @BeforeEach
     fun setup() {
-        rootDirectory = folder.newFolder().apply {
-            mkdirs()
-        }
-        origin = folder.newFolder("origin").apply {
-            mkdirs()
-            Git.init().setDirectory(this).call()
-        }
+        Git.init().setDirectory(origin).call()
         git = Git.init().apply {
             setDirectory(rootDirectory)
         }.call()
@@ -46,10 +39,12 @@ internal abstract class WithGradleProjectTest {
             setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_REMOTE, remoteName)
             setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_MERGE, Constants.R_HEADS + branchName)
         }.save()
-        rootDirectory.resolve(".gitignore").writeText("""
+        rootDirectory.resolve(".gitignore").writeText(
+            """
             .gradle
             **/build/
-            """.trimIndent())
+            """.trimIndent()
+        )
         commit("init")
         tag("release/1.1.0")
         git.push().apply {
@@ -87,9 +82,11 @@ internal abstract class WithGradleProjectTest {
     }
 
     protected fun commit(commitMessage: String) {
-        rootDirectory.resolve("File.txt").appendText("""
+        rootDirectory.resolve("File.txt").appendText(
+            """
             | Text
-            """.trimMargin())
+            """.trimMargin()
+        )
         git.add().apply {
             addFilepattern(".")
         }.call()

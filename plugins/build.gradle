@@ -1,13 +1,13 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+buildscript {
+    repositories.google()
+}
 
 plugins {
     id 'com.gradle.plugin-publish' version '0.10.1'
     id 'java-gradle-plugin'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
+    id 'com.starter.library.kotlin' version '0.5.0'
     id 'maven-publish'
-    id 'org.jmailen.kotlinter' version '2.2.0'
     id 'pl.droidsonroids.jacoco.testkit' version '1.0.4'
-    id 'jacoco'
 }
 
 repositories {
@@ -19,31 +19,29 @@ repositories {
 tasks.named('lintKotlinMain') {
     dependsOn 'formatKotlin'
 }
-tasks.named('jacocoTestReport') {
-    dependsOn 'test', 'generateJacocoTestKitProperties'
-    reports {
-        xml.enabled true
-    }
-}
-
-tasks.withType(KotlinCompile) {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-}
 
 dependencies {
-    api 'org.jmailen.gradle:kotlinter-gradle:2.2.0'
+    api('org.jmailen.gradle:kotlinter-gradle:2.3.0') {
+        // https://github.com/pinterest/ktlint/issues/678
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
+    }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.4.0'
     api 'com.android.tools.build:gradle:3.5.3'
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.10.3'
 
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
     testImplementation 'org.assertj:assertj-core:3.14.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
 }
 
 java {
     withSourcesJar()
+}
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
+    }
 }
 
 publishing {
@@ -67,7 +65,7 @@ pluginBundle {
     website = 'https://github.com/mateuszkwiecinski/project-starter/'
     vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter/'
     description = 'Set of plugins that might be useful for Multi-Module Android projects.'
-    tags = ['android', 'kotlin', 'quickstart', 'codestyle', 'library']
+    tags = ['android', 'kotlin', 'quickstart', 'codestyle', 'library', 'baseline']
 }
 
 gradlePlugin {

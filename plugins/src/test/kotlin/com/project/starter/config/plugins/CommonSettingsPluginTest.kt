@@ -6,15 +6,15 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
@@ -22,12 +22,14 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('kotlin')
                         }
                       
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
@@ -38,7 +40,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures common config extension using property syntax`() {
-        @Language("groovy") val buildscript = """
+        @Language("groovy")
+        val buildscript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -59,7 +63,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     enabled = true
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(buildscript)
 
         val result = runTask("help")
@@ -69,7 +73,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures common config extension using function syntax`() {
-        @Language("groovy") val buildscript = """
+        @Language("groovy")
+        val buildscript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -90,7 +96,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     enabled true
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(buildscript)
 
         val result = runTask("help")
@@ -100,11 +106,13 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `throws exception if not applied to the root project`() {
-        @Language("groovy") val buildscript = """
+        @Language("groovy")
+        val buildscript =
+            """
             plugins {
                 id('com.starter.config')
             }
-        """.trimIndent()
+            """.trimIndent()
         module1Root.resolve("build.gradle").appendText(buildscript)
 
         val result = runTask("build", shouldFail = true)

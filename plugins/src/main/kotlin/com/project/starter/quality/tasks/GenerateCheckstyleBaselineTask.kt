@@ -1,7 +1,5 @@
 package com.project.starter.quality.tasks
 
-import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.plugins.quality.Checkstyle
@@ -9,6 +7,8 @@ import org.gradle.api.plugins.quality.CheckstyleExtension
 import org.gradle.api.tasks.TaskAction
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 
 internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
 
@@ -28,16 +28,18 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
         if (all.isEmpty()) {
             baseline.delete()
         } else {
-            baseline.writeText("""
-            |<?xml version="1.0"?>
-            |<!DOCTYPE suppressions PUBLIC
-            |    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-            |    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
-            |<suppressions>
-            |${all.joinToString(separator = "") { "\t$it\n" }}
-            |</suppressions>
-            |
-        """.trimMargin())
+            baseline.writeText(
+                """
+                |<?xml version="1.0"?>
+                |<!DOCTYPE suppressions PUBLIC
+                |    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+                |    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+                |<suppressions>
+                |${all.joinToString(separator = "") { "\t$it\n" }}
+                |</suppressions>
+                |
+                """.trimMargin()
+            )
         }
     }
 
@@ -69,12 +71,6 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
                 yield(item(it))
             }
         }
-
-    private data class Violation(
-        val issue: String,
-        val file: String,
-        val line: String
-    )
 
     companion object {
 

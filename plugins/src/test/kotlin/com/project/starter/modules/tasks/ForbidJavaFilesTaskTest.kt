@@ -7,15 +7,15 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
     lateinit var main: File
     lateinit var test: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
@@ -23,7 +23,8 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
             resolve("module1") {
                 @Language("groovy")
-                val buildScript = """
+                val buildScript =
+                    """
                     plugins {
                         id('com.starter.library.kotlin')
                     }
@@ -31,7 +32,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     projectConfig {
                         javaFilesAllowed = false
                     }
-                """.trimIndent()
+                    """.trimIndent()
                 resolve("build.gradle") {
                     writeText(buildScript)
                 }

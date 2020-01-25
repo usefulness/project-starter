@@ -35,13 +35,16 @@ buildscript {
     }
     
     dependencies {
-        implementation "com.project.starter:plugins:0.5.0"
+        classpath 'com.project.starter:plugins:0.5.0'
     }
 }
 ```
 
 ### Plugins Configuration
 #### Kotlin Library Plugin
+Plugin configures automated [code style tasks](#quality-plugin), hooks for [common tasks](#day-to-day-use), 
+sets coverage reports generation or manages [versioning](#versioning-plugin) of the artifact
+    
 Apply plugin to project level `build.gradle`
 
 ``` groovy
@@ -49,14 +52,18 @@ apply plugin: 'com.starter.library.kotlin'
 
 // optional config with default values
 projectConfig {
-    javaFilesAllowed = false
+    javaFilesAllowed false
 }
 ```
 
 - `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
 
 #### Android Application/Library Plugin
-- Android Library plugin requires adding to project level `build.gradle`:
+In addition to customizations made to [Kotlin Library Plugin](#kotlin-library-plugin) Android plugins 
+tweak default Android Gradle Plugin setup by disabling _BuildConfig_ file generation 
+or recognizing `src/main/kotlin` (and similar) path as a valid source set. 
+
+Android Library plugin requires adding to project level `build.gradle`:
 
 ``` groovy
 apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
