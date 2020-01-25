@@ -23,7 +23,8 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
             resolve("module1") {
                 @Language("groovy")
-                val buildScript = """
+                val buildScript =
+                    """
                     plugins {
                         id('com.starter.library.kotlin')
                     }
@@ -31,7 +32,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     projectConfig {
                         javaFilesAllowed = false
                     }
-                """.trimIndent()
+                    """.trimIndent()
                 resolve("build.gradle") {
                     writeText(buildScript)
                 }

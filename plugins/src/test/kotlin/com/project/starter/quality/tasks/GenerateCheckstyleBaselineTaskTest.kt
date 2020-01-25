@@ -21,7 +21,8 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
             resolve("build.gradle").writeText("")
             moduleRoot = resolve("javaModule") {
                 @Language("groovy")
-                val script = """
+                val script =
+                    """
                     plugins {
                         id('com.starter.quality')
                         id('com.android.library')
@@ -39,14 +40,16 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
                         }
                     }
                     
-                """.trimIndent()
+                    """.trimIndent()
                 resolve("build.gradle") {
                     writeText(script)
                 }
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
-                         <manifest package="com.example.module2" />
-                    """.trimIndent())
+                    writeText(
+                        """
+                        <manifest package="com.example.module2" />
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
@@ -62,14 +65,15 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
     fun `generating baseline makes build to pass on old code, but fail on new one`() {
         moduleRoot.resolve("src/test/java/OldCode.java") {
             @Language("java")
-            val javaClass = """
+            val javaClass =
+                """
                 public class OldCode {
                     
                     void test(){
                         System.out.println("");
                     }
                 }
-            """.trimIndent()
+                """.trimIndent()
             writeText(javaClass)
         }
 
@@ -81,14 +85,15 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
         moduleRoot.resolve("src/test/java/NewCode.java") {
             @Language("java")
-            val javaClass = """
+            val javaClass =
+                """
                 public class NewCode {
                     
                     void test(){
                         System.out.println("");
                     }
                 }
-            """.trimIndent()
+                """.trimIndent()
             writeText(javaClass)
         }
 

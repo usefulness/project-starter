@@ -20,27 +20,31 @@ class VersioningPlugin : Plugin<Project> {
                 prefix = "release"
             }
             hooks.apply {
-                preReleaseHooks.add(ReleaseHookAction { context ->
-                    Git.open(repository.directory).use {
-                        val version = context.releaseVersion
-                        val isNonPatchVersion = version.matches("^\\d+\\.\\d\\.0[-*]?$".toRegex())
-                        if (isNonPatchVersion) {
-                            it.branchCreate().setName("release/$version").call()
+                preReleaseHooks.add(
+                    ReleaseHookAction { context ->
+                        Git.open(repository.directory).use {
+                            val version = context.releaseVersion
+                            val isNonPatchVersion = version.matches("^\\d+\\.\\d\\.0[-*]?$".toRegex())
+                            if (isNonPatchVersion) {
+                                it.branchCreate().setName("release/$version").call()
+                            }
                         }
                     }
-                })
-                postReleaseHooks.add(ReleaseHookAction {
-                    try {
-                        Git.open(repository.directory)
-                            .push()
-                            .setPushAll()
-                            .setPushTags()
-                            .setRemote(repository.remote)
-                            .call()
-                    } catch (error: Throwable) {
-                        logger.error("Couldn't push. Run `git push --tags --all` manually.", error)
+                )
+                postReleaseHooks.add(
+                    ReleaseHookAction {
+                        try {
+                            Git.open(repository.directory)
+                                .push()
+                                .setPushAll()
+                                .setPushTags()
+                                .setRemote(repository.remote)
+                                .call()
+                        } catch (error: Throwable) {
+                            logger.error("Couldn't push. Run `git push --tags --all` manually.", error)
+                        }
                     }
-                })
+                )
             }
         }
 

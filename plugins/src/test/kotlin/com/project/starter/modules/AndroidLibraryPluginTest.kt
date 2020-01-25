@@ -25,37 +25,41 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
-                @Language("groovy") val buildScript = """
-                        plugins {
-                            id('com.starter.library.android')
+                @Language("groovy")
+                val buildScript =
+                    """
+                    plugins {
+                        id('com.starter.library.android')
+                    }
+                    
+                    android {
+                        buildTypes {
+                            debug { }
+                            superType { }
+                            release { }
                         }
-                        
-                        android {
-                            buildTypes {
-                                debug { }
-                                superType { }
-                                release { }
-                            }
-                            flavorDimensions "version"
-                            productFlavors {
-                                demo { }
-                                full { }
-                            }
+                        flavorDimensions "version"
+                        productFlavors {
+                            demo { }
+                            full { }
                         }
-                        
-                        dependencies {
-                            testImplementation 'junit:junit:4.13'
-                        }
-                        
+                    }
+                    
+                    dependencies {
+                        testImplementation 'junit:junit:4.13'
+                    }
+                    
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(buildScript)
                 }
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
+                    writeText(
+                        """
                         <manifest package="com.example.module1" />
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
@@ -64,19 +68,22 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                     writeText(kotlinClass("ReleaseModel"))
                 }
                 resolve("src/test/kotlin/Test1.kt") {
-                    writeText("""
-                            class Test1 {
-                            
-                                @org.junit.Test
-                                fun test1() = Unit
-                            }
-                            
-                        """.trimIndent())
+                    writeText(
+                        """
+                        class Test1 {
+                        
+                            @org.junit.Test
+                            fun test1() = Unit
+                        }
+                        
+                        """.trimIndent()
+                    )
                 }
             }
             module2Root = resolve("module2") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('com.starter.library.android')
                         }
@@ -85,13 +92,16 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
+                    writeText(
+                        """
                         <manifest package="com.example.module1" />
                         
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
@@ -146,38 +156,48 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
         assertThat(result.task(":module2:assembleDebug")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
         val generated = module2Root.resolve("build/generated/")
-        assertThat(generated.walk()).matches({ allFiles ->
-            allFiles.none { it.isFile && it.name == "BuildConfig.java" }
-        }, "BuildConfig file found in $generated")
+        assertThat(generated.walk()).matches(
+            { allFiles ->
+                allFiles.none { it.isFile && it.name == "BuildConfig.java" }
+            },
+            "BuildConfig file found in $generated"
+        )
     }
 
     @Test
     fun `contains BuildConfig file if generation enabled`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 generateBuildConfig = true
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module2Root.resolve("build.gradle").appendText(config)
 
         val result = runTask("assembleDebug")
 
         assertThat(result.task(":module2:assembleDebug")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
         val generated = module2Root.resolve("build/generated/")
-        assertThat(generated.walk()).matches({ allFiles ->
-            allFiles.any { it.isFile && it.name == "BuildConfig.java" }
-        }, "BuildConfig file not found in $generated")
+        assertThat(generated.walk()).matches(
+            { allFiles ->
+                allFiles.any { it.isFile && it.name == "BuildConfig.java" }
+            },
+            "BuildConfig file not found in $generated"
+        )
     }
 
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module1Root.resolve("build.gradle").appendText(config)
 
         val result = runTask("module1:projectTest", "module1:projectLint", "module1:projectCoverage")
@@ -192,7 +212,9 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures android library extension`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 generateBuildConfig = false
                 javaFilesAllowed = false
@@ -200,7 +222,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 coverageExclusions = ["**/view/**"]
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module1Root.resolve("build.gradle").appendText(config)
 
         runTask("help")
@@ -219,12 +241,14 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `fail on java files if settings enabled at project level`() {
-        @Language("groovy") val config = """
+        @Language("groovy")
+        val config =
+            """
             projectConfig {
                 javaFilesAllowed = false
             }
             
-        """.trimIndent()
+            """.trimIndent()
         module2Root.resolve("build.gradle").appendText(config)
         module2Root.resolve("src/main/java/JavaFile.java") {
             writeText(javaClass(className = "JavaFile"))
@@ -246,7 +270,8 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     @Test
     fun `does not configured quality plugin if disable using configuration plugin`() {
         @Language("groovy")
-        val qualityScript = """
+        val qualityScript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -256,7 +281,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                     enabled = false
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         rootBuildScript.appendText(qualityScript)
 
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)

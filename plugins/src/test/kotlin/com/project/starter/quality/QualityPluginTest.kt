@@ -23,12 +23,14 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             resolve("build.gradle").createNewFile()
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
-                    writeText("""
+                    writeText(
+                        """
                         plugins {
                             id('com.starter.quality')
                             id('kotlin')
                         }
-                    """.trimIndent())
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
@@ -49,7 +51,8 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             module2Root = resolve("module2").apply {
                 mkdirs()
                 @Language("groovy")
-                val script = """
+                val script =
+                    """
                     plugins {
                         id('com.starter.quality')
                         id('com.android.library')
@@ -67,12 +70,14 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                         }
                     }
                     
-                """.trimIndent()
+                    """.trimIndent()
                 resolve("build.gradle").writeText(script)
                 resolve("src/main/AndroidManifest.xml") {
-                    writeText("""
-                         <manifest package="com.example.module2" />
-                    """.trimIndent())
+                    writeText(
+                        """
+                        <manifest package="com.example.module2" />
+                        """.trimIndent()
+                    )
                 }
                 resolve("src/main/java/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
@@ -111,17 +116,19 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `formatOnCompile option enables failing builds if code style errors found`() {
         val enableFormatOnCompile = {
-            @Language("groovy") val buildscript = """
-            plugins {
-                id('com.starter.config')
-            }
-            
-            commonConfig {
-                qualityPlugin {
-                    formatOnCompile = true
+            @Language("groovy")
+            val buildscript =
+                """
+                plugins {
+                    id('com.starter.config')
                 }
-            }
-        """.trimIndent()
+                
+                commonConfig {
+                    qualityPlugin {
+                        formatOnCompile = true
+                    }
+                }
+                """.trimIndent()
             rootDirectory.resolve("build.gradle").appendText(buildscript)
         }
 
@@ -145,7 +152,8 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     fun `projectCodeStyle fails if Checkstyle violation found`() {
         module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
             @Language("java")
-            val javaClass = """
+            val javaClass =
+                """
                 public class JavaFileWithCheckstyleIssues {
     
                     int test() {
@@ -158,7 +166,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     }
                 }
                 
-            """.trimIndent()
+                """.trimIndent()
             writeText(javaClass)
         }
 
@@ -173,7 +181,9 @@ internal class QualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectCodeStyle is not present if java files are not allowed`() {
-        @Language("groovy") val buildscript = """
+        @Language("groovy")
+        val buildscript =
+            """
             plugins {
                 id('com.starter.config')
             }
@@ -182,7 +192,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 javaFilesAllowed false
             }
             
-        """.trimIndent()
+            """.trimIndent()
         rootDirectory.resolve("build.gradle").appendText(buildscript)
 
         val result = runTask("projectCodeStyle")

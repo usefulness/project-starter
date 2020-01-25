@@ -46,10 +46,12 @@ internal abstract class WithGradleProjectTest {
             setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_REMOTE, remoteName)
             setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_MERGE, Constants.R_HEADS + branchName)
         }.save()
-        rootDirectory.resolve(".gitignore").writeText("""
+        rootDirectory.resolve(".gitignore").writeText(
+            """
             .gradle
             **/build/
-            """.trimIndent())
+            """.trimIndent()
+        )
         commit("init")
         tag("release/1.1.0")
         git.push().apply {
@@ -87,9 +89,11 @@ internal abstract class WithGradleProjectTest {
     }
 
     protected fun commit(commitMessage: String) {
-        rootDirectory.resolve("File.txt").appendText("""
+        rootDirectory.resolve("File.txt").appendText(
+            """
             | Text
-            """.trimMargin())
+            """.trimMargin()
+        )
         git.add().apply {
             addFilepattern(".")
         }.call()
