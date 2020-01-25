@@ -1,12 +1,2 @@
-buildscript {
-    repositories {
-        google()
-    }
-}
-
-plugins {
-    id 'com.starter.versioning' version '0.5.0'
-}
-
 tasks.register('noOp')
 defaultTasks 'noOp'

@@ -1,13 +1,11 @@
 buildscript {
-    repositories {
-        google()
-    }
+    repositories.google()
 }
 
 plugins {
     id 'com.gradle.plugin-publish' version '0.10.1'
     id 'java-gradle-plugin'
-    id 'com.starter.library.kotlin'
+    id 'com.starter.library.kotlin' version '0.5.0'
     id 'maven-publish'
     id 'pl.droidsonroids.jacoco.testkit' version '1.0.4'
 }
