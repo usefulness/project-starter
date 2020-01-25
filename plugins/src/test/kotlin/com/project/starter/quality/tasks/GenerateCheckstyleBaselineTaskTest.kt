@@ -6,14 +6,14 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
     private lateinit var moduleRoot: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ':javaModule' """)

@@ -4,18 +4,18 @@ import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import java.io.File
-import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class QualityPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)

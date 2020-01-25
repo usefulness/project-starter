@@ -8,8 +8,8 @@ import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
@@ -17,7 +17,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     lateinit var module1Root: File
     lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)

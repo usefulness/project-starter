@@ -4,16 +4,16 @@ import com.project.starter.WithGradleProjectTest
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class VersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
@@ -51,7 +51,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         }
     }
 
-    @After
+    @AfterEach
     internal fun tearDown() {
         git.close()
     }

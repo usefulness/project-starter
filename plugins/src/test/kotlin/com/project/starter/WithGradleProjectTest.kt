@@ -1,7 +1,5 @@
 package com.project.starter
 
-import java.io.File
-import java.io.InputStream
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE
@@ -9,30 +7,25 @@ import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.URIish
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Before
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.io.TempDir
+import java.io.File
+import java.io.InputStream
 
 internal abstract class WithGradleProjectTest {
 
-    @get:Rule
-    var folder = TemporaryFolder()
+    @TempDir
+    lateinit var rootDirectory: File
+
+    @TempDir
+    lateinit var origin: File
 
     lateinit var git: Git
         private set
-    lateinit var rootDirectory: File
-        private set
-    private lateinit var origin: File
 
-    @Before
+    @BeforeEach
     fun setup() {
-        rootDirectory = folder.newFolder().apply {
-            mkdirs()
-        }
-        origin = folder.newFolder("origin").apply {
-            mkdirs()
-            Git.init().setDirectory(this).call()
-        }
+        Git.init().setDirectory(origin).call()
         git = Git.init().apply {
             setDirectory(rootDirectory)
         }.call()

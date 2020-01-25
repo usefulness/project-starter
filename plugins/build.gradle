@@ -23,19 +23,27 @@ tasks.named('lintKotlinMain') {
 }
 
 dependencies {
-    api 'org.jmailen.gradle:kotlinter-gradle:2.3.0'
+    api('org.jmailen.gradle:kotlinter-gradle:2.3.0') {
+        // https://github.com/pinterest/ktlint/issues/678
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
+    }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.4.0'
     api 'com.android.tools.build:gradle:3.5.3'
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.10.3'
 
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
     testImplementation 'org.assertj:assertj-core:3.14.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
 }
 
 java {
     withSourcesJar()
+}
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
+    }
 }
 
 publishing {
