@@ -14,7 +14,6 @@ import org.gradle.api.Project
 import org.gradle.api.file.FileTree
 import org.gradle.api.plugins.quality.Checkstyle
 import org.gradle.api.plugins.quality.CheckstyleExtension
-import org.jmailen.gradle.kotlinter.id
 
 private val pluginsWithConfgiuration = listOf(
     Config(
@@ -84,7 +83,7 @@ private fun Project.configureAndroidCheckstyle() {
     applyCheckstyle()
     val checkstyle = tasks.register("checkstyle")
     android.sourceSets.all { sourceSet ->
-        val id = sourceSet.name.id
+        val id = sourceSet.name.split(" ").first()
         val files = getJavaFiles(sourceSet) + getResourceFiles(sourceSet)
         if (files.isNotEmpty()) {
             val variantCheck = tasks.register("checkstyle${id.capitalize()}", Checkstyle::class.java) { task ->

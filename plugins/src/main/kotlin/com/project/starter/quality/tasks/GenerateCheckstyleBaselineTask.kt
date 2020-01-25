@@ -28,7 +28,8 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
         if (all.isEmpty()) {
             baseline.delete()
         } else {
-            baseline.writeText("""
+            baseline.writeText(
+                """
                 |<?xml version="1.0"?>
                 |<!DOCTYPE suppressions PUBLIC
                 |    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
@@ -37,7 +38,8 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
                 |${all.joinToString(separator = "") { "\t$it\n" }}
                 |</suppressions>
                 |
-                """.trimMargin())
+                """.trimMargin()
+            )
         }
     }
 
