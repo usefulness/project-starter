@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Update _kotlinter-gradle_ to version _2.3.0_
+- Update _Detekt_ to version _1.5.0_
 
 ## [0.5.0] - 2020-01-23
 

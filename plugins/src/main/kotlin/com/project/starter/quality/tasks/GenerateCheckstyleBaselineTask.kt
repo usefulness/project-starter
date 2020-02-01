@@ -1,5 +1,7 @@
 package com.project.starter.quality.tasks
 
+import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.plugins.quality.Checkstyle
@@ -7,8 +9,6 @@ import org.gradle.api.plugins.quality.CheckstyleExtension
 import org.gradle.api.tasks.TaskAction
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
-import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 
 internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
 
