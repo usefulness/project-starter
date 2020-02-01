@@ -200,4 +200,23 @@ internal class QualityPluginTest : WithGradleProjectTest() {
         assertThat(result.task(":module1:checkstyle")).isNull()
         assertThat(result.task(":module2:checkstyle")).isNull()
     }
+
+    @Test
+    fun `detekt fails on magic number`() {
+        module2Root.resolve("src/main/kotlin/MagicNumber.kt") {
+            @Language("kotlin")
+            val kotlinClass =
+                """
+                class MagicNumber {
+                    var value: Int = 16
+                }
+                
+                """.trimIndent()
+            writeText(kotlinClass)
+        }
+
+        val result = runTask("projectCodeStyle", shouldFail = true)
+
+        assertThat(result.task(":module2:detekt")?.outcome).isEqualTo(TaskOutcome.FAILED)
+    }
 }

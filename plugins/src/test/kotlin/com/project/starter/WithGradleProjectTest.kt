@@ -1,5 +1,7 @@
 package com.project.starter
 
+import java.io.File
+import java.io.InputStream
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION
 import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE
@@ -9,8 +11,6 @@ import org.eclipse.jgit.transport.URIish
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
-import java.io.InputStream
 
 internal abstract class WithGradleProjectTest {
 
