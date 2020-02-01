@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.6.0] - 2020-02-01
+
+### Changed
 - Update _kotlinter-gradle_ to version _2.3.0_
 - Update _Detekt_ to version _1.5.0_
 
@@ -52,7 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.5.0...HEAD
+[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.6.0...HEAD
+[0.6.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.5.0.../release/0.6.0
 [0.5.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.4.0.../release/0.5.0
 [0.4.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.3.0.../release/0.4.0
 [0.3.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.2.0.../release/0.3.0

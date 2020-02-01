@@ -1,4 +1,4 @@
-name: Publish project
+name: Publish Project Snapshot
 
 on:
   push:
