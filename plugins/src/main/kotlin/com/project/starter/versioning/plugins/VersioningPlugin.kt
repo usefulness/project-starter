@@ -1,5 +1,9 @@
 package com.project.starter.versioning.plugins
 
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.project.starter.modules.internal.withExtension
 import org.eclipse.jgit.api.Git
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -49,8 +53,24 @@ class VersioningPlugin : Plugin<Project> {
             }
         }
 
-        allprojects {
-            it.version = scmConfig.version
+        allprojects { project ->
+            project.version = scmConfig.version
+
+            val configureVersion: BaseExtension.(String) -> Unit = { version ->
+                println(version)
+                defaultConfig.versionCode = 1
+                defaultConfig.versionName = version
+            }
+            pluginManager.withPlugin("com.android.library") {
+                project.withExtension<LibraryExtension> {
+                    it.configureVersion(scmConfig.undecoratedVersion)
+                }
+            }
+            pluginManager.withPlugin("com.android.application") {
+                project.withExtension<AppExtension> {
+                    it.configureVersion(scmConfig.undecoratedVersion)
+                }
+            }
         }
     }
 }
