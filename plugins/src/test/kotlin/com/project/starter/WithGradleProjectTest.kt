@@ -92,6 +92,7 @@ internal abstract class WithGradleProjectTest {
         }.call()
         git.commit().apply {
             setAll(true)
+            setSign(false)
             message = commitMessage
         }.call()
     }
@@ -100,6 +101,7 @@ internal abstract class WithGradleProjectTest {
         git.tag().apply {
             name = tagName
             isAnnotated = false
+            setSigned(false)
         }.call()
     }
 

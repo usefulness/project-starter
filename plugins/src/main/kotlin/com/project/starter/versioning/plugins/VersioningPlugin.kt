@@ -21,7 +21,6 @@ class VersioningPlugin : Plugin<Project> {
         val scmConfig = extensions.getByType(VersionConfig::class.java).apply {
             tag.apply {
                 versionSeparator = "/"
-                prefix = "release"
             }
             hooks.apply {
                 preReleaseHooks.add(
@@ -57,16 +56,18 @@ class VersioningPlugin : Plugin<Project> {
             project.version = scmConfig.version
 
             val configureVersion: BaseExtension.(String) -> Unit = { version ->
-                println(version)
-                defaultConfig.versionCode = 1
-                defaultConfig.versionName = version
+                val minor = version.split(".")[0].toInt()
+                val major = version.split(".")[1].toInt()
+                val patch = version.split(".")[2].toInt()
+                defaultConfig.versionCode = minor * 1_000_000 + major * 1000 + patch
+                defaultConfig.versionName = "$minor.$major.$patch"
             }
-            pluginManager.withPlugin("com.android.library") {
+            project.pluginManager.withPlugin("com.android.library") {
                 project.withExtension<LibraryExtension> {
                     it.configureVersion(scmConfig.undecoratedVersion)
                 }
             }
-            pluginManager.withPlugin("com.android.application") {
+            project.pluginManager.withPlugin("com.android.application") {
                 project.withExtension<AppExtension> {
                     it.configureVersion(scmConfig.undecoratedVersion)
                 }
