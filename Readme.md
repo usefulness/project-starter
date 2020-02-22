@@ -26,7 +26,7 @@ Each module consists of configuration code most commonly used in Android project
 
 #### Add buildscript dependency
 
-Add root project `build.gradle`:
+Add to your **root** project `build.gradle`:
 ``` groovy
 buildscript {
     repositories {
@@ -35,7 +35,7 @@ buildscript {
     }
     
     dependencies {
-        classpath 'com.project.starter:plugins:0.5.0'
+        classpath 'com.project.starter:plugins:${version}'
     }
 }
 ```

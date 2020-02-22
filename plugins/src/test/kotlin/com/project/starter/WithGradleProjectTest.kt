@@ -46,7 +46,6 @@ internal abstract class WithGradleProjectTest {
             """.trimIndent()
         )
         commit("init")
-        tag("release/1.1.0")
         git.push().apply {
             remote = "origin"
             setPushTags()
@@ -92,6 +91,7 @@ internal abstract class WithGradleProjectTest {
         }.call()
         git.commit().apply {
             setAll(true)
+            setSign(false)
             message = commitMessage
         }.call()
     }
@@ -100,6 +100,7 @@ internal abstract class WithGradleProjectTest {
         git.tag().apply {
             name = tagName
             isAnnotated = false
+            setSigned(false)
         }.call()
     }
 

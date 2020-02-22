@@ -114,7 +114,7 @@ private fun Project.getResourceFiles(sourceSet: AndroidSourceSet) = sourceSet.re
 private fun Project.applyCheckstyle() {
     pluginManager.apply("checkstyle")
     extensions.configure<CheckstyleExtension>("checkstyle") {
-        it.toolVersion = "8.28"
+        it.toolVersion = "8.29"
     }
 }
 

@@ -1,5 +1,9 @@
 package com.project.starter.versioning.plugins
 
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.project.starter.modules.internal.withExtension
 import org.eclipse.jgit.api.Git
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -17,7 +21,6 @@ class VersioningPlugin : Plugin<Project> {
         val scmConfig = extensions.getByType(VersionConfig::class.java).apply {
             tag.apply {
                 versionSeparator = "/"
-                prefix = "release"
             }
             hooks.apply {
                 preReleaseHooks.add(
@@ -49,8 +52,30 @@ class VersioningPlugin : Plugin<Project> {
             }
         }
 
-        allprojects {
-            it.version = scmConfig.version
+        withExtension<VersionConfig> {
+            allprojects { project ->
+                project.version = scmConfig.version
+            }
+        }
+
+        allprojects { project ->
+            val configureVersion: BaseExtension.(String) -> Unit = { version ->
+                val minor = version.split(".")[0].toInt()
+                val major = version.split(".")[1].toInt()
+                val patch = version.split(".")[2].toInt()
+                defaultConfig.versionCode = minor * 1_000_000 + major * 1000 + patch
+                defaultConfig.versionName = "$minor.$major.$patch"
+            }
+            project.pluginManager.withPlugin("com.android.library") {
+                project.withExtension<LibraryExtension> {
+                    it.configureVersion(scmConfig.undecoratedVersion)
+                }
+            }
+            project.pluginManager.withPlugin("com.android.application") {
+                project.withExtension<AppExtension> {
+                    it.configureVersion(scmConfig.undecoratedVersion)
+                }
+            }
         }
     }
 }
