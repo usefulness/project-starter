@@ -1,12 +1,12 @@
 package com.project.starter.versioning
 
 import com.project.starter.WithGradleProjectTest
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 
 internal class VersioningPluginTest : WithGradleProjectTest() {
 
@@ -49,6 +49,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                 }
             }
         }
+        tag("release/1.1.0")
     }
 
     @AfterEach
@@ -107,5 +108,32 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
             setListMode(ListMode.ALL)
         }.call()
         assertThat(branches.map { it.name }).contains("refs/remotes/origin/release/1.3.0")
+    }
+
+    @Test
+    fun `can override axion config`() {
+        rootDirectory.resolve("build.gradle") {
+            appendText(
+                """
+                scmVersion {
+                    tag {
+                        prefix = ""
+                        versionSeparator = ""
+                    }
+                }
+                
+                """.trimIndent()
+            )
+        }
+        commit("features in 1.2.0")
+        tag("1.2.0")
+
+        val modules = listOf(":module1", ":module1", "")
+
+        modules.forEach {
+            val moduleResult = runTask("$it:properties")
+
+            assertThat(moduleResult?.output).contains("version: 1.2.0")
+        }
     }
 }

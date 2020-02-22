@@ -46,7 +46,6 @@ internal abstract class WithGradleProjectTest {
             """.trimIndent()
         )
         commit("init")
-        tag("release/1.1.0")
         git.push().apply {
             remote = "origin"
             setPushTags()

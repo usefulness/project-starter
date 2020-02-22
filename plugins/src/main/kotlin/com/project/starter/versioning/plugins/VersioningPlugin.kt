@@ -52,9 +52,13 @@ class VersioningPlugin : Plugin<Project> {
             }
         }
 
-        allprojects { project ->
-            project.version = scmConfig.version
+        withExtension<VersionConfig> {
+            allprojects { project ->
+                project.version = scmConfig.version
+            }
+        }
 
+        allprojects { project ->
             val configureVersion: BaseExtension.(String) -> Unit = { version ->
                 val minor = version.split(".")[0].toInt()
                 val major = version.split(".")[1].toInt()
