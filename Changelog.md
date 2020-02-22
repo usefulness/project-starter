@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Add versioning for Android apps and libraries
+## Added:
+- Add automatic versioning of Android apps and libraries
+
+### Changed
+- Add coverage exclusions of dagger generated classes for Kotlin modules 
+
+## Fixed:
 - Restore ability to override Axion Release Plugin config
 
 ## [0.6.0] - 2020-02-01
@@ -59,6 +65,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Quality Plugin - `com.starter.quality`
 
 [Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.6.0...HEAD
+[0.10.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.9.0.../release/0.10.0
+[0.9.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.8.0.../release/0.9.0
+[0.8.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.7.0.../release/0.8.0
+[0.7.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.6.0.../release/0.7.0
 [0.6.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.5.0.../release/0.6.0
 [0.5.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.4.0.../release/0.5.0
 [0.4.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.3.0.../release/0.4.0
