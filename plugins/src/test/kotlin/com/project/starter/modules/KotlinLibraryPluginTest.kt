@@ -181,7 +181,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures versioning plugin by default`() {
-        tag("release/1.2.2")
+        tag("release-1.2.2")
         commit("random commit")
 
         val versioningEnabled = runTask("currentVersion")

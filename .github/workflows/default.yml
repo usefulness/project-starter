@@ -21,10 +21,10 @@ jobs:
     - name: Gradle Wrapper Validation
       uses: gradle/wrapper-validation-action@v1
     - name: Code style
-      run: ./gradlew lintKotlin
+      run: ./gradlew projectCodestyle
     - name: Assemble
       run: ./gradlew assemble
     - name: Jacoco test report
-      run: ./gradlew jacocoTestReport
+      run: ./gradlew projectCoverage
     - name: Codecov report upload
       run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}

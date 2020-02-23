@@ -2,8 +2,9 @@ package com.project.starter.versioning
 
 import com.project.starter.WithGradleProjectTest
 import org.assertj.core.api.Assertions.assertThat
+import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
-import org.junit.jupiter.api.AfterEach
+import org.eclipse.jgit.lib.BranchConfig
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -49,13 +50,9 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                 }
             }
         }
-        tag("release/1.1.0")
+        tag("release-1.1.0")
     }
 
-    @AfterEach
-    internal fun tearDown() {
-        git.close()
-    }
 
     @Test
     fun `fails if not applied to root project`() {
@@ -74,7 +71,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @Test
     fun `sets version to all projects`() {
         commit("features in 1.2.0")
-        tag("release/1.2.0")
+        tag("release-1.2.0")
 
         val modules = listOf(":module1", ":module1", "")
 
@@ -87,12 +84,8 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `goes regular release flow`() {
-        tag("release/1.2.0")
+        tag("release-1.2.0")
         commit("contains 1.3.0 features")
-
-        assertThat(runTask("currentVersion").output).contains("1.2.1-SNAPSHOT")
-
-        runTask("markNextVersion", "-Prelease.version=1.3.0")
 
         assertThat(runTask("currentVersion").output).contains("1.3.0-SNAPSHOT")
 
@@ -108,6 +101,25 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
             setListMode(ListMode.ALL)
         }.call()
         assertThat(branches.map { it.name }).contains("refs/remotes/origin/release/1.3.0")
+    }
+
+    @Test
+    fun `goes regular flow on release branch`() {
+        assertThat(runTask("currentVersion").output).contains("1.1.0")
+        commit("contains 1.2.0 changes")
+        assertThat(runTask("currentVersion").output).contains("1.2.0-SNAPSHOT")
+
+        git.push().call()
+        runTask("release")
+        assertThat(runTask("currentVersion").output).contains("1.2.0")
+
+        checkout("release/1.2.0")
+        commit("contains 1.2.1 fix")
+        assertThat(runTask("currentVersion").output).contains("1.2.1-SNAPSHOT")
+
+        git.push().call()
+        runTask("release")
+        assertThat(runTask("currentVersion").output).contains("1.2.1")
     }
 
     @Test

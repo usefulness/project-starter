@@ -1,2 +1,18 @@
+buildscript {
+    repositories.google()
+}
+plugins {
+    id 'com.starter.config'  version '0.6.0'
+    id 'com.starter.versioning' version '0.6.0'
+}
+
+scmVersion {
+    versionIncrementer 'incrementMinorIfNotOnRelease'
+}
+
+commonConfig {
+    javaFilesAllowed false
+}
+
 tasks.register('noOp')
 defaultTasks 'noOp'

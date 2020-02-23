@@ -1,5 +1,7 @@
 package com.project.starter
 
+import org.eclipse.jgit.api.CreateBranchCommand
+import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
 import java.io.File
 import java.io.InputStream
 import org.eclipse.jgit.api.Git
@@ -9,6 +11,7 @@ import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.URIish
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.io.TempDir
 
@@ -53,6 +56,11 @@ internal abstract class WithGradleProjectTest {
         }.call()
     }
 
+    @AfterEach
+    fun tearDown() {
+        git.close()
+    }
+
     protected fun runTask(vararg taskName: String, shouldFail: Boolean = false) =
         GradleRunner.create().apply {
             forwardOutput()
@@ -80,6 +88,17 @@ internal abstract class WithGradleProjectTest {
         }
     }
 
+    protected fun checkout(branchName: String){
+        git.checkout().apply {
+            setName(branchName)
+        }.call()
+        git.repository.config.apply {
+            val remoteName = "origin"
+            setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_REMOTE, remoteName)
+            setString(CONFIG_BRANCH_SECTION, branchName, CONFIG_KEY_MERGE, Constants.R_HEADS + branchName)
+        }.save()
+    }
+
     protected fun commit(commitMessage: String) {
         rootDirectory.resolve("File.txt").appendText(
             """
@@ -100,7 +119,7 @@ internal abstract class WithGradleProjectTest {
         git.tag().apply {
             name = tagName
             isAnnotated = false
-            setSigned(false)
+            isSigned = false
         }.call()
     }
 
