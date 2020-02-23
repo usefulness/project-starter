@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Add coverage exclusions of dagger generated classes for Kotlin modules 
+- Change default release tag format to `release-X.X.X` to avoid conflicts with release branch names
 
 ## Fixed:
 - Restore ability to override Axion Release Plugin config
+- Track newly created release branch
 
 ## [0.6.0] - 2020-02-01
 
