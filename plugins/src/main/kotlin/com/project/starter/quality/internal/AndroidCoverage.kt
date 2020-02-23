@@ -59,7 +59,7 @@ private val butterKnife = listOf(
     "**/*${"$"}ViewInjector*.*",
     "**/*${"$"}ViewBinder*.*"
 )
-private val dagger = listOf(
+internal val dagger = listOf(
     "**/*_MembersInjector.class",
     "**/Dagger*Component.class",
     "**/Dagger*Component${"$"}Builder.class",
