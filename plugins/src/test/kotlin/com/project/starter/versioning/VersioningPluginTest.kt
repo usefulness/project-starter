@@ -1,18 +1,26 @@
 package com.project.starter.versioning
 
 import com.project.starter.WithGradleProjectTest
+import com.project.starter.checkout
+import com.project.starter.commit
+import com.project.starter.setupGit
+import com.project.starter.tag
+import java.io.File
 import org.assertj.core.api.Assertions.assertThat
-import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
+import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
-import org.eclipse.jgit.lib.BranchConfig
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.File
+import org.junit.jupiter.api.io.TempDir
 
 internal class VersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
+    private lateinit var git: Git
+
+    @TempDir
+    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -50,9 +58,9 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                 }
             }
         }
-        tag("release-1.1.0")
+        git = setupGit(origin)
+        git.tag("release-1.1.0")
     }
-
 
     @Test
     fun `fails if not applied to root project`() {
@@ -70,8 +78,8 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `sets version to all projects`() {
-        commit("features in 1.2.0")
-        tag("release-1.2.0")
+        git.commit("features in 1.2.0")
+        git.tag("release-1.2.0")
 
         val modules = listOf(":module1", ":module1", "")
 
@@ -84,12 +92,12 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `goes regular release flow`() {
-        tag("release-1.2.0")
-        commit("contains 1.3.0 features")
+        git.tag("release-1.2.0")
+        git.commit("contains 1.3.0 features")
 
         assertThat(runTask("currentVersion").output).contains("1.3.0-SNAPSHOT")
 
-        commit("contains 1.3.0 features")
+        git.commit("contains 1.3.0 features")
 
         assertThat(runTask("currentVersion").output).contains("1.3.0-SNAPSHOT")
 
@@ -106,15 +114,15 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @Test
     fun `goes regular flow on release branch`() {
         assertThat(runTask("currentVersion").output).contains("1.1.0")
-        commit("contains 1.2.0 changes")
+        git.commit("contains 1.2.0 changes")
         assertThat(runTask("currentVersion").output).contains("1.2.0-SNAPSHOT")
 
         git.push().call()
         runTask("release")
         assertThat(runTask("currentVersion").output).contains("1.2.0")
 
-        checkout("release/1.2.0")
-        commit("contains 1.2.1 fix")
+        git.checkout("release/1.2.0")
+        git.commit("contains 1.2.1 fix")
         assertThat(runTask("currentVersion").output).contains("1.2.1-SNAPSHOT")
 
         git.push().call()
@@ -137,8 +145,8 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                 """.trimIndent()
             )
         }
-        commit("features in 1.2.0")
-        tag("1.2.0")
+        git.commit("features in 1.2.0")
+        git.tag("1.2.0")
 
         val modules = listOf(":module1", ":module1", "")
 

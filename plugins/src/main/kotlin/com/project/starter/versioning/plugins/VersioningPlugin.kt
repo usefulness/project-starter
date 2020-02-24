@@ -4,8 +4,6 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.project.starter.modules.internal.withExtension
-import groovy.lang.Closure
-import org.eclipse.jgit.api.CreateBranchCommand
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
 import org.eclipse.jgit.api.Git
 import org.gradle.api.GradleException
@@ -14,7 +12,6 @@ import org.gradle.api.Project
 import pl.allegro.tech.build.axion.release.ReleasePlugin
 import pl.allegro.tech.build.axion.release.domain.PredefinedVersionIncrementer
 import pl.allegro.tech.build.axion.release.domain.VersionConfig
-import pl.allegro.tech.build.axion.release.domain.VersionIncrementerContext
 import pl.allegro.tech.build.axion.release.domain.hooks.ReleaseHookAction
 
 class VersioningPlugin : Plugin<Project> {
