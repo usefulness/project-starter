@@ -22,7 +22,7 @@ dependencies {
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.5.1'
-    api 'com.android.tools.build:gradle:3.5.3'
+    api 'com.android.tools.build:gradle:3.6.0'
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
 
