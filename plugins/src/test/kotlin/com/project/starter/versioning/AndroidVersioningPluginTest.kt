@@ -1,15 +1,21 @@
 package com.project.starter.versioning
 
 import com.project.starter.WithGradleProjectTest
+import com.project.starter.commit
+import com.project.starter.setupGit
+import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.File
+import org.junit.jupiter.api.io.TempDir
 
 internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var androidAppRoot: File
+
+    @TempDir
+    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -48,8 +54,9 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     internal fun `sets android application version`() {
+        val git = setupGit(origin)
         runTask("markNextVersion", "-Prelease.version=1.2.3")
-        commit("contains 1.2.3 features")
+        git.commit("contains 1.2.3 features")
 
         val result = runTask("printVersion")
 

@@ -1,21 +1,28 @@
 package com.project.starter.modules
 
 import com.project.starter.WithGradleProjectTest
+import com.project.starter.commit
 import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import com.project.starter.kotlinTestClass
+import com.project.starter.setupGit
+import com.project.starter.tag
 import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.io.TempDir
 
 internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
     lateinit var module2Root: File
+
+    @TempDir
+    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -181,12 +188,13 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures versioning plugin by default`() {
-        tag("release/1.2.2")
-        commit("random commit")
+        val git = setupGit(origin)
+        git.tag("release-1.2.2")
+        git.commit("random commit")
 
         val versioningEnabled = runTask("currentVersion")
 
-        assertThat(versioningEnabled.output).contains("version: 1.2.3-SNAPSHOT")
+        assertThat(versioningEnabled.output).contains("version: 1.3.0-SNAPSHOT")
     }
 
     @Test
