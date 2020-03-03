@@ -1,6 +1,6 @@
 package com.project.starter.quality.internal
 
-import com.android.build.gradle.AndroidConfig
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceSet
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.extensions.RootConfigExtension
@@ -79,7 +79,7 @@ private fun Project.configureKotlinCheckstyle() {
 }
 
 private fun Project.configureAndroidCheckstyle() {
-    val android = extensions.getByName("android") as AndroidConfig
+    val android = extensions.getByName("android") as BaseExtension
     applyCheckstyle()
     val checkstyle = tasks.register("checkstyle")
     android.sourceSets.all { sourceSet ->

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Update _Android Gradle Plugin_ to 3.6.1, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
+- Update _Kotlin Gradle Plugin_ to 1.3.70, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.3.70)
+- Update _kotlinter-gradle_ to version _2.3.2_
 
 ## [0.7.0] - 2020-02-24
 ## Added:

@@ -17,12 +17,12 @@ tasks.named('lintKotlinMain') {
 }
 
 dependencies {
-    api('org.jmailen.gradle:kotlinter-gradle:2.3.1') {
+    api('org.jmailen.gradle:kotlinter-gradle:2.3.2') {
         // https://github.com/pinterest/ktlint/issues/678
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.5.1'
-    api 'com.android.tools.build:gradle:3.6.0'
+    api 'com.android.tools.build:gradle:3.6.1'
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
 
