@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update _Android Gradle Plugin_ to 3.6.1, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
 - Update _Kotlin Gradle Plugin_ to 1.3.70, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.3.70)
 - Update _kotlinter-gradle_ to version _2.3.2_
+- Update _Detekt_ to version _1.6.0_
 
 ## [0.7.0] - 2020-02-24
 ## Added:
