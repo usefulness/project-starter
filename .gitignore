@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# ignore AGP's properties file just in case when project opened in Android Studio
+local.properties
