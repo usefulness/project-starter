@@ -23,7 +23,7 @@ dependencies {
     }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.6.0'
     api 'com.android.tools.build:gradle:3.6.1'
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+    api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
 
     testImplementation 'org.assertj:assertj-core:3.15.0'
