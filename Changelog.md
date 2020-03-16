@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## Changed
 - Kotlin Gradle plugin becomes available for library consumers
+
+## Fixed
+- Fix detekt task failure when calling `./gradlew clean build` by providing Detekt config lazily
  
 ## [0.8.0] - 2020-03-14
 ## Changed

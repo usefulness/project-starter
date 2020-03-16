@@ -25,9 +25,9 @@ internal fun WithGradleProjectTest.setupGit(origin: File): Git {
     }.save()
     rootDirectory.resolve(".gitignore").writeText(
         """
-            .gradle
-            **/build/
-            """.trimIndent()
+        .gradle
+        **/build/
+        """.trimIndent()
     )
     git.commit("init")
     git.push().apply {

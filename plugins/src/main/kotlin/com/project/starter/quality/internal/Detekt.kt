@@ -10,16 +10,14 @@ import org.gradle.api.Project
 internal fun Project.configureDetekt(config: RootConfigExtension) {
     pluginManager.apply(DetektPlugin::class.java)
 
-    extensions.configure(DetektExtension::class.java) {
-        it.reports.apply {
+    extensions.configure(DetektExtension::class.java) { detekt ->
+        detekt.reports.apply {
             html.enabled = false
             xml.enabled = false
             txt.enabled = false
         }
-        val configFile = loadFromResources("detekt-config.yml")
-        logger.info("Detekt config: $configFile")
 
-        it.config.setFrom(configFile)
+        detekt.config.setFrom(loadFromResources("detekt-config.yml"))
     }
     tasks.named("detekt", Detekt::class.java) {
         it.exclude(".*/resources/.*", ".*/build/.*")

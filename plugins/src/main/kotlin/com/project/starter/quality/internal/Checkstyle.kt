@@ -119,8 +119,8 @@ private fun Project.applyCheckstyle() {
 }
 
 private fun Project.configureTask(task: Checkstyle) {
-    val suppressions = loadFromResources("checkstyle-suppressions.xml")
-    val config = loadFromResources("checkstyle-config.xml")
+    val suppressions = loadFromResources("checkstyle-suppressions.xml").orNull
+    val config = loadFromResources("checkstyle-config.xml").orNull
     logger.info("Checkstyle config: $config")
 
     task.configProperties = mapOf(
