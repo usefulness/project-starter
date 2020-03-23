@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.9.0] - 2020-03-17
 ## Changed
 - Kotlin Gradle plugin becomes available for library consumers
+- Update _Kotlin Gradle Plugin_ to 1.3.71, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.3.71)
+
 
 ## Fixed
 - Fix detekt task failure when calling `./gradlew clean build` by providing Detekt config lazily
