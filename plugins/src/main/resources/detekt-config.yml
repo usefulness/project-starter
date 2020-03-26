@@ -83,8 +83,10 @@ complexity:
     threshold: 60
   LongParameterList:
     active: true
-    threshold: 6
-    ignoreDefaultParameters: true
+    functionThreshold: 6
+    constructorThreshold: 7
+    ignoreDefaultParameters: false
+    ignoreDataClasses: true
   MethodOverloading:
     active: false
     threshold: 6
@@ -479,7 +481,7 @@ style:
     allowedPatterns: ''
   ForbiddenImport:
     active: false
-    imports: ''
+    imports: []
     forbiddenPatterns: ''
   ForbiddenMethodCall:
     active: false
