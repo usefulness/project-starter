@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.10.0] - 2020-04-05
 - Update _Detekt_ to version _1.7.3_
 
 ## [0.9.0] - 2020-03-17
@@ -86,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.9.0...HEAD
+[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.10.0...HEAD
 [0.10.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.9.0.../release/0.10.0
 [0.9.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.8.0.../release/0.9.0
 [0.8.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.7.0.../release/0.8.0
