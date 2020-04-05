@@ -1,5 +1,5 @@
 plugins {
-    id 'com.gradle.plugin-publish' version '0.10.1'
+    id 'com.gradle.plugin-publish' version '0.11.0'
     id 'java-gradle-plugin'
     id 'com.starter.library.kotlin'
     id 'maven-publish'
@@ -22,7 +22,7 @@ dependencies {
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.7.3'
-    api 'com.android.tools.build:gradle:3.6.1'
+    api 'com.android.tools.build:gradle:3.6.2'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
 
