@@ -82,7 +82,7 @@ private fun Project.configureAndroidCheckstyle() {
     val android = extensions.getByName("android") as BaseExtension
     applyCheckstyle()
     val checkstyle = tasks.register("checkstyle")
-    android.sourceSets.all { sourceSet ->
+    android.sourceSets.configureEach { sourceSet ->
         val id = sourceSet.name.split(" ").first()
         val files = getJavaFiles(sourceSet) + getResourceFiles(sourceSet)
         if (files.isNotEmpty()) {
@@ -104,8 +104,8 @@ private fun Project.getJavaFiles(sourceSet: AndroidSourceSet) = sourceSet.java.s
     fileTree(dir) {
         it.include("**/*.java")
     }
-}.reduce { merged: FileTree, tree ->
-    merged.plus(tree)
+}.reduce { merged: FileTree, tree: FileTree ->
+    merged + tree
 }.files
 
 private fun Project.getResourceFiles(sourceSet: AndroidSourceSet) = sourceSet.res.srcDirs

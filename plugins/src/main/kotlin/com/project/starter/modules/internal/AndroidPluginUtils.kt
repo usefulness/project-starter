@@ -6,10 +6,10 @@ import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.AndroidExtension
-import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.addForbidJavaFilesTask
-import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.addProjectCoverageTask
-import com.project.starter.modules.tasks.ProjectLintTask.Companion.addProjectLintTask
-import com.project.starter.modules.tasks.ProjectTestTask.Companion.addProjectTestTask
+import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.registerForbidJavaFilesTask
+import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
+import com.project.starter.modules.tasks.ProjectLintTask.Companion.registerProjectLintTask
+import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
 import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
@@ -44,21 +44,21 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
             projectConfig.defaultVariants
         }
     }
-    addProjectLintTask { projectLint ->
+    registerProjectLintTask { projectLint ->
         val childTasks = findBuildVariants().map { "$path:lint${it.capitalize()}" }
         childTasks.forEach { projectLint.dependsOn(it) }
     }
-    addProjectTestTask { projectTest ->
+    registerProjectTestTask { projectTest ->
         val childTasks = findBuildVariants().map { "$path:test${it.capitalize()}UnitTest" }
         childTasks.forEach { projectTest.dependsOn(it) }
     }
-    addProjectCoverageTask { projectCoverage ->
+    registerProjectCoverageTask { projectCoverage ->
         val childTasks = findBuildVariants().map { "$path:jacoco${it.capitalize()}TestReport" }
         childTasks.forEach { projectCoverage.dependsOn(it) }
     }
     val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
     if (!javaFilesAllowed) {
-        tasks.named("preBuild").dependsOn(addForbidJavaFilesTask())
+        tasks.named("preBuild").dependsOn(registerForbidJavaFilesTask())
     }
 }
 
@@ -68,7 +68,7 @@ internal inline fun <reified T> Project.withExtension(crossinline action: Projec
     }
 
 private fun BaseExtension.addKotlinSourceSets() {
-    sourceSets.all { set ->
+    sourceSets.configureEach { set ->
         val withKotlin = set.java.srcDirs.map { it.path.replace("java", "kotlin") }
         set.java.setSrcDirs(set.java.srcDirs + withKotlin)
     }

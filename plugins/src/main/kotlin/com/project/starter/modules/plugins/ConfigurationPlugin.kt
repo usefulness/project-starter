@@ -27,7 +27,7 @@ internal class ConfigurationPlugin : Plugin<Project> {
         dependencies.configureCommonDependencies()
 
         val javaVersion = rootConfig.javaVersion
-        tasks.withType(KotlinCompile::class.java).all {
+        tasks.withType(KotlinCompile::class.java).configureEach {
             it.kotlinOptions.jvmTarget = javaVersion.toString()
         }
     }

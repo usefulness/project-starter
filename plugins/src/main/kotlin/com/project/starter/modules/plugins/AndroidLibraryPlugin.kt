@@ -20,7 +20,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
         val rootConfig = this.rootConfig
         extensions.create("projectConfig", AndroidLibraryConfigExtension::class.java)
 
-        val android = extensions.getByType<LibraryExtension>(LibraryExtension::class.java).apply {
+        val android = extensions.getByType(LibraryExtension::class.java).apply {
             configureAndroidPlugin(rootConfig)
             configureAndroidLint(lintOptions)
         }
@@ -30,7 +30,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
             configureAndroidProject(variants, projectConfig)
 
-            variants.all { variant ->
+            variants.configureEach { variant ->
                 variant.generateBuildConfigProvider.configure { it.enabled = projectConfig.generateBuildConfig }
             }
         }

@@ -14,12 +14,12 @@ open class ForbidJavaFilesTask : SourceTask() {
     init {
         if (project.hasProperty("android")) {
             val extension = project.extensions.getByType(TestedExtension::class.java)
-            extension.sourceSets.all {
+            extension.sourceSets.configureEach {
                 source += it.java.sourceFiles
             }
         } else {
             val plugin = project.convention.getPlugin(JavaPluginConvention::class.java)
-            plugin.sourceSets.all {
+            plugin.sourceSets.configureEach {
                 if (it.name == "main" || it.name == "test") {
                     source += it.java
                 }
@@ -41,7 +41,7 @@ open class ForbidJavaFilesTask : SourceTask() {
 
         private const val TASK_NAME = "forbidJavaFiles"
 
-        fun Project.addForbidJavaFilesTask(action: (ForbidJavaFilesTask) -> Unit = {}) =
+        fun Project.registerForbidJavaFilesTask(action: (ForbidJavaFilesTask) -> Unit = {}) =
             tasks.register(TASK_NAME, ForbidJavaFilesTask::class.java, action)
     }
 }
