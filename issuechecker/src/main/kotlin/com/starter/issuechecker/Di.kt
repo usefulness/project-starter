@@ -23,31 +23,23 @@ internal fun defaultChecker(
     )
 }
 
-private fun youtrackService(): YoutrackService {
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://youtrack.jetbrains.com/")
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-    return retrofit.create(YoutrackService::class.java)
-}
-
-private fun githubService(okHttpClient: OkHttpClient): GithubService {
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com/")
-        .addConverterFactory(MoshiConverterFactory.create())
-        .client(okHttpClient)
-        .build()
-
-    return retrofit.create(GithubService::class.java)
-}
+internal fun restApi(baseUrl: String, okHttpClient: OkHttpClient = OkHttpClient()) = Retrofit.Builder()
+    .baseUrl(baseUrl)
+    .addConverterFactory(MoshiConverterFactory.create())
+    .client(okHttpClient)
+    .build()
 
 private fun createYoutrack() = YoutrackStatusResolver(
-    service = youtrackService()
+    service = restApi(
+        baseUrl = "https://youtrack.jetbrains.com/"
+    ).create(YoutrackService::class.java)
 )
 
 private fun createGithub(token: String?) = GithubStatusResolver(
-    service = githubService(githubOkHttpClient { token })
+    service = restApi(
+        baseUrl = "https://api.github.com/",
+        okHttpClient = githubOkHttpClient { token }
+    ).create(GithubService::class.java)
 )
 
 private fun githubOkHttpClient(auth: () -> String?) =

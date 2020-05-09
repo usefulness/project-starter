@@ -32,10 +32,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-results
-          path: /**/build/reports/tests
+          path: "${{ github.workspace }}/**/build/reports/tests"
       - name: Upload jacoco report
         uses: actions/upload-artifact@v2
         with:
           name: jacoco-report
-          path: /**/build/reports/jacoco
+          path: "${{ github.workspace }}/**/build/reports/tests"
 
