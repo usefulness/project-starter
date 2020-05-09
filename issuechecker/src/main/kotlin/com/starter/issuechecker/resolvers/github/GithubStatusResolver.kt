@@ -35,7 +35,7 @@ internal class GithubStatusResolver(
     }
 }
 
-interface GithubService {
+internal interface GithubService {
     @GET("repos/{owner}/{repo}/issues/{issueId}")
     suspend fun getIssue(
         @Path("owner") owner: String,
@@ -45,7 +45,7 @@ interface GithubService {
 }
 
 @JsonClass(generateAdapter = true)
-data class GithubIssue(
+internal data class GithubIssue(
     @Json(name = "title") val title: String,
     @Json(name = "closed_at") val closedAt: String?
 )

@@ -26,14 +26,14 @@ internal class YoutrackStatusResolver(
     }
 }
 
-interface YoutrackService {
+internal interface YoutrackService {
     @GET("api/issues/{issueId}?fields=resolved,idReadable,summary")
     suspend fun getIssue(@Path("issueId") issueId: String): YoutrackIssue
 }
 
 @JsonClass(generateAdapter = true)
-data class YoutrackIssue(
-    @Json(name ="idReadable")val idReadable: String,
-    @Json(name ="summary")val summary: String,
-    @Json(name ="resolved")val resolved: String?
+internal data class YoutrackIssue(
+    @Json(name = "idReadable") val idReadable: String,
+    @Json(name = "summary") val summary: String,
+    @Json(name = "resolved") val resolved: String?
 )
