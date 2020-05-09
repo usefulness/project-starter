@@ -20,5 +20,7 @@ jobs:
       run: ./gradlew build
     - name: Publish to Gradle Plugin Portal
       run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+    - name: Publish to Bintray repository
+      run: ./gradlew bintrayPublish
     - name: Publish to Github Package Registry
       run: ./gradlew publish -PGH_TOKEN=${{ secrets.GITHUB_TOKEN }} --continue || true
