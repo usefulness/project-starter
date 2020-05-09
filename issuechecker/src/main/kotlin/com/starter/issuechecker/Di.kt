@@ -12,9 +12,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 internal fun defaultChecker(
     config: IssueChecker.Config
 ): DefaultChecker {
-    val supportedTrackers = mapOf(
-        "github.com" to createGithub(config.githubToken),
-        "youtrack.jetbrains.com" to createYoutrack()
+    val supportedTrackers = setOf(
+        createGithub(config.githubToken),
+        createYoutrack()
     )
 
     return DefaultChecker(

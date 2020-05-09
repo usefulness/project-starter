@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-package com.project.starter.quality.internal
+package com.project.starter.quality.tasks
 
 import com.starter.issuechecker.CheckResult
 import com.starter.issuechecker.IssueChecker
@@ -25,7 +25,7 @@ import org.gradle.workers.WorkerExecutor
 import javax.inject.Inject
 
 @CacheableTask
-abstract class IssueLinksCheckerTask @Inject constructor(
+abstract class IssueLinksTask @Inject constructor(
     private val workerExecutor: WorkerExecutor
 ) : SourceTask() {
 
@@ -39,6 +39,11 @@ abstract class IssueLinksCheckerTask @Inject constructor(
     @Input
     @Optional
     val githubToken: Property<String> = project.objects.property(String::class.java)
+
+    init {
+        description = "Generates report for issue links in code comments"
+        group = "quality"
+    }
 
     @TaskAction
     fun run() {
@@ -55,10 +60,10 @@ abstract class IssueLinksCheckerTask @Inject constructor(
 
     companion object {
 
-        private const val TASK_NAME = "issueLinkCheckReport"
+        private const val TASK_NAME = "issueLinksReport"
 
-        fun Project.registerIssueCheckerTask(action: IssueLinksCheckerTask.() -> Unit = {}) =
-            tasks.register(TASK_NAME, IssueLinksCheckerTask::class.java, action)
+        fun Project.registerIssueCheckerTask(action: IssueLinksTask.() -> Unit = {}) =
+            tasks.register(TASK_NAME, IssueLinksTask::class.java, action)
     }
 }
 

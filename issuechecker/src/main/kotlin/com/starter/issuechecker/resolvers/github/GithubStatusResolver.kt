@@ -12,12 +12,11 @@ internal class GithubStatusResolver(
     private val service: GithubService
 ) : StatusResolver {
 
-    @Suppress("MagicNumber")
     override suspend fun resolve(url: URL): IssueStatus {
-        val result = pattern.find(url.toString())?.groups ?: throw IllegalArgumentException("Couldn't parse $url")
-        val owner = result[1]?.value ?: throw IllegalArgumentException("Couldn't get owner from $url")
-        val repo = result[2]?.value ?: throw IllegalArgumentException("Couldn't get repo from$url")
-        val issueId = result[3]?.value ?: throw IllegalArgumentException("Couldn't get issueId from $url")
+        val result = handledPattern.find(url.toString())?.groups ?: throw IllegalArgumentException("Couldn't parse $url")
+        val owner = result[OWNER]?.value ?: throw IllegalArgumentException("Couldn't get owner from $url")
+        val repo = result[REPO]?.value ?: throw IllegalArgumentException("Couldn't get repo from $url")
+        val issueId = result[ISSUE_ID]?.value ?: throw IllegalArgumentException("Couldn't get issueId from $url")
         val status = service.getIssue(owner, repo, issueId)
 
         return if (status.closedAt == null) {
@@ -27,10 +26,17 @@ internal class GithubStatusResolver(
         }
     }
 
+    override fun handles(url: URL): Boolean =
+        handledPattern.containsMatchIn(url.toString())
+
     companion object {
 
-        private val pattern by lazy {
-            "github.com/([^/]*)/([^/]*)/issues/([^/]*)/?".toRegex()
+        private const val OWNER = 2
+        private const val REPO = 3
+        private const val ISSUE_ID = 5
+
+        private val handledPattern by lazy {
+            "https?://(www.)?github.com/([^/]+)/([^/]+)/(issues|pull)/([^/]+)/?".toRegex()
         }
     }
 }

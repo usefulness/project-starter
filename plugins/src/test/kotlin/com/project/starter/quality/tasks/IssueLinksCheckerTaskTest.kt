@@ -65,9 +65,9 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             writeText(randomLinks)
         }
 
-        val result = runTask("issueLinkCheckReport")
+        val result = runTask("issueLinksReport")
 
-        assertThat(result.task(":module1:issueLinkCheckReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
@@ -88,9 +88,9 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             writeText(randomLinks)
         }
 
-        val result = runTask("issueLinkCheckReport")
+        val result = runTask("issueLinksReport")
 
-        assertThat(result.task(":module1:issueLinkCheckReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
@@ -110,7 +110,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             writeText(randomLinks)
         }
 
-        val result = runTask("issueLinkCheckReport")
+        val result = runTask("issueLinksReport")
 
         assertThat(moduleRoot.resolve("build/reports/issue_comments.txt"))
             .hasContent(
@@ -119,7 +119,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
                 """.trimIndent()
             )
-        assertThat(result.task(":module1:issueLinkCheckReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
@@ -140,7 +140,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             writeText(randomLinks)
         }
 
-        val result = runTask("issueLinkCheckReport")
+        val result = runTask("issueLinksReport")
 
         assertThat(moduleRoot.resolve("build/reports/issue_comments.txt"))
             .hasContent(
@@ -150,6 +150,6 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 ❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found
                 """.trimIndent()
             )
-        assertThat(result.task(":module1:issueLinkCheckReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 }

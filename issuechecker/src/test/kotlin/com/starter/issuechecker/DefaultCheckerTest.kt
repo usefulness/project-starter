@@ -18,7 +18,7 @@ internal class DefaultCheckerTest {
     @BeforeEach
     internal fun setUp() {
         checker = DefaultChecker(
-            supportedTrackers = mapOf("fixture.url" to statusResolver),
+            supportedTrackers = setOf(statusResolver),
             dispatcher = testDispatcher
         )
     }
@@ -77,4 +77,6 @@ internal class FakeStatusResolver : StatusResolver {
     val responses = mutableMapOf<String, IssueStatus>()
 
     override suspend fun resolve(url: URL) = responses.getValue(url.toString())
+
+    override fun handles(url: URL): Boolean = url.host == "fixture.url"
 }
