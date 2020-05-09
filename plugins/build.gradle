@@ -2,8 +2,8 @@ plugins {
     id 'com.gradle.plugin-publish' version '0.11.0'
     id 'java-gradle-plugin'
     id 'com.starter.library.kotlin'
-    id 'maven-publish'
     id 'pl.droidsonroids.jacoco.testkit' version '1.0.6'
+    id 'com.starter.publishing'
 }
 
 repositories {
@@ -34,10 +34,6 @@ dependencies {
 jacoco {
     toolVersion = "0.8.5"
 }
-
-java {
-    withSourcesJar()
-}
 test {
     useJUnitPlatform()
     testLogging {
@@ -45,23 +41,7 @@ test {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = 'github'
-            setUrl('https://maven.pkg.github.com/mateuszkwiecinski/project-starter')
-            credentials {
-                username 'mateuszkwiecinski'
-                password project.findProperty('GH_TOKEN') ?: ''
-            }
-        }
-    }
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
+
 pluginBundle {
     website = 'https://github.com/mateuszkwiecinski/project-starter/'
     vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter.git'
