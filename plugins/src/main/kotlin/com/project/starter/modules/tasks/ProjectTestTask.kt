@@ -14,7 +14,7 @@ open class ProjectTestTask : DefaultTask() {
 
         const val TASK_NAME = "projectTest"
 
-        fun Project.addProjectTestTask(action: (ProjectTestTask) -> Unit = {}) =
+        fun Project.registerProjectTestTask(action: (ProjectTestTask) -> Unit = {}) =
             tasks.register(TASK_NAME, ProjectTestTask::class.java, action)
     }
 }

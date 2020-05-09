@@ -3,7 +3,7 @@ plugins {
     id 'java-gradle-plugin'
     id 'com.starter.library.kotlin'
     id 'maven-publish'
-    id 'pl.droidsonroids.jacoco.testkit' version '1.0.4'
+    id 'pl.droidsonroids.jacoco.testkit' version '1.0.6'
 }
 
 repositories {
@@ -21,13 +21,18 @@ dependencies {
         // https://github.com/pinterest/ktlint/issues/678
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
-    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.7.3'
-    api 'com.android.tools.build:gradle:3.6.2'
+    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.8.0'
+    api 'com.android.tools.build:gradle:3.6.3'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
+    implementation project(":issuechecker")
 
-    testImplementation 'org.assertj:assertj-core:3.15.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
+    testImplementation 'org.assertj:assertj-core:3.16.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
 }
 
 java {
@@ -59,7 +64,7 @@ publishing {
 }
 pluginBundle {
     website = 'https://github.com/mateuszkwiecinski/project-starter/'
-    vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter/'
+    vcsUrl = 'https://github.com/mateuszkwiecinski/project-starter.git'
     description = 'Set of plugins that might be useful for Multi-Module Android projects.'
     tags = ['android', 'kotlin', 'quickstart', 'codestyle', 'library', 'baseline']
 }

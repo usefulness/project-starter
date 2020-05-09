@@ -14,7 +14,7 @@ open class ProjectLintTask : DefaultTask() {
 
         const val TASK_NAME = "projectLint"
 
-        fun Project.addProjectLintTask(action: (ProjectLintTask) -> Unit = {}) =
+        fun Project.registerProjectLintTask(action: (ProjectLintTask) -> Unit = {}) =
             tasks.register(TASK_NAME, ProjectLintTask::class.java, action)
     }
 }

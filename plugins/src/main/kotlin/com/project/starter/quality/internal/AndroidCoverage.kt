@@ -9,7 +9,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out BaseVariant>, projectExclusions: List<String>) {
     pluginManager.apply("jacoco")
 
-    variants.all { variant ->
+    variants.configureEach { variant ->
         tasks.register("jacoco${variant.name.capitalize()}TestReport", JacocoReport::class.java) { report ->
             val capitalizedVariant = variant.name.capitalize()
             val testTask = tasks.getByName("test${capitalizedVariant}UnitTest")

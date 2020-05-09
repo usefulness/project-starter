@@ -14,7 +14,7 @@ open class ProjectCoverageTask : DefaultTask() {
 
         const val TASK_NAME = "projectCoverage"
 
-        fun Project.addProjectCoverageTask(action: (ProjectCoverageTask) -> Unit = {}) =
+        fun Project.registerProjectCoverageTask(action: (ProjectCoverageTask) -> Unit = {}) =
             tasks.register(TASK_NAME, ProjectCoverageTask::class.java, action)
     }
 }

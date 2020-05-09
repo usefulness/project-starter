@@ -1,0 +1,6 @@
+{
+  "idReadable": "KT-24746",
+  "summary": "Provide ability to exclude specific warnings from compiler option Werror (all warnings as errors)",
+  "resolved": null,
+  "$type": "Issue"
+}
