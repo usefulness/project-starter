@@ -1,0 +1,44 @@
+plugins {
+    id "com.starter.library.kotlin"
+    id "application"
+    id "maven-publish"
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+application {
+    mainClassName = "com.project.starter.issuechecker.cli.Main"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
+    }
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+        }
+    }
+    repositories {
+        maven {
+            name = "github"
+            url "https://maven.pkg.github.com/mateuszkwiecinski/project-starter"
+            credentials {
+                username = "mateuszkwiecinski"
+                password = properties["GH_TOKEN"].toString()
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(":issuechecker")
+    implementation("com.beust:jcommander:1.71")
+    implementation("com.github.ajalt:clikt:2.6.0")
+
+    testImplementation "org.assertj:assertj-core:3.16.1"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.6.2"
+}

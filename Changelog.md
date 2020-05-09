@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Added
-- **[New feature]** `issueLinkCheckReport` that lists status of all issues in different public trackers
+- **[New feature]** `issueLinksReport` that lists status of all issues in different public trackers.  
+New feature is available as automatically registered gradle task, but also can be run as a standalone CLI tool 
 - Plugins are now available on `jcenter()` repository 
 
 ## Changed

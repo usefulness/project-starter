@@ -9,20 +9,15 @@ import kotlinx.coroutines.withContext
 import java.net.URL
 
 internal class DefaultChecker internal constructor(
-    private val supportedTrackers: Map<String, StatusResolver>,
+    private val supportedTrackers: Set<StatusResolver>,
     private val dispatcher: CoroutineDispatcher
 ) {
-
-    suspend fun findLinks(text: String): List<String> = withContext(dispatcher) {
-        getLinks(text).filterKeys { it != null }.values.flatten().map { it.toString() }
-    }
 
     private suspend fun getLinks(text: String) = withContext(dispatcher) {
         val result = linkPattern.findAll(text)
         result.mapNotNull { matcher -> URL(matcher.value) }
             .groupBy { url ->
-                val domain = supportedTrackers.keys.firstOrNull { domain -> url.host.contains(domain) }
-                supportedTrackers[domain]
+                supportedTrackers.firstOrNull { it.handles(url) }
             }
     }
 

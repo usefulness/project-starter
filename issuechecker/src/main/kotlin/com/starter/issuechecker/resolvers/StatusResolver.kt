@@ -6,4 +6,6 @@ import java.net.URL
 internal interface StatusResolver {
 
     suspend fun resolve(url: URL): IssueStatus
+
+    fun handles(url: URL): Boolean
 }

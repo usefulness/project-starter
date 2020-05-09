@@ -19,7 +19,7 @@ class PublishingPlugin : Plugin<Project> {
             with(repositories) {
                 maven { maven ->
                     maven.name = "github"
-                    maven.setUrl("ttps://maven.pkg.github.com/mateuszkwiecinski/project-starter")
+                    maven.setUrl("https://maven.pkg.github.com/mateuszkwiecinski/project-starter")
                     with(maven.credentials) {
                         username = "mateuszkwiecinski"
                         password = findConfig("GH_TOKEN")
