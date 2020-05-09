@@ -31,6 +31,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+}
+
 java {
     withSourcesJar()
 }

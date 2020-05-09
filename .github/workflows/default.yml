@@ -29,13 +29,13 @@ jobs:
       - name: Codecov report upload
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
       - name: Upload test results
-          uses: actions/upload-artifact@v2
-          with:
-            name: test-results
-            path: /**/build/reports/tests
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: /**/build/reports/tests
       - name: Upload jacoco report
-          uses: actions/upload-artifact@v2
-          with:
-            name: jacoco-report
-            path: /**/build/reports/jacoco
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacoco-report
+          path: /**/build/reports/jacoco
 
