@@ -24,11 +24,11 @@ publishing {
     }
     repositories {
         maven {
-            name = "github"
+            name "github"
             url "https://maven.pkg.github.com/mateuszkwiecinski/project-starter"
             credentials {
                 username = "mateuszkwiecinski"
-                password = properties["GH_TOKEN"].toString()
+                password = findProperty("GH_TOKEN")
             }
         }
     }

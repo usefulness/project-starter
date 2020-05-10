@@ -3,67 +3,90 @@
 package com.project.starter.issuechecker.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
-import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.file
 import com.github.ajalt.clikt.parameters.types.path
 import com.starter.issuechecker.CheckResult
 import com.starter.issuechecker.IssueChecker
 import com.starter.issuechecker.IssueStatus
 import java.io.File
+import java.nio.file.FileSystems
 
 fun main(args: Array<String>) {
     IssueCheckerCli().main(args)
 }
 
 class IssueCheckerCli : CliktCommand() {
-    val source by option("--source", "-s", help = "Source files").file(mustExist = true).required()
-    val githubToken by option(help = "Github token to check private issues")
-    val debug by option("--debug", "-d", help = "Enabled additional logging").flag()
-    val stacktrace by option("--stacktrace", help = "Shows additional stacktrace in case of failure").flag()
+    private val source by option(
+        "--src", "-s", "--source",
+        help = "Source file filter, i.e. `--source **.java` to find all java files"
+    ).default("**")
+    private val githubToken by option(help = "Github token to check private issues")
+    private val debug by option("--debug", "-d", help = "Enabled additional logging").flag()
+    private val stacktrace by option("--stacktrace", help = "Shows additional stacktrace in case of failure").flag()
+    private val dryRun by option("--dry-run", help = "Only finds all links, without checking them").flag()
 
-    val checker by lazy {
-        IssueChecker(
-            config = IssueChecker.Config(
-                githubToken = githubToken
-            )
-        )
+    private val checker by lazy {
+        IssueChecker(config = IssueChecker.Config(githubToken = githubToken))
     }
 
     override fun run() {
-        if (source.isDirectory) {
-            source.walkTopDown().filter { it.isFile }.forEach {
-                checkFile(it)
-            }
-        } else {
-            checkFile(source)
-        }
+        val workingDir = File("").absoluteFile
         if (debug) {
-            println("Done")
+            println("Working dir: $workingDir")
+        }
+
+        val pathMatcher = FileSystems.getDefault().getPathMatcher("glob:$source")
+        workingDir.walkTopDown()
+            .filter { it.isFile }
+            .filter { pathMatcher.matches(it.toPath()) }
+            .forEach {
+                if (debug) {
+                    println("Visiting file ${it.path}")
+                }
+                if (dryRun) {
+                    findLinks(it)
+                } else {
+                    checkFile(it)
+                }
+            }
+
+        if (debug) {
+            println("Completed")
+        }
+    }
+
+    private fun findLinks(file: File) {
+        checker.findAllLinksBlocking(file.readText()).forEach { links ->
+            println(file.path)
+            links.forEach {
+                println("-> $it")
+            }
         }
     }
 
     private fun checkFile(source: File) {
-        if (debug) {
-            println("Checking file ${source.path}")
-        }
-        checker.reportBlocking(source.readText()).forEach { result ->
+        val messages = checker.reportBlocking(source.readText()).map { result ->
             when (result) {
                 is CheckResult.Success -> {
-                    val message = when (result.issueStatus) {
+                    when (result.issueStatus) {
                         IssueStatus.Open -> "✅ ${result.issueUrl} (Opened)"
                         IssueStatus.Closed -> "👉 ${result.issueUrl} (Closed)"
-                    }
-                    println(message)
+                    }.let { { println("-> $it") } }
                 }
                 is CheckResult.Error -> {
                     if (debug || stacktrace) {
                         result.throwable.printStackTrace()
                     }
-                    System.err.println("Couldn't check url ${result.issueUrl}")
+                    "Couldn't check url ${result.issueUrl}".let { { System.err.println("-> $it") } }
                 }
-            }.let { }
+            }
+        }
+        if (messages.isNotEmpty()) {
+            println(source.path)
+            messages.forEach { it.invoke() }
         }
     }
 }
