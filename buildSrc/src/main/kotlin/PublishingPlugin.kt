@@ -55,5 +55,5 @@ class PublishingPlugin : Plugin<Project> {
 }
 
 private fun Project.findConfig(key: String): String {
-    return project.findProperty(key)?.toString() ?: System.getenv()[key] ?: ""
+    return findProperty(key)?.toString() ?: System.getenv()[key] ?: ""
 }

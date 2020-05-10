@@ -13,7 +13,7 @@ internal class DefaultChecker internal constructor(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    private suspend fun getLinks(text: String) = withContext(dispatcher) {
+    suspend fun getLinks(text: String) = withContext(dispatcher) {
         val result = linkPattern.findAll(text)
         result.mapNotNull { matcher -> URL(matcher.value) }
             .groupBy { url ->
