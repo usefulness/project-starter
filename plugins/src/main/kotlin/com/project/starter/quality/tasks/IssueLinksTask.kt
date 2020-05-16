@@ -9,6 +9,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileTree
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.logging.Logger
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -47,6 +48,7 @@ abstract class IssueLinksTask @Inject constructor(
 
     @TaskAction
     fun run() {
+        LoggingContext.logger = logger
         source.forEach { chunk ->
             workerExecutor.noIsolation().submit(IssueCheckAction::class.java) {
                 it.files.from(chunk)
@@ -76,14 +78,11 @@ interface IssueCheckParameters : WorkParameters {
 abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
 
     override fun execute() {
-        val issueChecker = IssueChecker(
-            config = IssueChecker.Config(
-                githubToken = parameters.githubToken.orNull
-            )
-        )
+        val issueChecker = IssueChecker(config = IssueChecker.Config(githubToken = parameters.githubToken.orNull))
         val output = parameters.reportFile.get().asFile
+        output.writeText("")
         for (file in parameters.files) {
-            val text = issueChecker.reportBlocking(file.readText()).joinToString(separator = "\n") { result ->
+            val message = issueChecker.reportBlocking(file.readText()).map { result ->
                 when (result) {
                     is CheckResult.Success -> when (result.issueStatus) {
                         IssueStatus.Open -> "✅ ${result.issueUrl} (Opened)"
@@ -93,7 +92,14 @@ abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
                 }
             }
 
-            output.appendText(text)
+            output.appendText(message.joinToString(separator = "\n"))
+            message.forEach {
+                LoggingContext.logger.quiet(it)
+            }
         }
     }
+}
+
+object LoggingContext {
+    lateinit var logger: Logger
 }
