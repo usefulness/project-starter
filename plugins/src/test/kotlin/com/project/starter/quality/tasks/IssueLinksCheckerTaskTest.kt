@@ -119,6 +119,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
                 """.trimIndent()
             )
+        assertThat(result.output).contains("\uD83D\uDC49 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)")
+        assertThat(result.output).contains("✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)")
         assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
@@ -150,6 +152,10 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 ❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found
                 """.trimIndent()
             )
+        assertThat(result.output).contains("✅ https://github.com/isaacs/github/issues/66 (Opened)")
+        assertThat(result.output).contains(
+            "❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found"
+        )
         assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 }
