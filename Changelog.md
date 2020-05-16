@@ -10,11 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **[New feature]** `issueLinksReport` that lists status of all issues in different public trackers.  
 The new feature is available as automatically registered gradle task, but also can be run as a standalone CLI tool 
 - Plugins are now available on `jcenter()` repository 
-- Update _Detekt_ to version _1.9.0_
 
 ## Changed
 - Update _Android Gradle Plugin_ to 3.6.3, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
-- Update _Detekt_ to version _1.8.0_
+- Update _Detekt_ to version _1.9.0_
 
 ## [0.11.0] - 2020-04-05
 ## Changed
