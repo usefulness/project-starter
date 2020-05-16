@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.12.0] - 2020-05-16
 ## Added
 - **[New feature]** `issueLinksReport` that lists status of all issues in different public trackers.  
 The new feature is available as automatically registered gradle task, but also can be run as a standalone CLI tool 
