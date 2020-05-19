@@ -19,7 +19,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            resolve("settings.gradle").writeText("""include ":module1", ":parentModule:childModule" """)
 
             resolve("module1") {
                 @Language("groovy")
@@ -47,6 +47,53 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                 test = resolve("src/test") {
                     resolve("kotlin/Test1.kt") {
                         writeText(kotlinClass("Test1"))
+                    }
+                }
+            }
+
+            resolve("parentModule") {
+                @Language("groovy")
+                val parentBuildScript =
+                    """
+                    plugins {
+                        id('com.starter.library.android')
+                    }
+                    """.trimIndent()
+                resolve("build.gradle") {
+                    writeText(parentBuildScript)
+                }
+                resolve("src/main/AndroidManifest.xml") {
+                    writeText(
+                        """
+                        <manifest package="com.example.parent" />
+                        
+                        """.trimIndent()
+                    )
+                }
+                resolve("src/main") {
+                    resolve("kotlin/ValidKotlinInParent.kt") {
+                        writeText(kotlinClass("ValidKotlinInParent"))
+                    }
+                }
+                resolve("childModule") {
+                    @Language("groovy")
+                    val childBuildscript =
+                        """
+                        plugins {
+                            id('com.starter.library.kotlin')
+                        }
+                        
+                        projectConfig {
+                            javaFilesAllowed = false
+                        }
+                        """.trimIndent()
+                    resolve("build.gradle") {
+                        writeText(childBuildscript)
+                    }
+                    resolve("src/main") {
+                        resolve("kotlin/ValidKotlinInChild.kt") {
+                            writeText(kotlinClass("ValidKotlinInChild"))
+                        }
                     }
                 }
             }
@@ -84,9 +131,9 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `task is cacheable`() {
-        runTask("assemble")
+        runTask(":module1:assemble")
 
-        val secondRun = runTask("assemble")
+        val secondRun = runTask(":module1:assemble")
 
         assertThat(secondRun.task(":module1:forbidJavaFiles")?.outcome).isNotEqualTo(TaskOutcome.SUCCESS)
     }
@@ -100,5 +147,16 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
         val secondRun = runTask("assemble")
 
         assertThat(secondRun.task(":module1:forbidJavaFiles")?.outcome).isNotEqualTo(TaskOutcome.SUCCESS)
+    }
+
+    @Test
+    fun `does not fail if registered in nested non-android module with android parent`() {
+        rootDirectory.resolve("parentModule/childModule/src/main/java/JavaClass.java") {
+            writeText(javaClass("JavaClass"))
+        }
+
+        val result = runTask(":parentModule:childModule:forbidJavaFiles", shouldFail = true)
+
+        assertThat(result.task(":parentModule:childModule:forbidJavaFiles")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 }

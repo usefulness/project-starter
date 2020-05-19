@@ -13,6 +13,7 @@ import com.project.starter.modules.tasks.ProjectLintTask.Companion.registerProje
 import com.project.starter.quality.internal.configureKotlinCoverage
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginConvention
 
 class KotlinLibraryPlugin : Plugin<Project> {
 
@@ -40,7 +41,15 @@ class KotlinLibraryPlugin : Plugin<Project> {
         withExtension<KotlinLibraryConfigExtension> { config ->
             val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed
             if (!javaFilesAllowed) {
-                tasks.named("compileKotlin").dependsOn(registerForbidJavaFilesTask())
+                val forbidJavaFiles = registerForbidJavaFilesTask { task ->
+                    val plugin = project.convention.getPlugin(JavaPluginConvention::class.java)
+                    plugin.sourceSets.configureEach { sourceSet ->
+                        if (sourceSet.name == "main" || sourceSet.name == "test") {
+                            task.source += sourceSet.java
+                        }
+                    }
+                }
+                tasks.named("compileKotlin").dependsOn(forbidJavaFiles)
             }
         }
     }

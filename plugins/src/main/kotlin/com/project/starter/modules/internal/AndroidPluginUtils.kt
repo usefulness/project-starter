@@ -1,6 +1,7 @@
 package com.project.starter.modules.internal
 
 import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.api.BaseVariant
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.extensions.RootConfigExtension
@@ -58,7 +59,14 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
     }
     val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
     if (!javaFilesAllowed) {
-        tasks.named("preBuild").dependsOn(registerForbidJavaFilesTask())
+        val forbidJavaFiles = registerForbidJavaFilesTask { task ->
+            val extension = project.extensions.getByType(TestedExtension::class.java)
+            extension.sourceSets.configureEach { sourceSet ->
+                task.source += sourceSet.java.sourceFiles
+            }
+        }
+
+        tasks.named("preBuild").dependsOn(forbidJavaFiles)
     }
 }
 
