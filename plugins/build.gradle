@@ -1,5 +1,5 @@
 plugins {
-    id 'com.gradle.plugin-publish' version '0.11.0'
+    id 'com.gradle.plugin-publish' version '0.12.0'
     id 'java-gradle-plugin'
     id 'com.starter.library.kotlin'
     id 'pl.droidsonroids.jacoco.testkit' version '1.0.7'
@@ -21,8 +21,8 @@ dependencies {
         // https://github.com/pinterest/ktlint/issues/678
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
-    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.9.0'
-    api 'com.android.tools.build:gradle:3.6.3'
+    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.9.1'
+    api 'com.android.tools.build:gradle:4.0.0'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
     implementation project(":issuechecker")
