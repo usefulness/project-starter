@@ -1,6 +1,7 @@
 package com.project.starter.quality.internal
 
 import com.android.build.gradle.api.BaseVariant
+import com.project.starter.modules.internal.getByType
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
@@ -13,7 +14,7 @@ internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out Base
         tasks.register("jacoco${variant.name.capitalize()}TestReport", JacocoReport::class.java) { report ->
             val capitalizedVariant = variant.name.capitalize()
             val testTask = tasks.getByName("test${capitalizedVariant}UnitTest")
-            val jacocoTestTaskExtension = testTask.extensions.getByType(JacocoTaskExtension::class.java).apply {
+            val jacocoTestTaskExtension = testTask.extensions.getByType<JacocoTaskExtension>().apply {
                 isIncludeNoLocationClasses = true
             }
             report.dependsOn(testTask)

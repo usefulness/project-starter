@@ -268,7 +268,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `does not configured quality plugin if disable using configuration plugin`() {
+    fun `does not configured quality plugin if disabled using configuration plugin`() {
         @Language("groovy")
         val qualityScript =
             """

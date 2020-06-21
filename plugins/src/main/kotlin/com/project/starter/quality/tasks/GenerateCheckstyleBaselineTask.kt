@@ -1,5 +1,6 @@
 package com.project.starter.quality.tasks
 
+import com.project.starter.modules.internal.getByType
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.DefaultTask
@@ -21,7 +22,7 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
 
     @TaskAction
     fun run() {
-        val violations = project.extensions.getByType(CheckstyleExtension::class.java).reportsDir.listFiles().orEmpty()
+        val violations = project.extensions.getByType<CheckstyleExtension>().reportsDir.listFiles().orEmpty()
         val all = violations.flatMap { readViolationFile(it) }
 
         val baseline = project.file("checkstyle-baseline.xml")
