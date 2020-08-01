@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.14.0] - 2020-08-01
 ## Changed
 - Update _kotlinter-gradle_ to version _2.4.1_
 - Update _Android Gradle Plugin_ to 4.0.0, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
@@ -111,7 +113,10 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.11.0...HEAD
+[Unreleased]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.14.0...HEAD
+[0.17.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.16.0.../release/0.17.0
+[0.16.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.15.0.../release/0.16.0
+[0.15.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.14.0.../release/0.15.0
 [0.14.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.13.0.../release/0.14.0
 [0.13.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.12.0.../release/0.13.0
 [0.12.0]: https://github.com/mateuszkwiecinski/project-starter/compare/release/0.11.0.../release/0.12.0
