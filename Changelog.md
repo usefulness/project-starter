@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
+- Update _kotlinter-gradle_ to version _2.4.1_
 - Update _Android Gradle Plugin_ to 4.0.0, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
 - Update _Detekt_ to version _1.9.1_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.9.1)
 

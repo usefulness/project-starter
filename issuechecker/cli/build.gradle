@@ -2,7 +2,7 @@ plugins {
     id "com.starter.library.kotlin"
     id "application"
     id "maven-publish"
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.github.johnrengelman.shadow" version "6.0.0"
 }
 
 application {
@@ -36,8 +36,7 @@ publishing {
 
 dependencies {
     implementation project(":issuechecker")
-    implementation("com.beust:jcommander:1.71")
-    implementation("com.github.ajalt:clikt:2.6.0")
+    implementation("com.github.ajalt:clikt:2.8.0")
 
     testImplementation "org.assertj:assertj-core:3.16.1"
     testImplementation "org.junit.jupiter:junit-jupiter:5.6.2"

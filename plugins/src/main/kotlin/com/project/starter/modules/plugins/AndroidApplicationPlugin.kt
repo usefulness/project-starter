@@ -6,6 +6,7 @@ import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
+import com.project.starter.modules.internal.getByType
 import com.project.starter.modules.internal.withExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -19,7 +20,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
         extensions.create("projectConfig", AndroidApplicationConfigExtension::class.java)
 
-        val android = extensions.getByType<AppExtension>(AppExtension::class.java).apply {
+        val android = extensions.getByType<AppExtension>().apply {
             configureAndroidPlugin(rootConfig)
             configureAndroidLint(lintOptions)
         }

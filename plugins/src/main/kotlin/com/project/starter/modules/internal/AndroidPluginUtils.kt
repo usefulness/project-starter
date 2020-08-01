@@ -14,6 +14,7 @@ import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProje
 import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
+import org.gradle.api.plugins.ExtensionContainer
 
 internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
@@ -58,7 +59,7 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
     val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
     if (!javaFilesAllowed) {
         val forbidJavaFiles = registerForbidJavaFilesTask { task ->
-            val extension = project.extensions.getByType(TestedExtension::class.java)
+            val extension = project.extensions.getByType<TestedExtension>()
             extension.sourceSets.configureEach { sourceSet ->
                 task.source += sourceSet.java.sourceFiles
             }
@@ -68,9 +69,12 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
     }
 }
 
+internal inline fun <reified T> ExtensionContainer.getByType() =
+    getByType(T::class.java)
+
 internal inline fun <reified T> Project.withExtension(crossinline action: Project.(T) -> Unit) =
     afterEvaluate {
-        it.action(it.extensions.getByType(T::class.java))
+        it.action(it.extensions.getByType<T>())
     }
 
 private fun BaseExtension.addKotlinSourceSets() {

@@ -117,6 +117,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
         val result = runTask("build", shouldFail = true)
 
-        assertThat(result.output).contains("Failed to apply plugin [id 'com.starter.config']")
+        assertThat(result.output).contains("Failed to apply plugin 'com.starter.config'")
     }
 }

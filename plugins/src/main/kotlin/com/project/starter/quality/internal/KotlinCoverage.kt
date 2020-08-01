@@ -1,5 +1,6 @@
 package com.project.starter.quality.internal
 
+import com.project.starter.modules.internal.getByType
 import org.gradle.api.Project
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
@@ -19,7 +20,7 @@ internal fun Project.configureKotlinCoverage() {
         }
     }
     tasks.named("test") { testTask ->
-        testTask.extensions.getByType(JacocoTaskExtension::class.java).apply {
+        testTask.extensions.getByType<JacocoTaskExtension>().apply {
             excludes = dagger
         }
     }

@@ -3,6 +3,7 @@ package com.project.starter.versioning.plugins
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
+import com.project.starter.modules.internal.getByType
 import com.project.starter.modules.internal.withExtension
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
 import org.eclipse.jgit.api.Git
@@ -20,7 +21,7 @@ class VersioningPlugin : Plugin<Project> {
         if (this != rootProject) throw GradleException("Versioning plugin can be applied to the root project only")
         pluginManager.apply(ReleasePlugin::class.java)
 
-        val scmConfig = extensions.getByType(VersionConfig::class.java).apply {
+        val scmConfig = extensions.getByType<VersionConfig>().apply {
             versionIncrementer = PredefinedVersionIncrementer.versionIncrementerFor("incrementMinorIfNotOnRelease")
             hooks.apply {
                 preReleaseHooks.add(
