@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 1.6, 8, 12, 13 ]
+        java: [ 8, 11, 12, 13 ]
     name: Java ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v1
@@ -21,6 +21,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('buildSrc/*.kt') }}
+          restore-keys: |
+            gradle-
+      - uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
       - name: Code style
