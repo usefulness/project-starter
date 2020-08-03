@@ -6,7 +6,7 @@ updates:
       interval: "daily"
     assignees:
       - "mateuszkwiecinski"
- - package-ecosystem: "gradle"
+  - package-ecosystem: "gradle"
     directory: "buildSrc"
     schedule:
       interval: "daily"
