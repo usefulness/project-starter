@@ -4,7 +4,6 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.internal.findByType
-import com.project.starter.modules.internal.getByType
 import com.project.starter.quality.tasks.IssueLinksTask.Companion.registerIssueCheckerTask
 import com.project.starter.quality.internal.configureCheckstyle
 import com.project.starter.quality.internal.configureDetekt

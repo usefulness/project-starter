@@ -17,6 +17,7 @@ internal fun kotlinClass(className: String) =
     object $className
 
     """.trimIndent()
+
 @Language("kotlin")
 internal fun kotlinTestClass(className: String) =
     """
