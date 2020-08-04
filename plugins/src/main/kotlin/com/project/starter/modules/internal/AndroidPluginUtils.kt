@@ -72,9 +72,12 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
 internal inline fun <reified T> ExtensionContainer.getByType() =
     getByType(T::class.java)
 
+internal inline fun <reified T> ExtensionContainer.findByType() =
+    findByType(T::class.java)
+
 internal inline fun <reified T> Project.withExtension(crossinline action: Project.(T) -> Unit) =
     afterEvaluate {
-        it.action(it.extensions.getByType<T>())
+        it.action(it.extensions.getByType())
     }
 
 private fun BaseExtension.addKotlinSourceSets() {
