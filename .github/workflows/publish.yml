@@ -2,8 +2,8 @@ name: Publish Project to Gradle Plugin Portal
 
 on:
   push:
-    branches:
-      - 'release/*'
+    tags:
+      - 'release-*'
 
 jobs:
   build:
