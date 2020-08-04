@@ -3,6 +3,7 @@ package com.project.starter.quality.plugins
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
+import com.project.starter.modules.internal.findByType
 import com.project.starter.modules.internal.getByType
 import com.project.starter.quality.tasks.IssueLinksTask.Companion.registerIssueCheckerTask
 import com.project.starter.quality.internal.configureCheckstyle
@@ -32,8 +33,8 @@ class QualityPlugin : Plugin<Project> {
 
     private fun Project.configureIssueCheckerTask() {
         registerIssueCheckerTask {
-            if (project.hasProperty("android")) {
-                val extension = project.extensions.getByType<BaseExtension>()
+            val extension = project.extensions.findByType<BaseExtension>()
+            if (extension != null) {
                 extension.sourceSets.configureEach { sourceSet ->
                     source += sourceSet.java.srcDirs
                         .map { dir -> project.fileTree(dir) }
