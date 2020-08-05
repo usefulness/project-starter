@@ -1,8 +1,8 @@
 ## Starter
 ___
 
-[![codecov](https://codecov.io/gh/mateuszkwiecinski/project-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/mateuszkwiecinski/project-starter)
-&nbsp;[![build](https://github.com/mateuszkwiecinski/project-starter/workflows/Build%20project/badge.svg)](https://github.com/mateuszkwiecinski/project-starter/actions)
+[![codecov](https://codecov.io/gh/usefulness/project-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/usefulness/project-starter)
+&nbsp;[![build](https://github.com/usefulness/project-starter/workflows/Build%20project/badge.svg)](https://github.com/usefulness/project-starter/actions)
 &nbsp;[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 [![version](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/project/starter/plugins/maven-metadata.xml?label=gradle)](https://plugins.gradle.org/search?term=com.starter) 
