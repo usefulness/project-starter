@@ -5,11 +5,12 @@ on:
     branches:
       - 'master'
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -21,4 +22,4 @@ jobs:
     - name: Build app with Gradle
       run: ./gradlew assemble
     - name: Publish to Github Package Registry
-      run: ./gradlew publish -PGH_TOKEN=${{ secrets.GITHUB_TOKEN }} --continue || true
+      run: ./gradlew publish --continue || true
