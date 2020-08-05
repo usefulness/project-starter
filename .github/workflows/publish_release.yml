@@ -1,9 +1,14 @@
-name: Publish Project to Gradle Plugin Portal
+name: Publish Project to all Maven repositories
 
 on:
   push:
     tags:
       - 'release-*'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+  BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
 
 jobs:
   build:
@@ -25,4 +30,4 @@ jobs:
     - name: Publish to Bintray repository
       run: ./gradlew bintrayUpload
     - name: Publish to Github Package Registry
-      run: ./gradlew publish -PGH_TOKEN=${{ secrets.GITHUB_TOKEN }} --continue || true
+      run: ./gradlew publish --continue || true

@@ -19,10 +19,10 @@ class PublishingPlugin : Plugin<Project> {
             with(repositories) {
                 maven { maven ->
                     maven.name = "github"
-                    maven.setUrl("https://maven.pkg.github.com/mateuszkwiecinski/project-starter")
+                    maven.setUrl("https://maven.pkg.github.com/usefulness/project-starter")
                     with(maven.credentials) {
-                        username = "mateuszkwiecinski"
-                        password = findConfig("GH_TOKEN")
+                        username = "usefulness"
+                        password = findConfig("GITHUB_TOKEN")
                     }
                 }
             }
@@ -40,7 +40,7 @@ class PublishingPlugin : Plugin<Project> {
                 repo = "maven"
                 name = "com.project.starter"
                 setLicenses("MIT")
-                vcsUrl = "https://github.com/mateuszkwiecinski/project-starter.git"
+                vcsUrl = "https://github.com/usefulness/project-starter.git"
                 with(version) {
                     name = project.version.toString()
                 }
@@ -55,5 +55,5 @@ class PublishingPlugin : Plugin<Project> {
 }
 
 private fun Project.findConfig(key: String): String {
-    return findProperty(key)?.toString() ?: System.getenv()[key] ?: ""
+    return findProperty(key)?.toString() ?: System.getenv(key) ?: ""
 }
