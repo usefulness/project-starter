@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Changed
+- Update _Detekt_ to version _1.11.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.11.0-RC1)
 
 ## [0.15.0] - 2020-08-04
 ## Changed
