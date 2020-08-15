@@ -474,6 +474,8 @@ potential-bugs:
     active: false
   MissingWhenCase:
     active: true
+  NullableToStringCall:
+    active: false
   RedundantElseInWhen:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -523,7 +525,7 @@ style:
     forbiddenPatterns: ''
   ForbiddenMethodCall:
     active: false
-    methods: []
+    methods: ['kotlin.io.println', 'kotlin.io.print']
   ForbiddenPublicDataClass:
     active: false
     ignorePackages: ['*.internal', '*.internal.*']
@@ -538,6 +540,8 @@ style:
     excludeAnnotatedFunction: ['dagger.Provides']
   LibraryCodeMustSpecifyReturnType:
     active: true
+  LibraryEntitiesShouldNotBePublic:
+    active: false
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
