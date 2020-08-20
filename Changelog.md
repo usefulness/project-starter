@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
-- Update _Detekt_ to version _1.11.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.11.0-RC1)
+- Update _Detekt_ to version _1.11.2_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.11.2)
 
 ## [0.15.0] - 2020-08-04
 ## Changed
