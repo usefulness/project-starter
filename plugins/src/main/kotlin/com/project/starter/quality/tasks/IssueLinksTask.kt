@@ -93,6 +93,7 @@ abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
             }
 
             output.appendText(message.joinToString(separator = "\n"))
+            LoggingContext.logger.info("Found ${message.size} issues in ${file.path}")
             message.forEach {
                 LoggingContext.logger.quiet(it)
             }
