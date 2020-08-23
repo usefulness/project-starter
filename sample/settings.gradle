@@ -1,0 +1,14 @@
+rootProject.name = "com.project.starter.sample"
+
+include ":moduleAndroidApplication"
+include ":moduleAndroidLibrary"
+include ":moduleKotlinLibrary"
+
+include ":moduleRoot:moduleAndroidLibrary"
+include ":moduleRoot:moduleKotlinLibrary"
+include ":moduleRootAndroid:moduleAndroidLibrary"
+include ":moduleRootAndroid:moduleKotlinLibrary"
+
+if (!hasProperty("useMavenLocal")) {
+    includeBuild ".."
+}
