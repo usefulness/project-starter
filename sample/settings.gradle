@@ -6,6 +6,7 @@ include ":moduleKotlinLibrary"
 
 include ":moduleRoot:moduleAndroidLibrary"
 include ":moduleRoot:moduleKotlinLibrary"
+include ":moduleRootAndroid"
 include ":moduleRootAndroid:moduleAndroidLibrary"
 include ":moduleRootAndroid:moduleKotlinLibrary"
 
