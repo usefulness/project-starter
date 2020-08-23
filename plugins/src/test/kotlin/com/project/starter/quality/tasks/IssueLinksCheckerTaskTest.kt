@@ -3,6 +3,7 @@ package com.project.starter.quality.tasks
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.gradle.internal.impldep.org.junit.Ignore
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
@@ -12,15 +13,16 @@ import java.io.File
 
 internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
-    lateinit var moduleRoot: File
+    lateinit var androidModuleRoot: File
+    lateinit var kotlinModuleRoot: File
 
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ':module1' """)
+            resolve("settings.gradle").writeText("""include ':module1', ':module2' """)
 
             resolve("build.gradle").writeText("")
-            moduleRoot = resolve("module1") {
+            androidModuleRoot = resolve("module1") {
                 @Language("groovy")
                 val script =
                     """
@@ -46,12 +48,31 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }
+            kotlinModuleRoot = resolve("module2") {
+                @Language("groovy")
+                val script =
+                    """
+                    plugins {
+                        id 'com.starter.library.kotlin' 
+                    }
+
+                    """.trimIndent()
+                resolve("build.gradle") {
+                    writeText(script)
+                }
+                resolve("src/main/java/ValidJava2.java") {
+                    writeText(javaClass("ValidJava2"))
+                }
+                resolve("src/test/java/ValidJavaTest2.java") {
+                    writeText(javaClass("ValidJavaTest2"))
+                }
+            }
         }
     }
 
     @Test
     fun `does not warn on regular project`() {
-        moduleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
             @Language("kotlin")
             val randomLinks =
                 """
@@ -73,7 +94,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     @Ignore("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
-        moduleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
             @Language("kotlin")
             val randomLinks =
                 """
@@ -95,10 +116,9 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `reports youtrack issues`() {
-        moduleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
-            val randomLinks =
-                """
+        @Language("kotlin")
+        val randomLinks =
+            """
                 /**
                 * https://news.ycombinator.com/
                 * https://youtrack.jetbrains.com/issue/KT-31666 
@@ -106,27 +126,33 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                  object ValidKotlin {
                    // https://youtrack.jetbrains.com/issue/KT-34230
                  }
-                """.trimIndent()
-            writeText(randomLinks)
+            """.trimIndent()
+
+        assertSoftly { softly ->
+            listOf("module1" to androidModuleRoot, "module2" to kotlinModuleRoot).forEach { (name, folder) ->
+                folder.resolve("src/main/kotlin/ValidKotlin.kt") {
+                    writeText(randomLinks)
+                }
+
+                val result = runTask(":$name:issueLinksReport")
+
+                softly.assertThat(androidModuleRoot.resolve("build/reports/issue_comments.txt"))
+                    .hasContent(
+                        """
+                        👉 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)
+                        ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
+                        """.trimIndent()
+                    )
+                softly.assertThat(result.output).contains("\uD83D\uDC49 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)")
+                softly.assertThat(result.output).contains("✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)")
+                softly.assertThat(result.task(":$name:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+            }
         }
-
-        val result = runTask("issueLinksReport")
-
-        assertThat(moduleRoot.resolve("build/reports/issue_comments.txt"))
-            .hasContent(
-                """
-                👉 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)
-                ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
-                """.trimIndent()
-            )
-        assertThat(result.output).contains("\uD83D\uDC49 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)")
-        assertThat(result.output).contains("✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)")
-        assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
     fun `reports github issues`() {
-        moduleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
             @Language("kotlin")
             val randomLinks =
                 """
@@ -144,7 +170,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
         val result = runTask("issueLinksReport")
 
-        assertThat(moduleRoot.resolve("build/reports/issue_comments.txt"))
+        assertThat(androidModuleRoot.resolve("build/reports/issue_comments.txt"))
             .hasContent(
                 """
                 ✅ https://github.com/isaacs/github/issues/66 (Opened)

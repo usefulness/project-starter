@@ -15,20 +15,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: set up JDK 1.8
+      - name: set up JAVA 8
         uses: actions/setup-java@v1
         with:
           java-version: 8
-      - uses: actions/cache@v2
+      - name: Cache .gradle
+        uses: burrunan/gradle-cache-action@v1
         with:
-          path: ~/.gradle/caches
-          key: gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('buildSrc/*.kt') }}
-          restore-keys: |
-            gradle-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.gradle/wrapper
-          key: wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          gradle-version: ${{ matrix.gradle }}
+          job-id: build-all-sample-projects
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
       - name: Code style
@@ -53,3 +48,30 @@ jobs:
           name: jacoco-report
           path: "${{ github.workspace }}/**/build/reports/jacoco"
 
+  build-all-sample-projects:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gradle: [ 6.1.1, 6.5.1, 6.6]
+        task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport]
+    name: Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: set up JAVA 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: Cache .gradle
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          gradle-version: ${{ matrix.gradle }}
+          job-id: build-all-sample-projects
+      - name: Pre-compile plugin
+        run: ./gradlew publishToMavenLocal -Pgroup=com.project.starter.local
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: sample
+          gradle-version: ${{ matrix.gradle }}
+          arguments: ${{ matrix.task }} -PuseMavenLocal

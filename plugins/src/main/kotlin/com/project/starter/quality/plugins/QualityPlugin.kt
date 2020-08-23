@@ -11,8 +11,13 @@ import com.project.starter.quality.internal.configureKtlint
 import com.project.starter.quality.tasks.ProjectCodeStyleTask.Companion.addProjectCodeStyleTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileTree
+import org.gradle.api.internal.HasConvention
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.tasks.SourceSet
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import java.io.File
 
 class QualityPlugin : Plugin<Project> {
 
@@ -40,9 +45,11 @@ class QualityPlugin : Plugin<Project> {
                         .reduce { merged: FileTree, tree: FileTree -> merged + tree }
                 }
             } else {
-                val plugin = project.convention.getPlugin(JavaPluginConvention::class.java)
-                plugin.sourceSets.configureEach {
-                    source += it.java
+                val javaPlugin = project.convention.getPlugin(JavaPluginConvention::class.java)
+                javaPlugin.sourceSets.configureEach { sourceSet ->
+                    source += sourceSet.java
+                    val kotlin = sourceSet.kotlin ?: return@configureEach
+                    source += kotlin.sourceDirectories.asFileTree
                 }
             }
             report.set(buildDir.resolve("reports/issue_comments.txt"))
@@ -61,4 +68,10 @@ class QualityPlugin : Plugin<Project> {
             tasks.named("preBuild").dependsOn("$path:formatKotlin")
         }
     }
+
+    private val SourceSet.kotlin
+        get() = ((getConvention("kotlin") ?: getConvention("kotlin2js")) as? KotlinSourceSet)?.kotlin
+
+    private fun SourceSet.getConvention(name: String) =
+        (this as HasConvention).convention.plugins[name]
 }
