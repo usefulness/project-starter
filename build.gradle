@@ -1,11 +1,30 @@
 buildscript {
     repositories.google()
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == "org.jetbrains.kotlin") {
+                details.useVersion "1.4.0"
+                details.because "Runtime JAR files in the classpath should have the same version"
+            }
+        }
+    }
 }
 plugins {
-    id 'com.starter.config'  version '0.16.0'
+    id 'com.starter.config' version '0.16.0'
     id 'com.starter.versioning' version '0.16.0'
 }
 
 commonConfig {
     javaFilesAllowed false
+}
+
+allprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == "org.jetbrains.kotlin") {
+                details.useVersion "1.4.0"
+                details.because "Runtime JAR files in the classpath should have the same version"
+            }
+        }
+    }
 }
