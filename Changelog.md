@@ -6,11 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.17.0] - 2020-08-25
 ## Changed
 - Update _Kotlin_ plugin to 1.4.0, see [release notes](https://kotlinlang.org/docs/reference/whatsnew14.html#mixing-named-and-positional-arguments)
 - Update _kotlinter-gradle_ to version _3.0.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.0.0)
 
-## [0.16.0] - 2020-08-25
+## [0.16.0] - 2020-08-24
 ## Changed
 - Update _Detekt_ to version _1.11.2_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.11.2)
 
