@@ -12,10 +12,6 @@ repositories {
     gradlePluginPortal()
 }
 
-tasks.named('lintKotlinMain') {
-    dependsOn 'formatKotlin'
-}
-
 dependencies {
     api('org.jmailen.gradle:kotlinter-gradle:3.0.0') {
         // https://github.com/pinterest/ktlint/issues/678

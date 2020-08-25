@@ -29,6 +29,7 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
         if (all.isEmpty()) {
             baseline.delete()
         } else {
+            val suppressions = all.joinToString(separator = "") { "\t$it\n" }
             baseline.writeText(
                 """
                 |<?xml version="1.0"?>
@@ -36,7 +37,7 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
                 |    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
                 |    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
                 |<suppressions>
-                |${all.joinToString(separator = "") { "\t$it\n" }}
+                |$suppressions
                 |</suppressions>
                 |
                 """.trimMargin()

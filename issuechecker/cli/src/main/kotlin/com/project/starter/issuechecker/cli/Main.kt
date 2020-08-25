@@ -20,7 +20,9 @@ fun main(args: Array<String>) {
 
 class IssueCheckerCli : CliktCommand() {
     private val source by option(
-        "--src", "-s", "--source",
+        "--src",
+        "-s",
+        "--source",
         help = "Source file filter, i.e. `--source **.java` to find all java files"
     ).default("**")
     private val githubToken by option(help = "Github token to check private issues")
