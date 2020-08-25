@@ -1,7 +1,6 @@
 package com.project.starter.modules.plugins
 
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.modules.internal.configureCommonDependencies
 import com.project.starter.modules.internal.configureKapt
 import com.project.starter.modules.internal.configureRepositories
 import com.project.starter.versioning.plugins.VersioningPlugin
@@ -23,8 +22,6 @@ internal class ConfigurationPlugin : Plugin<Project> {
         }
         configureKapt()
         configureRepositories()
-
-        dependencies.configureCommonDependencies()
 
         val javaVersion = rootConfig.javaVersion
         tasks.withType(KotlinCompile::class.java).configureEach {
