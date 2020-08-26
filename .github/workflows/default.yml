@@ -29,6 +29,8 @@ jobs:
         run: ./gradlew projectCodestyle
       - name: Assemble
         run: ./gradlew assemble
+      - name: Validate Plugins
+        run: ./gradlew validatePlugins validateTaskProperties
       - name: Jacoco test report
         run: ./gradlew projectCoverage
       - name: Upload coverage to Codecov
