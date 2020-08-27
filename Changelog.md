@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.18.0] - 2020-08-27
+## Changed
+- Update _Detekt_ to version _1.12.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.12.0)
+- Update _kotlinter-gradle_ to version _3.0.2_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.0.2)
+
+## [0.17.1] - 2020-08-25
 ## Fixed
 - Use the same Kotlin version across runtime JAR files 
 
@@ -136,7 +143,14 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.14.0...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.17.1...HEAD
+[0.23.0]: https://github.com/usefulness/project-starter/compare/release/0.22.0.../release/0.23.0
+[0.22.0]: https://github.com/usefulness/project-starter/compare/release/0.21.0.../release/0.22.0
+[0.21.0]: https://github.com/usefulness/project-starter/compare/release/0.20.0.../release/0.21.0
+[0.20.0]: https://github.com/usefulness/project-starter/compare/release/0.19.0.../release/0.20.0
+[0.19.0]: https://github.com/usefulness/project-starter/compare/release/0.18.0.../release/0.19.0
+[0.18.0]: https://github.com/usefulness/project-starter/compare/release/0.17.1.../release/0.18.0
+[0.17.1]: https://github.com/usefulness/project-starter/compare/release/0.17.0.../release/0.17.1
 [0.17.0]: https://github.com/usefulness/project-starter/compare/release/0.16.0.../release/0.17.0
 [0.16.0]: https://github.com/usefulness/project-starter/compare/release/0.15.0.../release/0.16.0
 [0.15.0]: https://github.com/usefulness/project-starter/compare/release/0.14.0.../release/0.15.0
