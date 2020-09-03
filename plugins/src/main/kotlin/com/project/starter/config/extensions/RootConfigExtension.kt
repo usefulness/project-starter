@@ -55,7 +55,7 @@ open class QualityPluginConfig(
 }
 
 open class AndroidPluginConfig(
-    var compileSdkVersion: Int = 29,
+    var compileSdkVersion: Int = 30,
     var minSdkVersion: Int = 23,
     var targetSdkVersion: Int? = null
 ) {
