@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## Changed
 - Android: Update `compileSdk` to 30
+- Codestyle: Enable ignoreDefaultParameters for `LongParameterList` check
 
 ## [0.18.0] - 2020-08-27
 ## Changed
