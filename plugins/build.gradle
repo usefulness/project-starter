@@ -19,7 +19,7 @@ dependencies {
     }
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.12.0'
     api 'com.android.tools.build:gradle:4.0.1'
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0'
+    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
     implementation project(":issuechecker")
 
