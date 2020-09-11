@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - Android: Update `compileSdk` to 30
 - Codestyle: Enable ignoreDefaultParameters for `LongParameterList` check
+- Update Kotlin plugin to [1.4.10](https://github.com/JetBrains/kotlin/releases/tag/v1.4.10)
 
 ## [0.18.0] - 2020-08-27
 ## Changed
