@@ -13,10 +13,7 @@ repositories {
 }
 
 dependencies {
-    api('org.jmailen.gradle:kotlinter-gradle:3.0.2') {
-        // https://github.com/pinterest/ktlint/issues/678
-        exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
-    }
+    api 'org.jmailen.gradle:kotlinter-gradle:3.0.2'
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.13.1'
     api 'com.android.tools.build:gradle:4.0.1'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10'
