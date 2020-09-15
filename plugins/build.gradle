@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    api('org.jmailen.gradle:kotlinter-gradle:3.0.2') {
+    api('org.jmailen.gradle:kotlinter-gradle:3.1.0') {
         // https://github.com/pinterest/ktlint/issues/678
         exclude group: 'com.pinterest.ktlint', module: 'ktlint-test'
     }
