@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
-- Codestyle: Update _Detekt_ to version _1.13.1_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.13.1)
+- Codestyle: Update _Detekt_ to version _1.14.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.14.0)
 - Update _kotlinter-gradle_ to version _3.1.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.1.0)
 
 ## [0.19.0] - 2020-09-11
