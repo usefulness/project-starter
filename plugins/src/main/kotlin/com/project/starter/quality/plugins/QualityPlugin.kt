@@ -19,6 +19,9 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 class QualityPlugin : Plugin<Project> {
 
+    private val SourceSet.kotlin
+        get() = ((getConvention("kotlin") ?: getConvention("kotlin2js")) as? KotlinSourceSet)?.kotlin
+
     override fun apply(project: Project) = with(project) {
         repositories.jcenter()
         addProjectCodeStyleTask()
@@ -66,9 +69,6 @@ class QualityPlugin : Plugin<Project> {
             tasks.named("preBuild").dependsOn("$path:formatKotlin")
         }
     }
-
-    private val SourceSet.kotlin
-        get() = ((getConvention("kotlin") ?: getConvention("kotlin2js")) as? KotlinSourceSet)?.kotlin
 
     private fun SourceSet.getConvention(name: String) =
         (this as HasConvention).convention.plugins[name]

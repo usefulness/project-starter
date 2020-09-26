@@ -30,10 +30,6 @@ abstract class IssueLinksTask @Inject constructor(
     private val workerExecutor: WorkerExecutor
 ) : SourceTask() {
 
-    @InputFiles
-    @PathSensitive(PathSensitivity.RELATIVE)
-    override fun getSource(): FileTree = super.getSource()
-
     @OutputFile
     val report: RegularFileProperty = project.objects.fileProperty()
 
@@ -45,6 +41,10 @@ abstract class IssueLinksTask @Inject constructor(
         description = "Generates report for issue links in code comments"
         group = "quality"
     }
+
+    @InputFiles
+    @PathSensitive(PathSensitivity.RELATIVE)
+    override fun getSource(): FileTree = super.getSource()
 
     @TaskAction
     fun run() {
