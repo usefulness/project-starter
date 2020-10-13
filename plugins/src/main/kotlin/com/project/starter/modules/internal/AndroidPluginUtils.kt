@@ -61,7 +61,7 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
         val forbidJavaFiles = registerForbidJavaFilesTask { task ->
             val extension = project.extensions.getByType<TestedExtension>()
             extension.sourceSets.configureEach { sourceSet ->
-                task.source += sourceSet.java.sourceFiles
+                task.source += sourceSet.java.getSourceFiles()
             }
         }
 

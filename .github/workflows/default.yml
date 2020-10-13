@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gradle: [ 6.1.1, 6.5.1, current, rc]
+        gradle: [ 6.5.1, current, rc]
         task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport]
     name: Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
