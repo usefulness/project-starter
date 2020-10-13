@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [0.21.1] - 2020-10-13
 ## Fixed
 - Allow using plugin with different AGP versions by not using internal AGP apis
 
@@ -162,7 +165,8 @@ The new feature is available as automatically registered gradle task, but also c
 
 [Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.20.0...HEAD
 [0.23.0]: https://github.com/usefulness/project-starter/compare/release/0.22.0.../release/0.23.0
-[0.22.0]: https://github.com/usefulness/project-starter/compare/release/0.21.0.../release/0.22.0
+[0.22.0]: https://github.com/usefulness/project-starter/compare/release/0.21.1.../release/0.22.0
+[0.21.1]: https://github.com/usefulness/project-starter/compare/release/0.21.0.../release/0.21.1
 [0.21.0]: https://github.com/usefulness/project-starter/compare/release/0.20.0.../release/0.21.0
 [0.20.0]: https://github.com/usefulness/project-starter/compare/release/0.19.0.../release/0.20.0
 [0.19.0]: https://github.com/usefulness/project-starter/compare/release/0.18.0.../release/0.19.0
