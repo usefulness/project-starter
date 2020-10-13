@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION") // https://issuetracker.google.com/issues/170650362
+
 package com.project.starter.quality.internal
 
 import com.android.build.gradle.BaseExtension
