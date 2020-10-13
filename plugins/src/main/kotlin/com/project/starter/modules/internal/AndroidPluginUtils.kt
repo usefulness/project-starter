@@ -21,7 +21,7 @@ internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtensio
         compileSdkVersion(rootConfig.android.compileSdkVersion)
         minSdkVersion(rootConfig.android.minSdkVersion)
         targetSdkVersion(rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion)
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
     dexOptions.preDexLibraries = true
     addKotlinSourceSets()
