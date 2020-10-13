@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.21.0] - 2020-10-13
+## Changed
+- Update _Android Gradle Plugin_ to 4.1.0, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
+
 ## [0.20.0] - 2020-09-27
 ## Changed
 - Codestyle: Update _Detekt_ to version _1.14.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.14.0)
@@ -154,7 +159,7 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.17.1...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.20.0...HEAD
 [0.23.0]: https://github.com/usefulness/project-starter/compare/release/0.22.0.../release/0.23.0
 [0.22.0]: https://github.com/usefulness/project-starter/compare/release/0.21.0.../release/0.22.0
 [0.21.0]: https://github.com/usefulness/project-starter/compare/release/0.20.0.../release/0.21.0
