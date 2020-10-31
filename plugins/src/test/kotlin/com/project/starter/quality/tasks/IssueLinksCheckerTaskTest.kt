@@ -4,10 +4,10 @@ import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.SoftAssertions.assertSoftly
-import org.gradle.internal.impldep.org.junit.Ignore
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -92,7 +92,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     }
 
     @Test
-    @Ignore("Google Issue tracker is not supported yet")
+    @Disabled("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
         androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
             @Language("kotlin")
