@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     api 'org.jmailen.gradle:kotlinter-gradle:3.2.0'
-    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.0'
+    api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.2'
     api 'com.android.tools.build:gradle:4.1.0'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.11.0'
