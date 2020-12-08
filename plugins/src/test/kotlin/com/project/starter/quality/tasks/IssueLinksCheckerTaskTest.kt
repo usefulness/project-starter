@@ -157,7 +157,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             val randomLinks =
                 """
                 /**
-                * https://github.com/isaacs/github/issues/66
+                * https://github.com/isaacs/github/issues/5
                 **/
                  object ValidKotlin {
                    // https://www.example.com
@@ -173,12 +173,12 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
         assertThat(androidModuleRoot.resolve("build/reports/issue_comments.txt"))
             .hasContent(
                 """
-                ✅ https://github.com/isaacs/github/issues/66 (Opened)
+                ✅ https://github.com/isaacs/github/issues/5 (Opened)
                 👉 https://github.com/apollographql/apollo-android/issues/2207 (Closed)
                 ❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found
                 """.trimIndent()
             )
-        assertThat(result.output).contains("✅ https://github.com/isaacs/github/issues/66 (Opened)")
+        assertThat(result.output).contains("✅ https://github.com/isaacs/github/issues/5 (Opened)")
         assertThat(result.output).contains(
             "❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found"
         )
