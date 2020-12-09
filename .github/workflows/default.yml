@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: 8
       - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
+        uses: burrunan/gradle-cache-action@v1.6
         with:
           job-id: build-all-sample-projects
       - name: Gradle Wrapper Validation
@@ -65,7 +65,7 @@ jobs:
         with:
           java-version: 8
       - name: Pre-compile plugin using gradle wrapper
-        uses: burrunan/gradle-cache-action@v1
+        uses: burrunan/gradle-cache-action@v1.6
         with:
           job-id: build-all-sample-projects
           arguments:  publishToMavenLocal -Pgroup=com.project.starter.local
