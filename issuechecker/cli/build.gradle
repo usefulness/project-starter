@@ -28,7 +28,7 @@ publishing {
             url "https://maven.pkg.github.com/usefulness/project-starter"
             credentials {
                 username = "usefulness"
-                password = findProperty("GITHUB_TOKEN")
+                password = findProperty("GITHUB_TOKEN")?.toString() ?: System.getenv("GITHUB_TOKEN") ?: ""
             }
         }
     }

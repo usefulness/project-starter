@@ -99,6 +99,9 @@ complexity:
   MethodOverloading:
     active: false
     threshold: 6
+  NamedArguments:
+    active: false
+    threshold: 3
   NestedBlockDepth:
     active: true
     threshold: 4
@@ -488,6 +491,7 @@ potential-bugs:
     active: false
   MissingWhenCase:
     active: true
+    allowElseExpression: true
   NullableToStringCall:
     active: false
   RedundantElseInWhen:
@@ -512,7 +516,7 @@ potential-bugs:
 style:
   active: true
   ClassOrdering:
-    active: true
+    active: false
   CollapsibleIfStatements:
     active: false
   DataClassContainsFunctions:
@@ -606,6 +610,8 @@ style:
     active: false
   RedundantExplicitType:
     active: false
+  RedundantHigherOrderMapUsage:
+    active: false
   RedundantVisibilityModifierRule:
     active: false
   ReturnCount:
@@ -663,6 +669,8 @@ style:
     allowVars: false
   UseEmptyCounterpart:
     active: false
+  UseIfEmptyOrIfBlank:
+    active: true
   UseIfInsteadOfWhen:
     active: true
   UseRequire:
