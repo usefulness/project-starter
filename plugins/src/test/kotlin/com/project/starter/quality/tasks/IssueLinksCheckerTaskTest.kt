@@ -162,7 +162,6 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                  object ValidKotlin {
                    // https://www.example.com
                    // https://github.com/apollographql/apollo-android/issues/2207 <- closed
-                   // https://github.com/private/repository-i-dont-have-access-to/issues/543
                  }
                 """.trimIndent()
             writeText(randomLinks)
@@ -175,13 +174,10 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 """
                 ✅ https://github.com/isaacs/github/issues/5 (Opened)
                 👉 https://github.com/apollographql/apollo-android/issues/2207 (Closed)
-                ❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found
                 """.trimIndent()
             )
         assertThat(result.output).contains("✅ https://github.com/isaacs/github/issues/5 (Opened)")
-        assertThat(result.output).contains(
-            "❗ https://github.com/private/repository-i-dont-have-access-to/issues/543 -> error: HTTP 404 Not Found"
-        )
+        assertThat(result.output).contains("\uD83D\uDC49 https://github.com/apollographql/apollo-android/issues/2207 (Closed)")
         assertThat(result.task(":module1:issueLinksReport")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 }
