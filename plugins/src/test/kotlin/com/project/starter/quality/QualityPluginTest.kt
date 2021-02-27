@@ -3,12 +3,12 @@ package com.project.starter.quality
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import com.project.starter.kotlinClass
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 
 internal class QualityPluginTest : WithGradleProjectTest() {
 
@@ -20,7 +20,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            resolve("build.gradle").createNewFile()
+            resolve("build.gradle")
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -29,6 +29,8 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                             id('com.starter.quality')
                             id('kotlin')
                         }
+                        
+                        repositories.jcenter()
                         """.trimIndent()
                     )
                 }
@@ -61,6 +63,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     
                     repositories {
                         google()
+                        jcenter()
                     }
                     
                     android {
@@ -129,7 +132,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     }
                 }
                 """.trimIndent()
-            rootDirectory.resolve("build.gradle").appendText(buildscript)
+            rootDirectory.resolve("build.gradle").writeText(buildscript)
         }
 
         module1Root.resolve("src/main//kotlin/WrongFileName.kt") {
@@ -191,9 +194,8 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             commonConfig {
                 javaFilesAllowed false
             }
-            
             """.trimIndent()
-        rootDirectory.resolve("build.gradle").appendText(buildscript)
+        rootDirectory.resolve("build.gradle").writeText(buildscript)
 
         val result = runTask("projectCodeStyle")
 

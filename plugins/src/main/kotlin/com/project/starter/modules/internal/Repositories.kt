@@ -14,5 +14,11 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
             googleLibraries.forEach(content::includeGroupByRegex)
         }
     }
-    jcenter()
+    mavenCentral()
+    jcenter { repository ->
+        repository.mavenContent { content ->
+            content.includeGroup("org.jetbrains.trove4j")
+            content.includeGroup("org.jetbrains.kotlinx")
+        }
+    }
 }

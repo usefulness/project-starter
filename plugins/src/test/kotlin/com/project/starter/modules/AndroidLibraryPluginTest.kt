@@ -282,7 +282,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(qualityScript)
+        rootBuildScript.writeText(qualityScript)
 
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
 

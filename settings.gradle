@@ -1,10 +1,2 @@
 rootProject.name = 'com.project.starter'
-include ":plugins", "issuechecker", "issuechecker:cli"
-
-def isCiServer = System.getenv().containsKey("CI")
-
-buildCache {
-    local {
-        enabled = !isCiServer
-    }
-}
+include ":plugins"

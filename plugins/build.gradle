@@ -7,7 +7,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     google()
     gradlePluginPortal()
 }
@@ -16,9 +16,9 @@ dependencies {
     api 'org.jmailen.gradle:kotlinter-gradle:3.3.0'
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.15.0'
     api 'com.android.tools.build:gradle:4.1.2'
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30'
+    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31'
     implementation 'pl.allegro.tech.build:axion-release-plugin:1.12.1'
-    implementation project(":issuechecker")
+    implementation 'com.github.usefulness:issuechecker:0.1.1'
 
     testImplementation "org.assertj:assertj-core:3.19.0"
     testImplementation "org.junit.jupiter:junit-jupiter:5.7.1"

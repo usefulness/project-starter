@@ -179,7 +179,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(qualityScript)
+        rootBuildScript.writeText(qualityScript)
 
         val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
 
@@ -212,7 +212,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(versioningScript)
+        rootBuildScript.writeText(versioningScript)
 
         val versioningDisabled = runTask("currentVersion", shouldFail = true)
 

@@ -6,14 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Changed
+- The `issuechecker` dependency has been moved from `jcenter()` to `mavenCentral()`
+- Update Kotlin plugin to [1.4.31](https://github.com/JetBrains/kotlin/releases/tag/v1.4.31)
 
 ## [0.23.0] - 2021-02-06
-## Updated
+## Changed
 - Update Jacoco to version `0.8.6`
 - Update Kotlin plugin to [1.4.30](https://github.com/JetBrains/kotlin/releases/tag/v1.4.30)
 
 ## [0.22.0] - 2021-01-15
-## Updated
+## Changed
 - Codestyle: Update _Detekt_ to version _1.15.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.15.0)
 - Update _kotlinter-gradle_ to version _3.3.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.3.0)
 - Update Kotlin plugin to [1.4.21](https://github.com/JetBrains/kotlin/releases/tag/v1.4.21)
