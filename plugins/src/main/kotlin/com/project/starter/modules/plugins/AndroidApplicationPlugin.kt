@@ -6,6 +6,7 @@ import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
+import com.project.starter.modules.internal.configureKapt
 import com.project.starter.modules.internal.getByType
 import com.project.starter.modules.internal.withExtension
 import org.gradle.api.Plugin
@@ -27,6 +28,10 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
         withExtension<AndroidApplicationConfigExtension> { projectConfig ->
             configureAndroidProject(android.applicationVariants, projectConfig)
+
+            if (projectConfig.useKapt ?: rootConfig.useKapt) {
+                configureKapt()
+            }
         }
     }
 }

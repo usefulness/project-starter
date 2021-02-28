@@ -1,7 +1,6 @@
 package com.project.starter.modules.plugins
 
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.modules.internal.configureKapt
 import com.project.starter.modules.internal.configureRepositories
 import com.project.starter.versioning.plugins.VersioningPlugin
 import org.gradle.api.Plugin
@@ -20,7 +19,6 @@ internal class ConfigurationPlugin : Plugin<Project> {
                 rootProject.pluginManager.apply(VersioningPlugin::class.java)
             }
         }
-        configureKapt()
         configureRepositories()
 
         val javaVersion = rootConfig.javaVersion
