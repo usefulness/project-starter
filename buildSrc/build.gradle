@@ -5,13 +5,13 @@ plugins {
 }
 
 repositories {
-    google()
     mavenCentral()
     gradlePluginPortal()
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin"
+    implementation "com.gradle.publish:plugin-publish-plugin:0.13.0"
 }
 
 gradlePlugin {

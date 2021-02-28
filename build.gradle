@@ -20,10 +20,11 @@ allprojects {
         }
     }
 
-    pluginManager.withPlugin("java") {
-        java {
-            toolchain {
-                languageVersion.set(JavaLanguageVersion.of(8))
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
+                details.useVersion "1.4.31"
             }
         }
     }

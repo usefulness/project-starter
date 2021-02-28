@@ -6,7 +6,7 @@ on:
 jobs:
   generate-diff:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
       with:
@@ -17,24 +17,37 @@ jobs:
           java-version: 1.8
     - name: Cache .gradle
       uses: burrunan/gradle-cache-action@v1
-    - id: dependency-diff
+      with:
+        gradle-distribution-sha-256-sum-warning: false
+    - id: dependency-diff-jvm
       name: Generate dependency diff
       uses: usefulness/dependency-tree-diff-action@v1
       with:
         configuration: 'runtimeClasspath'
-        project: 'plugins'
+        project: 'jvm'
+    - id: dependency-diff-android
+      name: Generate dependency diff
+      uses: usefulness/dependency-tree-diff-action@v1
+      with:
+        configuration: 'runtimeClasspath'
+        project: 'android'
     - uses: peter-evans/find-comment@v1
       id: find_comment
       with:
         issue-number: ${{ github.event.pull_request.number }}
         body-includes: Dependency diff
     - uses: peter-evans/create-or-update-comment@v1
-      if: ${{ steps.dependency-diff.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
+      if: ${{ steps.dependency-diff-jvm.outputs.text-diff != null || steps.dependency-diff-android.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
       with:
         body: |
-          Dependency diff: 
+          Dependency diff:
+            `:jvm`:
             ```diff
-            ${{ steps.dependency-diff.outputs.text-diff }}
+            ${{ steps.dependency-diff-jvm.outputs.text-diff }}
+            ```
+            `:android`:
+            ```diff
+            ${{ steps.dependency-diff-android.outputs.text-diff }}
             ```
         edit-mode: replace
         comment-id: ${{ steps.find_comment.outputs.comment-id }}

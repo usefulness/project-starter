@@ -1,2 +1,8 @@
 rootProject.name = 'com.project.starter'
-include ":plugins"
+include ":jvm",
+        ":android",
+        ":testing",
+        ":config",
+        ":quality",
+        ":versioning"
+

@@ -18,3 +18,15 @@ updates:
       interval: "daily"
     assignees:
       - "mateuszkwiecinski"
+  - package-ecosystem: "gradle"
+    directory: "sample/android"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "mateuszkwiecinski"
+  - package-ecosystem: "gradle"
+    directory: "sample/kotlin"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "mateuszkwiecinski"

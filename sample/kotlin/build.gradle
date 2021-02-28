@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        gradlePluginPortal {
+            content {
+                excludeGroup("com.project.starter")
+            }
+        }
+        if (project.hasProperty("useMavenLocal")) {
+            mavenLocal()
+        }
+    }
+    dependencies {
+        if (project.hasProperty("useMavenLocal")) {
+            classpath "com.project.starter.local:jvm:+"
+        } else {
+            classpath "com.project.starter:jvm"
+        }
+    }
+}
+
+apply plugin: 'com.starter.config'
+
+commonConfig {
+    javaFilesAllowed false
+    versioningPlugin {
+        enabled false
+    }
+}
