@@ -5,6 +5,7 @@ import com.android.build.gradle.internal.tasks.factory.dependsOn
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.KotlinLibraryConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
+import com.project.starter.modules.internal.configureKapt
 import com.project.starter.modules.internal.getByType
 import com.project.starter.modules.internal.withExtension
 import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.registerForbidJavaFilesTask
@@ -51,6 +52,10 @@ class KotlinLibraryPlugin : Plugin<Project> {
                     }
                 }
                 tasks.named("compileKotlin").dependsOn(forbidJavaFiles)
+            }
+
+            if (config.useKapt ?: rootConfig.useKapt) {
+                configureKapt()
             }
         }
     }

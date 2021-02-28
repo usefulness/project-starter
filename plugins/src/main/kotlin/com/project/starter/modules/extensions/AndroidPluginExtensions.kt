@@ -5,6 +5,7 @@ abstract class AndroidExtension {
     var javaFilesAllowed: Boolean? = null
     var defaultVariants: List<String> = emptyList()
     var coverageExclusions: List<String> = emptyList()
+    val useKapt: Boolean? = null
 }
 
 open class AndroidLibraryConfigExtension : AndroidExtension() {

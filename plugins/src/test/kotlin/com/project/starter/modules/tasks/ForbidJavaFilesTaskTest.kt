@@ -21,6 +21,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
             mkdirs()
             resolve("settings.gradle").writeText("""include ":module1", ":parentModule:childModule" """)
 
+            resolve("build.gradle")
             resolve("module1") {
                 @Language("groovy")
                 val buildScript =

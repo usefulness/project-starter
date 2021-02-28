@@ -19,4 +19,12 @@ allprojects {
             apiVersion = '1.3'
         }
     }
+
+    pluginManager.withPlugin("java") {
+        java {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(8))
+            }
+        }
+    }
 }

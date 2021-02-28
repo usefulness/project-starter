@@ -23,7 +23,7 @@ class QualityPlugin : Plugin<Project> {
         get() = ((getConvention("kotlin") ?: getConvention("kotlin2js")) as? KotlinSourceSet)?.kotlin
 
     override fun apply(project: Project) = with(project) {
-        repositories.jcenter()
+        repositories.mavenCentral()
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt(rootConfig)
