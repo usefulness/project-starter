@@ -2,6 +2,7 @@ package com.project.starter.modules.internal
 
 import com.project.starter.config.getByType
 import org.gradle.api.Project
+import org.gradle.api.tasks.testing.Test
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
@@ -9,6 +10,12 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 internal fun Project.configureKotlinCoverage() {
     pluginManager.apply("jacoco")
 
+    tasks.withType(Test::class.java) {
+        it.extensions.getByType<JacocoTaskExtension>().apply {
+            isIncludeNoLocationClasses = true
+            excludes = daggerCoverageExclusions + "jdk.internal.*"
+        }
+    }
     extensions.configure(JacocoPluginExtension::class.java) {
         it.toolVersion = "0.8.6"
     }
@@ -17,11 +24,6 @@ internal fun Project.configureKotlinCoverage() {
         it.reports.apply {
             xml.isEnabled = true
             html.isEnabled = true
-        }
-    }
-    tasks.named("test") { testTask ->
-        testTask.extensions.getByType<JacocoTaskExtension>().apply {
-            excludes = daggerCoverageExclusions
         }
     }
 }
