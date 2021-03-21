@@ -1,5 +1,6 @@
 package com.project.starter.modules.internal
 
+import com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.api.BaseVariant
@@ -15,6 +16,8 @@ import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 
+private const val LAST_STABLE_AGP_VERSION = 4
+
 internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
         compileSdkVersion(rootConfig.android.compileSdkVersion)
@@ -22,7 +25,12 @@ internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtensio
         targetSdkVersion(rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion)
         setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
-    dexOptions.preDexLibraries = true
+
+    if (ANDROID_GRADLE_PLUGIN_VERSION.split(".").firstOrNull()?.toIntOrNull() ?: 0 <= LAST_STABLE_AGP_VERSION) {
+        @Suppress("deprecation")
+        dexOptions.preDexLibraries = true
+    }
+
     addKotlinSourceSets()
 
     compileOptions.apply {
