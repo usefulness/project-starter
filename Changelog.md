@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `kapt` is not enabled automatically by default. use `useKapt` config property to change the default behavior
 - Update Kotlin plugin to [1.4.31](https://github.com/JetBrains/kotlin/releases/tag/v1.4.31)
 - Divide plugins into multiple functional groups to avoid adding unnecessary dependencies
+- Codestyle: Update _Detekt_ to version _1.16.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.16.0)
 
 ## [0.23.0] - 2021-02-06
 ## Changed
