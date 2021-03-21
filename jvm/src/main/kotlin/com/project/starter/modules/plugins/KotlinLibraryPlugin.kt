@@ -3,7 +3,6 @@ package com.project.starter.modules.plugins
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.KotlinLibraryConfigExtension
-import com.project.starter.modules.internal.configureKapt
 import com.project.starter.modules.internal.configureKotlinCoverage
 import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.registerForbidJavaFilesTask
 import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
@@ -42,10 +41,6 @@ class KotlinLibraryPlugin : Plugin<Project> {
                 tasks.named("compileKotlin") {
                     it.dependsOn(forbidJavaFiles)
                 }
-            }
-
-            if (config.useKapt ?: rootConfig.useKapt) {
-                configureKapt()
             }
         }
     }

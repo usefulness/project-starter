@@ -8,7 +8,6 @@ import com.project.starter.modules.extensions.AndroidLibraryConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
-import com.project.starter.modules.internal.configureKapt
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -35,10 +34,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             // Use `buildFeatures.buildConfig` after https://issuetracker.google.com/issues/159540417 is fixed
             variants.configureEach { variant ->
                 variant.generateBuildConfigProvider.configure { it.enabled = projectConfig.generateBuildConfig }
-            }
-
-            if (projectConfig.useKapt ?: rootConfig.useKapt) {
-                configureKapt()
             }
         }
     }
