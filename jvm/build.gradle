@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31'
+    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32'
     implementation project(":versioning")
     implementation project(":quality")
     implementation project(":config")

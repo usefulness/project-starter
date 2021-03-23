@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - The `issuechecker` dependency has been moved from `jcenter()` to `mavenCentral()`
 - `kapt` is not enabled automatically by default
-- Update Kotlin plugin to [1.4.31](https://github.com/JetBrains/kotlin/releases/tag/v1.4.31)
+- Update Kotlin plugin to [1.4.32](https://github.com/JetBrains/kotlin/releases/tag/v1.4.32)
 - Divide plugins into multiple functional groups to avoid adding unnecessary dependencies
 - Codestyle: Update _Detekt_ to version _1.16.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.16.0)
 
