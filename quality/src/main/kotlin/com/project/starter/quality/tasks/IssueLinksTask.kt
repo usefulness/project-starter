@@ -5,6 +5,7 @@ package com.project.starter.quality.tasks
 import com.starter.issuechecker.CheckResult
 import com.starter.issuechecker.IssueChecker
 import com.starter.issuechecker.IssueStatus
+import com.starter.issuechecker.reportBlocking
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileTree
