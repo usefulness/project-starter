@@ -14,16 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: set up Java
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
-    - name: Build app with Gradle
-      run: ./gradlew build
-    - name: Publish to Gradle Plugin Portal
-      run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
-    - name: Publish to Github Package Registry
-      run: ./gradlew publish --continue || true
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Build app with Gradle
+        run: ./gradlew build
+
+      - name: Publish to Gradle Plugin Portal
+        run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+
+      - name: Publish to Github Package Registry
+        run: ./gradlew publish --continue || true

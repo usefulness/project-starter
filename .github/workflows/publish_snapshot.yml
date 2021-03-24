@@ -12,14 +12,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: set up Java
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
-    - name: Build app with Gradle
-      run: ./gradlew assemble
-    - name: Publish to Github Package Registry
-      run: ./gradlew publish --continue || true
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Build app with Gradle
+        run: ./gradlew assemble
+
+      - name: Publish to Github Package Registry
+        run: ./gradlew publish --continue || true

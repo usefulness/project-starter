@@ -15,35 +15,45 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
       - name: Cache .gradle
         uses: burrunan/gradle-cache-action@v1
         with:
-          job-id: build-all-sample-projects
+          job-id: build
           gradle-distribution-sha-256-sum-warning: false
+
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
+
       - name: Code style
         run: ./gradlew projectCodestyle
+
       - name: Assemble
         run: ./gradlew assemble
+
       - name: Validate Plugins
         run: ./gradlew validatePlugins validateTaskProperties
+
       - name: Jacoco test report
         run: ./gradlew projectCoverage --stacktrace
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test-results
           path: "${{ github.workspace }}/**/build/reports/tests"
+
       - name: Upload jacoco report
         uses: actions/upload-artifact@v2
         with:
@@ -54,23 +64,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gradle: [ 6.5.1, current, rc]
-        task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport]
+        gradle: [ 6.5.1, current, rc ]
+        task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
       - name: Pre-compile plugin using gradle wrapper
         uses: burrunan/gradle-cache-action@v1
         with:
           job-id: build-all-sample-android-projects
           gradle-distribution-sha-256-sum-warning: false
-          arguments:  publishToMavenLocal -Pgroup=com.project.starter.local
+          arguments: publishToMavenLocal -Pgroup=com.project.starter.local
+
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: sample/android
@@ -88,16 +101,19 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
       - name: Pre-compile plugin using gradle wrapper
         uses: burrunan/gradle-cache-action@v1
         with:
           job-id: build-all-sample-kotlin-projects
           gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
+
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: sample/kotlin
