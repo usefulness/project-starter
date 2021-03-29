@@ -17,7 +17,7 @@ dependencies {
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.15.0'
     api 'com.android.tools.build:gradle:4.1.2'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31'
-    implementation 'pl.allegro.tech.build:axion-release-plugin:1.12.1'
+    implementation 'pl.allegro.tech.build:axion-release-plugin:1.13.0'
     implementation 'com.github.usefulness:issuechecker:0.1.1'
 
     testImplementation "org.assertj:assertj-core:3.19.0"
