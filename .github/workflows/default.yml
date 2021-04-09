@@ -40,12 +40,12 @@ jobs:
         run: ./gradlew validatePlugins
 
       - name: Jacoco test report
-        run: ./gradlew projectCoverage --stacktrace
+        run: ./gradlew test
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v1
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload test results
         if: ${{ always() }}
@@ -54,11 +54,11 @@ jobs:
           name: test-results
           path: "${{ github.workspace }}/**/build/reports/tests"
 
-      - name: Upload jacoco report
-        uses: actions/upload-artifact@v2
-        with:
-          name: jacoco-report
-          path: "${{ github.workspace }}/**/build/reports/jacoco"
+#      - name: Upload jacoco report
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: jacoco-report
+#          path: "${{ github.workspace }}/**/build/reports/jacoco"
 
   build-all-sample-android-projects:
     runs-on: ubuntu-latest
