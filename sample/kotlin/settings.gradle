@@ -1,0 +1,8 @@
+rootProject.name = "com.project.starter.sample"
+
+include ":moduleKotlinLibrary"
+include ":moduleRoot:moduleKotlinLibrary"
+
+if (!hasProperty("useMavenLocal")) {
+    includeBuild "../.."
+}

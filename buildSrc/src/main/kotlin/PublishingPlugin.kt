@@ -1,3 +1,4 @@
+import com.gradle.publish.PluginBundleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionContainer
@@ -9,6 +10,7 @@ class PublishingPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("maven-publish")
+        pluginManager.apply("com.gradle.plugin-publish")
 
         extensions.configure<JavaPluginExtension> {
             withSourcesJar()
@@ -29,6 +31,12 @@ class PublishingPlugin : Plugin<Project> {
                     it.from(components.getByName("java"))
                 }
             }
+        }
+        extensions.configure<PluginBundleExtension> {
+            website = "https://github.com/usefulness/project-starter/"
+            vcsUrl = "https://github.com/usefulness/project-starter.git"
+            description = "Set of plugins that might be useful for Multi-Module Android projects."
+            tags = listOf("android", "kotlin", "quickstart", "codestyle", "library", "baseline")
         }
     }
 

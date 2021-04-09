@@ -1,0 +1,27 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'com.starter.library.kotlin'
+    id 'pl.droidsonroids.jacoco.testkit' version '1.0.7'
+    id 'com.starter.publishing'
+}
+
+dependencies {
+    testImplementation project(":testing")
+}
+
+jacoco {
+    toolVersion = "0.8.6"
+}
+test {
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    plugins {
+        commonConfig {
+            id = 'com.starter.config'
+            displayName = 'Common Configuration Plugin'
+            implementationClass = 'com.project.starter.config.plugins.CommonSettingsPlugin'
+        }
+    }
+}
