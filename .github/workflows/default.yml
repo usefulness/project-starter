@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew assemble
 
       - name: Validate Plugins
-        run: ./gradlew validatePlugins validateTaskProperties
+        run: ./gradlew validatePlugins
 
       - name: Jacoco test report
         run: ./gradlew projectCoverage --stacktrace
