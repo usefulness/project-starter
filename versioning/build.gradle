@@ -6,8 +6,15 @@ plugins {
 }
 
 repositories {
+    exclusiveContent {
+        forRepository {
+            gradlePluginPortal()
+        }
+        filter {
+            includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
+        }
+    }
     mavenCentral()
-    gradlePluginPortal()
 }
 
 dependencies {
