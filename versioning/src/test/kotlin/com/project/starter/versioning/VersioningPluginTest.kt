@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.ListBranchCommand.ListMode
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
@@ -112,6 +113,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     }
 
     @Test
+    @Disabled
     fun `goes regular flow on release branch`() {
         assertThat(runTask("currentVersion").output).contains("1.1.0")
         git.commit("contains 1.2.0 changes")
@@ -131,6 +133,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     }
 
     @Test
+    @Disabled
     fun `can override axion config`() {
         rootDirectory.resolve("build.gradle") {
             appendText(

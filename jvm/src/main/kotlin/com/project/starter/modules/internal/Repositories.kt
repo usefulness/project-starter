@@ -15,6 +15,7 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
         }
     }
     mavenCentral()
+    @Suppress("DEPRECATION")
     jcenter { repository ->
         repository.mavenContent { content ->
             content.includeGroup("org.jetbrains.trove4j")

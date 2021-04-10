@@ -4,7 +4,6 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.project.starter.config.getByType
-import com.project.starter.config.withExtension
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
 import org.eclipse.jgit.api.Git
 import org.gradle.api.GradleException
@@ -65,7 +64,8 @@ class VersioningPlugin : Plugin<Project> {
             }
         }
         configureVersion()
-        withExtension<VersionConfig> { configureVersion() }
+        val property = project.objects.property(Int::class.java)
+        // withExtension<VersionConfig> { configureVersion() }
     }
 
     private fun Project.setupAndroidVersioning(scmConfig: VersionConfig) {
