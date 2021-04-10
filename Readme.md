@@ -144,18 +144,17 @@ apply plugin: 'com.starter.config'
  
 commonConfig {
     javaVersion JavaVersion.VERSION_1_8
-    javaFilesAllowed true
+    javaFilesAllowed = true
     androidPlugin {
         compileSdkVersion 29
         minSdkVersion 23
         targetSdkVersion 29
     }
     qualityPlugin {
-        enabled true
-        formatOnCompile false
+        formatOnCompile = false
     }
     versioningPlugin {
-        enabled true
+        enabled = true
     }
 }
 ```
@@ -165,7 +164,6 @@ commonConfig {
 - `androidPlugin`:
     - contains values passed to _Android Gradle Plugin_
 - `qualityPlugin`:
-    - `enabled` - enables/disables [Quality Plugin](#quality-plugin)
     - `formatOnCompile` - defines if ktlint should format source code on every compilation
 - `versioningPlugin`:
     - `enabled` - enables/disables [Versioning Plugin](#versioning-plugin)

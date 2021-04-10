@@ -43,14 +43,9 @@ open class RootConfigExtension(
 
 open class QualityPluginConfig(
     var formatOnCompile: Boolean = false,
-    var enabled: Boolean = true
 ) {
     fun formatOnCompile(value: Boolean) {
         formatOnCompile = value
-    }
-
-    fun enabled(value: Boolean) {
-        enabled = value
     }
 }
 

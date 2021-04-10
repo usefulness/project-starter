@@ -21,8 +21,8 @@ buildscript {
 apply plugin: 'com.starter.config'
 
 commonConfig {
-    javaFilesAllowed false
+    javaFilesAllowed = false
     versioningPlugin {
-        enabled false
+        enabled = false
     }
 }

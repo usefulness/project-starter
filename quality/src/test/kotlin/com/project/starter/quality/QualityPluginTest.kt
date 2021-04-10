@@ -73,7 +73,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 
                 commonConfig {
                     qualityPlugin {
-                        formatOnCompile = true
+                        formatOnCompile true
                     }
                 }
                 """.trimIndent()
@@ -138,7 +138,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             }
             
             commonConfig {
-                javaFilesAllowed false
+                javaFilesAllowed = false
             }
             
             repositories.jcenter()

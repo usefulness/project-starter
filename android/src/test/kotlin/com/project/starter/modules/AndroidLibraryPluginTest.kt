@@ -266,26 +266,4 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
         assertThat(qualityEnabled.task(":module1:projectCodeStyle")?.outcome).isNotNull()
         assertThat(qualityEnabled.task(":module2:projectCodeStyle")?.outcome).isNotNull()
     }
-
-    @Test
-    fun `does not configured quality plugin if disabled using configuration plugin`() {
-        @Language("groovy")
-        val qualityScript =
-            """
-            plugins {
-                id('com.starter.config')
-            }
-            
-            commonConfig {
-                qualityPlugin {
-                    enabled = false
-                }
-            }
-            """.trimIndent()
-        rootBuildScript.writeText(qualityScript)
-
-        val qualityDisabled = runTask("projectCodeStyle", shouldFail = true)
-
-        assertThat(qualityDisabled.output).contains("Task 'projectCodeStyle' not found ")
-    }
 }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Divide plugins into multiple functional groups to avoid adding unnecessary dependencies
 - Update _Detekt_ to version _1.16.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.16.0)
 - Update _kotlinter-gradle_ to version _3.4.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.4.0)
+- Quality plugin can't be disabled anymore 
 
 ## [0.23.0] - 2021-02-06
 ## Changed
