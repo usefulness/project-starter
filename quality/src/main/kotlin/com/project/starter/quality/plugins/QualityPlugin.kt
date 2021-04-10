@@ -24,16 +24,10 @@ class QualityPlugin : Plugin<Project> {
         repositories.mavenCentral()
         addProjectCodeStyleTask()
         configureKtlint()
-        configureDetekt(rootConfig)
-        configureCheckstyle(rootConfig)
+        configureDetekt()
+        configureCheckstyle()
         configureIssueCheckerTask()
-
-        val config = rootConfig.quality
-        afterEvaluate {
-            if (config.formatOnCompile) {
-                applyFormatOnRecompile()
-            }
-        }
+        configureFormatOnRecompile()
     }
 
     private fun Project.configureIssueCheckerTask() {
@@ -59,20 +53,26 @@ class QualityPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.applyFormatOnRecompile() {
+    private fun Project.configureFormatOnRecompile() {
         pluginManager.withPlugin("kotlin") {
             tasks.named("compileKotlin") {
-                it.dependsOn("$path:formatKotlin")
+                if (rootConfig.quality.formatOnCompile) {
+                    it.dependsOn("$path:formatKotlin")
+                }
             }
         }
         pluginManager.withPlugin("com.android.library") {
             tasks.named("preBuild") {
-                it.dependsOn("$path:formatKotlin")
+                if (rootConfig.quality.formatOnCompile) {
+                    it.dependsOn("$path:formatKotlin")
+                }
             }
         }
         pluginManager.withPlugin("com.android.application") {
             tasks.named("preBuild") {
-                it.dependsOn("$path:formatKotlin")
+                if (rootConfig.quality.formatOnCompile) {
+                    it.dependsOn("$path:formatKotlin")
+                }
             }
         }
     }

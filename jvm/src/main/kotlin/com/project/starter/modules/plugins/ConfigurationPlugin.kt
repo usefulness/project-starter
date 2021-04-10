@@ -11,23 +11,16 @@ class ConfigurationPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         afterEvaluate {
-            if (rootConfig.quality.enabled) {
-                pluginManager.apply("com.starter.quality")
-            }
-        }
-        afterEvaluate {
             if (rootConfig.versioning.enabled) {
                 if (!rootProject.pluginManager.hasPlugin("com.starter.versioning")) {
                     logger.info("Apply com.starter.versioning to $rootProject")
                     rootProject.pluginManager.apply(VersioningPlugin::class.java)
                 }
             }
+            tasks.withType(KotlinCompile::class.java).configureEach {
+                it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
+            }
         }
         configureRepositories()
-
-        val javaVersion = rootConfig.javaVersion
-        tasks.withType(KotlinCompile::class.java).configureEach {
-            it.kotlinOptions.jvmTarget = javaVersion.toString()
-        }
     }
 }

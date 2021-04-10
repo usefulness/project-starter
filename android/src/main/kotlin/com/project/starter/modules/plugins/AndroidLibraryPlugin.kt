@@ -16,6 +16,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply("com.android.library")
         pluginManager.apply("kotlin-android")
+        pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
         val rootConfig = this.rootConfig

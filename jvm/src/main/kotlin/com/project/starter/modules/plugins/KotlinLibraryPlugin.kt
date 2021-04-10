@@ -15,6 +15,7 @@ class KotlinLibraryPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("kotlin")
+        pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
         extensions.create("projectConfig", KotlinLibraryConfigExtension::class.java)

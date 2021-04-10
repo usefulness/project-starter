@@ -56,7 +56,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     targetSdkVersion = 30
                 }
                 qualityPlugin {
-                    enabled = true
                     formatOnCompile = true
                 }
                 versioningPlugin {
@@ -89,7 +88,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     targetSdkVersion 30
                 }
                 qualityPlugin {
-                    enabled true
                     formatOnCompile true
                 }
                 versioningPlugin {

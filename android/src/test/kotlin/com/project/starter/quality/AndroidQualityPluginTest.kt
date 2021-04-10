@@ -192,7 +192,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
             }
             
             commonConfig {
-                javaFilesAllowed false
+                javaFilesAllowed = false
             }
             """.trimIndent()
         rootDirectory.resolve("build.gradle").writeText(buildscript)

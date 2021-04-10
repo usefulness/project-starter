@@ -4,8 +4,7 @@ package com.project.starter.quality.internal
 
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceSet
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-import com.project.starter.config.extensions.RootConfigExtension
+import com.project.starter.config.plugins.rootConfig
 import com.project.starter.config.withExtension
 import com.project.starter.quality.extensions.JavaSourcesAware
 import com.project.starter.quality.tasks.GenerateCheckstyleBaselineTask.Companion.addGenerateCheckstyleBaselineTask
@@ -15,7 +14,7 @@ import org.gradle.api.file.FileTree
 import org.gradle.api.plugins.quality.Checkstyle
 import org.gradle.api.plugins.quality.CheckstyleExtension
 
-private val pluginsWithConfgiuration = listOf(
+private val pluginsWithConfiguration = listOf(
     Config(
         plugin = "kotlin",
         starterPlugin = "com.starter.library.kotlin",
@@ -39,8 +38,8 @@ private data class Config(
     val configuration: Project.() -> Unit
 )
 
-internal fun Project.configureCheckstyle(rootConfig: RootConfigExtension) {
-    pluginsWithConfgiuration.forEach { (plugin, starterPlugin, configuration) ->
+internal fun Project.configureCheckstyle() {
+    pluginsWithConfiguration.forEach { (plugin, starterPlugin, configuration) ->
         pluginManager.withPlugin(plugin) {
             if (pluginManager.hasPlugin(starterPlugin)) {
                 withExtension<JavaSourcesAware> {
