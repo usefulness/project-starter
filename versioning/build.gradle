@@ -6,13 +6,20 @@ plugins {
 }
 
 repositories {
+    exclusiveContent {
+        forRepository {
+            gradlePluginPortal()
+        }
+        filter {
+            includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
+        }
+    }
     mavenCentral()
-    gradlePluginPortal()
 }
 
 dependencies {
     compileOnly 'com.android.tools.build:gradle:4.1.3'
-    implementation 'pl.allegro.tech.build:axion-release-plugin:1.12.1'
+    implementation 'pl.allegro.tech.build:axion-release-plugin:1.13.1'
     implementation project(":config")
 
     testImplementation project(":testing")

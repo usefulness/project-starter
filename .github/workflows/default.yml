@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: 8
+          java-version: 11
 
       - name: Cache .gradle
         uses: burrunan/gradle-cache-action@v1
@@ -30,6 +30,9 @@ jobs:
 
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
+
+      - name: Check version
+        run: ./gradlew currentVersion
 
       - name: Code style
         run: ./gradlew projectCodestyle

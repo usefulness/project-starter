@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.24.0] - 2021-04-11
 ## Changed
 - The `issuechecker` dependency has been moved from `jcenter()` to `mavenCentral()`
 - `kapt` is not enabled automatically by default
@@ -13,7 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Divide plugins into multiple functional groups to avoid adding unnecessary dependencies
 - Update _Detekt_ to version _1.16.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.16.0)
 - Update _kotlinter-gradle_ to version _3.4.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.4.0)
-- Quality plugin can't be disabled anymore 
+- **Breaking:** Quality plugin can't be disabled anymore. The dependency has been added either way, so the plugin will now always create quality realated tasks.
+- **Breaking:** Changed default release tag format for new projects. This change follows `axion-release-plugin` convention.
+- **Breaking:** The plugin has been now divided into multiple smaller artifacts. The change is breaking only if the legacy plugin application is used.   
+`com.project.starter:plugins` can now be replaced with `com.project.starter:jvm` or `com.project.starter:android` or just `com.project.starter:quality`.  
+  Applying just `jvm` project doesn't require adding `google()` repository dependency anymore.
+- The plugin is now compatible with Gradle 7.0  
+
+#### Known bugs
+- It is not possible to override `com.starter.versionin` plugin config. The workaround is to set the project version manually, after updating its configuration. 
 
 ## [0.23.0] - 2021-02-06
 ## Changed
@@ -185,7 +195,13 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.20.0...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.23.0...HEAD
+[0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.0.../release/0.29.0
+[0.28.0]: https://github.com/usefulness/project-starter/compare/release/0.27.0.../release/0.28.0
+[0.27.0]: https://github.com/usefulness/project-starter/compare/release/0.26.0.../release/0.27.0
+[0.26.0]: https://github.com/usefulness/project-starter/compare/release/0.25.0.../release/0.26.0
+[0.25.0]: https://github.com/usefulness/project-starter/compare/release/0.24.0.../release/0.25.0
+[0.24.0]: https://github.com/usefulness/project-starter/compare/release/0.23.0.../release/0.24.0
 [0.23.0]: https://github.com/usefulness/project-starter/compare/release/0.22.0.../release/0.23.0
 [0.22.0]: https://github.com/usefulness/project-starter/compare/release/0.21.1.../release/0.22.0
 [0.21.1]: https://github.com/usefulness/project-starter/compare/release/0.21.0.../release/0.21.1

@@ -4,16 +4,12 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.project.starter.config.getByType
-import com.project.starter.config.withExtension
-import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode
-import org.eclipse.jgit.api.Git
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import pl.allegro.tech.build.axion.release.ReleasePlugin
 import pl.allegro.tech.build.axion.release.domain.PredefinedVersionIncrementer
 import pl.allegro.tech.build.axion.release.domain.VersionConfig
-import pl.allegro.tech.build.axion.release.domain.hooks.ReleaseHookAction
 
 class VersioningPlugin : Plugin<Project> {
 
@@ -22,50 +18,18 @@ class VersioningPlugin : Plugin<Project> {
         pluginManager.apply(ReleasePlugin::class.java)
 
         val scmConfig = extensions.getByType<VersionConfig>().apply {
-            versionIncrementer = PredefinedVersionIncrementer.versionIncrementerFor("incrementMinorIfNotOnRelease")
-            hooks.apply {
-                preReleaseHooks.add(
-                    ReleaseHookAction { context ->
-                        Git.open(repository.directory).use {
-                            val version = context.releaseVersion
-                            val isNonPatchVersion = version.matches("^\\d+\\.\\d\\.0[-*]?$".toRegex())
-                            if (isNonPatchVersion) {
-                                it.branchCreate().apply {
-                                    setUpstreamMode(SetupUpstreamMode.TRACK)
-                                    setName("release/$version")
-                                }.call()
-                            }
-                        }
-                    }
-                )
-
-                postReleaseHooks.add(
-                    ReleaseHookAction {
-                        try {
-                            Git.open(repository.directory)
-                                .push()
-                                .setPushAll()
-                                .setPushTags()
-                                .setRemote(repository.remote)
-                                .call()
-                        } catch (@Suppress("TooGenericExceptionCaught") error: Throwable) {
-                            logger.error("Couldn't push. Run `git push --tags --all` manually.", error)
-                        }
-                    }
-                )
-            }
+            versionIncrementer = PredefinedVersionIncrementer.versionIncrementerFor(
+                "incrementMinorIfNotOnRelease",
+                mapOf("releaseBranchPattern" to "^release/.*\$")
+            )
         }
 
-        val configureVersion = {
-            allprojects { project ->
-                project.version = scmConfig.version
-            }
-            allprojects {
-                it.setupAndroidVersioning(scmConfig)
-            }
+        allprojects { project ->
+            project.version = scmConfig.version
         }
-        configureVersion()
-        withExtension<VersionConfig> { configureVersion() }
+        allprojects { project ->
+            project.setupAndroidVersioning(scmConfig)
+        }
     }
 
     private fun Project.setupAndroidVersioning(scmConfig: VersionConfig) {
