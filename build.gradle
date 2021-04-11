@@ -2,6 +2,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories.google()
+
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'pl.allegro.tech.build' && requested.name.startsWith("axion-release-plugin")) {
+                details.useVersion "1.13.1"
+            }
+        }
+    }
 }
 
 plugins {

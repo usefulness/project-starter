@@ -31,6 +31,9 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
 
+      - name: Check version
+        run: ./gradlew currentVersion
+
       - name: Code style
         run: ./gradlew projectCodestyle
 

@@ -3,7 +3,7 @@ name: Publish Project to all Maven repositories
 on:
   push:
     tags:
-      - 'release-*'
+      - 'v*'
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
