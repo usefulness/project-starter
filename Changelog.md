@@ -13,7 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Divide plugins into multiple functional groups to avoid adding unnecessary dependencies
 - Update _Detekt_ to version _1.16.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.16.0)
 - Update _kotlinter-gradle_ to version _3.4.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.4.0)
-- Quality plugin can't be disabled anymore 
+- **Breaking:** Quality plugin can't be disabled anymore. The dependency has been added either way, so the plugin will now always create quality realated tasks.
+- **Breaking:** The plugin has been now divided into multiple smaller artifacts. The change is breaking only if the legacy plugin application is used.   
+`com.project.starter:plugins` can now be replaced with `com.project.starter:jvm` or `com.project.starter:android` or just `com.project.starter:quality`.  
+  Applying just `jvm` project doesn't require adding `google()` repository dependency anymore. 
 
 ## [0.23.0] - 2021-02-06
 ## Changed

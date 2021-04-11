@@ -27,20 +27,6 @@ Each module consists of configuration code most commonly used in Android project
 
 #### Add buildscript dependency
 
-Add to your **root** project `build.gradle`:
-``` groovy
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-    }
-    
-    dependencies {
-        classpath 'com.project.starter:plugins:${version}'
-    }
-}
-```
-
 ### Plugins Configuration
 #### Kotlin Library Plugin
 Plugin configures automated [code style tasks](#quality-plugin), hooks for [common tasks](#day-to-day-use), 
@@ -49,7 +35,9 @@ sets coverage reports generation or manages [versioning](#versioning-plugin) of 
 Apply plugin to project level `build.gradle`
 
 ``` groovy
-apply plugin: 'com.starter.library.kotlin'
+plugins {
+    id("com.starter.library.kotlin") version("x.y.z")
+}
 
 // optional config with default values
 projectConfig {
@@ -67,7 +55,10 @@ or recognizing `src/main/kotlin` (and similar) path as a valid source set.
 Android Library plugin requires adding to project level `build.gradle`:
 
 ``` groovy
-apply plugin: 'com.starter.library.android' // or 'com.starter.application.android'
+plugins {
+    id("com.starter.library.android") version("x.y.z") 
+    // or id("com.starter.application.android") version("x.y.z") 
+}
 
 // optional config with default values
 projectConfig {
@@ -99,10 +90,12 @@ for example setting `fullDebug` as default variant would make `testFullDebugUnit
 Quality plugin is applied automatically by a _Module plugin_, but there is a possibility to use it as a standalone plugin.
 Apply plugin to project level `build.gradle`
 ```
- apply plugin: 'com.starter.quality'
+plugins {
+    id("com.starter.quality") version("x.y.z") 
+}
 ```
 which applies and configures code style tasks for the project automatically.  
-To execute run: `./gradlew projectCodeStyle`
+To execute run: `./gradlew projectCodeStyle` to check codestyl or `./gradlew issueLinksReport` to find and check state of all issuetracker links linked in code comments. 
 
 ##### Generating baselines
 
@@ -140,7 +133,9 @@ Additional default configuration can be applied by adding to **root project** `b
 All submodules will use this config as default
 
 ``` groovy
-apply plugin: 'com.starter.config'
+plugins {
+  id("com.starter.config") version("x.y.z)
+}
  
 commonConfig {
     javaVersion JavaVersion.VERSION_1_8
