@@ -1,21 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-    repositories.google()
-
-    configurations.configureEach {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            def requested = details.requested
-            if (requested.group == 'pl.allegro.tech.build' && requested.name.startsWith("axion-release-plugin")) {
-                details.useVersion "1.13.1"
-            }
-        }
-    }
-}
-
 plugins {
-    id 'com.starter.config' version '0.23.0'
-    id 'com.starter.versioning' version '0.23.0'
+    id 'com.starter.config'
+    id 'com.starter.versioning'
 }
 
 commonConfig {
@@ -29,7 +16,6 @@ allprojects {
             useIR = true
         }
     }
-
     configurations.configureEach {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
