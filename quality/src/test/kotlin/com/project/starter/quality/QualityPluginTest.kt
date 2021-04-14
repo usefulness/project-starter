@@ -141,7 +141,6 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 javaFilesAllowed = false
             }
             
-            repositories.jcenter()
             """.trimIndent()
         rootDirectory.resolve("build.gradle").writeText(buildscript)
 

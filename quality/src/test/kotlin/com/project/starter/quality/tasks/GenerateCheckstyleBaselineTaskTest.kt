@@ -58,7 +58,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
             writeText(javaClass)
         }
 
-        val baselineResult = runTask("generateCheckstyleBaseline")
+        val baselineResult = runTask("generateCheckstyleBaseline", "--stacktrace")
         val checkStyleOldCode = runTask("checkstyle")
 
         assertThat(baselineResult.task(":javaModule:generateCheckstyleBaseline")?.outcome).isEqualTo(TaskOutcome.SUCCESS)

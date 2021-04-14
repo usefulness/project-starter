@@ -13,6 +13,7 @@ import org.gradle.api.file.FileTree
 import org.gradle.api.internal.HasConvention
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 class QualityPlugin : Plugin<Project> {
@@ -22,6 +23,12 @@ class QualityPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
         repositories.mavenCentral()
+        repositories.exclusiveContent {
+            it.forRepositories(repositories.jcenter())
+            it.filter {
+                it.includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+            }
+        }
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt()
@@ -32,17 +39,20 @@ class QualityPlugin : Plugin<Project> {
 
     private fun Project.configureIssueCheckerTask() {
         registerIssueCheckerTask {
-            val extension = project.extensions.findByName("android")
-            if (extension != null) {
-                extension as BaseExtension
-                extension.sourceSets.configureEach { sourceSet ->
+            onAndroid {
+                sourceSets.configureEach { sourceSet ->
                     source += sourceSet.java.srcDirs
                         .map { dir -> project.fileTree(dir) }
                         .reduce { merged: FileTree, tree: FileTree -> merged + tree }
                 }
-            } else {
-                val javaPlugin = project.convention.getPlugin(JavaPluginConvention::class.java)
-                javaPlugin.sourceSets.configureEach { sourceSet ->
+            }
+            onMultiplatform {
+                sourceSets.configureEach { sourceSet ->
+                    source += sourceSet.kotlin.sourceDirectories.asFileTree
+                }
+            }
+            onJvm {
+                sourceSets.configureEach { sourceSet ->
                     source += sourceSet.java
                     val kotlin = sourceSet.kotlin ?: return@configureEach
                     source += kotlin.sourceDirectories.asFileTree
@@ -79,4 +89,16 @@ class QualityPlugin : Plugin<Project> {
 
     private fun SourceSet.getConvention(name: String) =
         (this as HasConvention).convention.plugins[name]
+}
+
+internal inline fun Project.onAndroid(crossinline function: BaseExtension.() -> Unit) {
+    project.extensions.findByName("android")?.let { (it as? BaseExtension)?.function() }
+}
+
+internal inline fun Project.onMultiplatform(crossinline function: KotlinMultiplatformExtension.() -> Unit) {
+    project.extensions.findByName("kotlin")?.let { (it as? KotlinMultiplatformExtension)?.function() }
+}
+
+internal inline fun Project.onJvm(crossinline function: JavaPluginConvention.() -> Unit) {
+    project.convention.findPlugin(JavaPluginConvention::class.java)?.let(function)
 }

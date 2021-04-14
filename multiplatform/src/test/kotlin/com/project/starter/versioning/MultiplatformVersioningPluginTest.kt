@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
-internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
+internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
@@ -29,7 +29,11 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'com.starter.library.kotlin'
+                            id 'com.starter.library.multiplatform'
+                        }
+                        
+                        kotlin {
+                            ios()
                         }
                         """.trimIndent()
                     )
@@ -40,7 +44,11 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'com.starter.library.kotlin'
+                            id 'com.starter.library.multiplatform'
+                        }
+                        
+                        kotlin {
+                            jvm()
                         }
                         """.trimIndent()
                     )

@@ -30,7 +30,6 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                             id('kotlin')
                         }
                         
-                        repositories.jcenter()
                         """.trimIndent()
                     )
                 }
