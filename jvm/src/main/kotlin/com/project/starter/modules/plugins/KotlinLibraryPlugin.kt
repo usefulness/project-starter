@@ -25,8 +25,8 @@ class KotlinLibraryPlugin : Plugin<Project> {
         }
 
         configureKotlinCoverage()
-        registerProjectCoverageTask {
-            it.dependsOn("jacocoTestReport")
+        registerProjectCoverageTask { projectCoverage ->
+            projectCoverage.dependsOn("jacocoTestReport")
         }
         withExtension<KotlinLibraryConfigExtension> { config ->
             val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed

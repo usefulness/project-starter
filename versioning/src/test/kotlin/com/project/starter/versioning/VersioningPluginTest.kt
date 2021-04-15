@@ -59,7 +59,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
             }
         }
         git = setupGit(origin)
-        git.tag("release-1.1.0")
+        git.tag("v1.1.0")
     }
 
     @Test
@@ -79,7 +79,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @Test
     fun `sets version to all projects`() {
         git.commit("features in 1.2.0")
-        git.tag("release-1.2.0")
+        git.tag("v1.2.0")
 
         val modules = listOf(":module1", ":module1", "")
 

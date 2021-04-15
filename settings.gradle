@@ -7,5 +7,6 @@ include ":jvm",
         ":testing",
         ":config",
         ":quality",
-        ":versioning"
+        ":versioning",
+        ":multiplatform"
 

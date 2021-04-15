@@ -1,6 +1,7 @@
 package com.project.starter.quality.internal
 
 import com.project.starter.config.plugins.rootConfig
+import com.project.starter.quality.plugins.onMultiplatform
 import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
@@ -15,6 +16,13 @@ internal fun Project.configureDetekt() {
             html.enabled = false
             xml.enabled = false
             txt.enabled = false
+        }
+
+        onMultiplatform {
+            sourceSets.configureEach {
+                detekt.input.from(it.kotlin.srcDirs)
+                // detekt.input.from(it.kotlin.srcDirTrees)
+            }
         }
 
         detekt.config.setFrom(loadFromResources("detekt-config.yml"))

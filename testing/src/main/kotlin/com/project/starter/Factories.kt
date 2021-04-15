@@ -24,7 +24,7 @@ fun kotlinTestClass(className: String) =
     class $className {
     
         @org.junit.Test
-        fun ${className.toLowerCase()}() = Unit
+        fun test${className.toLowerCase()}() = Unit
     }
 
     """.trimIndent()

@@ -2,20 +2,18 @@ package com.project.starter.modules
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.commit
-import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import com.project.starter.kotlinTestClass
 import com.project.starter.setupGit
 import com.project.starter.tag
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
 
-internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
+internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
@@ -36,21 +34,25 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id('com.starter.library.kotlin')
+                            id('com.starter.library.multiplatform')
+                        }
+                        
+                        kotlin {
+                            jvm()
                         }
                         
                         dependencies {
-                            testImplementation 'junit:junit:4.13'
+                            "jvmTestImplementation"("junit:junit:4.13.2")
                         }
                         
                         """.trimIndent()
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                resolve("src/commonMain/kotlin/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/test/kotlin/Test1.kt") {
-                    writeText(kotlinTestClass("Test1"))
+                resolve("src/jvmTest/kotlin/JvmTest1.kt") {
+                    writeText(kotlinTestClass("JvmTest1"))
                 }
             }
             module2Root = resolve("module2") {
@@ -58,21 +60,27 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id('com.starter.library.kotlin')
+                            id('com.starter.library.multiplatform')
                         }
                         
+                        kotlin {
+                            ios()
+                            jvm()
+                        }
+                        
+                        
                         dependencies {
-                            testImplementation 'junit:junit:4.13'
+                            "jvmTestImplementation"("junit:junit:4.13.2")
                         }
                         
                         """.trimIndent()
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile2.kt") {
+                resolve("src/commonMain/kotlin/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/test/kotlin/Test2.kt") {
-                    writeText(kotlinTestClass("Test2"))
+                resolve("src/jvmTest/kotlin/JvmTest2.kt") {
+                    writeText(kotlinTestClass("JvmTest2"))
                 }
             }
         }
@@ -90,51 +98,19 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     fun `projectTest runs tests for all modules`() {
         val result = runTask("projectTest")
 
-        assertThat(result.task(":module1:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(module1Root.resolve("build/test-results/test")).isDirectoryContaining {
-            it.name.startsWith("TEST-")
-        }
+        assertThat(result.task(":module1:allTests")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:allTests")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
     }
 
     @Test
     fun `projectCoverage runs coverage for all modules`() {
         val result = runTask("projectCoverage")
 
-        assertThat(result.task(":module1:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(module1Root.resolve("build/reports/jacoco/test")).isDirectoryContaining {
+        assertThat(result.task(":module1:jvmTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:jvmTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(module1Root.resolve("build/reports/jacoco/jacocoTestReport")).isDirectoryContaining {
             it.name == "jacocoTestReport.xml"
         }
-    }
-
-    @Test
-    fun `does not fail on java files by default`() {
-        module2Root.resolve("src/main/java/JavaClass.java") {
-            writeText(javaClass("JavaClass"))
-        }
-
-        val result = runTask(":module2:assemble")
-
-        assertThat(result.task(":module2:assemble")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `fail on java files if failing enabled`() {
-        module2Root.resolve("build.gradle").appendText(
-            """
-            projectConfig {
-                javaFilesAllowed = false
-            }
-            """.trimIndent()
-        )
-        module2Root.resolve("src/main/java/JavaClass.java") {
-            writeText(javaClass("JavaClass"))
-        }
-
-        val result = runTask(":module2:assemble", shouldFail = true)
-
-        assertThat(result.task(":module2:forbidJavaFiles")!!.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 
     @Test
@@ -158,7 +134,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `does not configure versioning plugin if disabled using configuration plugin`() {
-        @Language("groovy")
+        //language=groovy
         val versioningScript =
             """
             plugins {
@@ -167,7 +143,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
             
             commonConfig {
                 versioningPlugin {
-                    enabled = false
+                    enabled false
                 }
             }
             """.trimIndent()
