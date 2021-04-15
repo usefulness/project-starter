@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - Require using Kotlin 1.4 for all library consumers. Bump min supported Gradle version to 6.8.3
 
-
 ## [0.25.0] - 2021-04-15
 ## Added
 - New `com.starter.library.multiplatform` plugin for KMM projects
