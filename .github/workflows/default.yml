@@ -9,6 +9,14 @@ on:
       - master
 
 jobs:
+  cancel-previous-workflows:
+    name: Cancel previous workflow runs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -46,10 +54,10 @@ jobs:
       - name: Jacoco test report
         run: ./gradlew test
 
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
+      #      - name: Upload coverage to Codecov
+      #        uses: codecov/codecov-action@v1
+      #        with:
+      #          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload test results
         if: ${{ always() }}
@@ -58,11 +66,11 @@ jobs:
           name: test-results
           path: "${{ github.workspace }}/**/build/reports/tests"
 
-#      - name: Upload jacoco report
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: jacoco-report
-#          path: "${{ github.workspace }}/**/build/reports/jacoco"
+  #      - name: Upload jacoco report
+  #        uses: actions/upload-artifact@v2
+  #        with:
+  #          name: jacoco-report
+  #          path: "${{ github.workspace }}/**/build/reports/jacoco"
 
   build-all-sample-android-projects:
     runs-on: ubuntu-latest
