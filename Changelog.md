@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.25.0] - 2021-04-15
+## Added
+- New `com.starter.library.multiplatform` plugin for KMM projects
+
 ## [0.24.0] - 2021-04-11
 ## Changed
 - The `issuechecker` dependency has been moved from `jcenter()` to `mavenCentral()`
