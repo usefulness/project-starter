@@ -21,13 +21,8 @@ dependencies {
     testImplementation project(":testing")
 }
 
-jacoco {
-    toolVersion = "0.8.6"
-}
 tasks.withType(Test) {
     useJUnitPlatform()
-    jacoco.includeNoLocationClasses = true
-    jacoco.excludes = ['jdk.internal.*']
 }
 
 gradlePlugin {

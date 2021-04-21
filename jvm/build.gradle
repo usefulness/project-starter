@@ -19,9 +19,6 @@ dependencies {
     testImplementation project(":testing")
 }
 
-jacoco {
-    toolVersion = "0.8.6"
-}
 test {
     useJUnitPlatform()
 }

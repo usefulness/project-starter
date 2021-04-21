@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Fixed
+- Fix lazy Test task configuration
+
 ## Changed
 - Require using Kotlin 1.4 for all library consumers. Bump min supported Gradle version to 6.8.3
 

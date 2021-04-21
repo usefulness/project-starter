@@ -10,7 +10,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 internal fun Project.configureKotlinCoverage() {
     pluginManager.apply("jacoco")
 
-    tasks.withType(Test::class.java) {
+    tasks.withType(Test::class.java).configureEach {
         it.extensions.getByType<JacocoTaskExtension>().apply {
             isIncludeNoLocationClasses = true
             excludes = daggerCoverageExclusions + "jdk.internal.*"
