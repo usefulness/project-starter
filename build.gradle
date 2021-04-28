@@ -19,7 +19,7 @@ allprojects {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
             if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
-                details.useVersion "1.4.32"
+                details.useVersion "1.5.0"
             }
         }
     }
