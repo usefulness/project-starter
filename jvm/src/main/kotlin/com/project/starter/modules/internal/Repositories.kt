@@ -12,6 +12,14 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
                 "android\\.arch\\..*",
                 "com\\.google\\.android\\..*",
                 "com\\.google\\.gms",
+                "com\\.google\\.test",
+                "com\\.google\\.ads\\..*",
+                "com\\.google\\.ar\\..*",
+                "com\\.google\\.mlkit.*",
+                "com\\.google\\.devtools.*",
+                "com\\.google\\.assistant.*",
+                "com\\.google\\.oboe.*",
+                "com\\.google\\.prefab.*",
             )
             googleLibraries.forEach(it::includeGroupByRegex)
         }
