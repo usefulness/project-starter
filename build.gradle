@@ -10,7 +10,6 @@ commonConfig {
 }
 
 allprojects {
-    repositories.google()
     tasks.withType(KotlinCompile).configureEach {
         kotlinOptions {
             apiVersion = "1.4"
