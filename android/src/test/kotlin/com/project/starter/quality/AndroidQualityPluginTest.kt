@@ -62,7 +62,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     
                     repositories {
                         google()
-                        jcenter()
+                        mavenCentral()
                     }
                     
                     android {

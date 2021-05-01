@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - Require using Kotlin 1.4 for all library consumers. Bump min supported Gradle version to 6.8.3
 - Update Kotlin plugin to [1.5.0](https://github.com/JetBrains/kotlin/releases/tag/v1.5.0)
+- Update Jacoco version to `0.8.7-SNAPSHOT` to [support Kotlin 1.5](https://github.com/detekt/detekt/pull/3718/files) 
 
 ## [0.25.0] - 2021-04-15
 ## Added
