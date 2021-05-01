@@ -17,19 +17,16 @@ import org.gradle.api.plugins.quality.CheckstyleExtension
 private val pluginsWithConfiguration = listOf(
     Config(
         plugin = "kotlin",
-        starterPlugin = "com.starter.library.kotlin",
-        configuration = Project::configureKotlinCheckstyle
-    ),
+        starterPlugin = "com.starter.library.kotlin"
+    ) { configureKotlinCheckstyle() },
     Config(
         plugin = "com.android.library",
-        starterPlugin = "com.starter.library.android",
-        configuration = Project::configureAndroidCheckstyle
-    ),
+        starterPlugin = "com.starter.library.android"
+    ) { configureAndroidCheckstyle() },
     Config(
         plugin = "com.android.application",
-        starterPlugin = "com.starter.application.android",
-        configuration = Project::configureAndroidCheckstyle
-    )
+        starterPlugin = "com.starter.application.android"
+    ) { configureAndroidCheckstyle() }
 )
 
 private data class Config(
