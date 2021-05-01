@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList
 internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
 
     init {
-        project.tasks.withType(Checkstyle::class.java).configureEach {
+        project.tasks.withType(Checkstyle::class.java).forEach {
             it.isIgnoreFailures = true
             dependsOn(it)
         }

@@ -8,9 +8,10 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
         content.filter {
             val googleLibraries = listOf(
                 "com\\.android.*",
-                "androidx.*",
-                "android.arch.*",
-                "com\\.google.*"
+                "androidx\\..*",
+                "android\\.arch\\..*",
+                "com\\.google\\.android\\..*",
+                "com\\.google\\.gms",
             )
             googleLibraries.forEach(it::includeGroupByRegex)
         }
