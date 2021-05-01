@@ -3,25 +3,25 @@ package com.project.starter.modules.internal
 import org.gradle.api.Project
 
 internal fun Project.configureRepositories(): Unit = with(repositories) {
-    exclusiveContent { content ->
-        content.forRepository { google() }
-        content.filter {
+    mavenCentral()
+    google { repository ->
+        repository.mavenContent { content ->
             val googleLibraries = listOf(
                 "com\\.android.*",
-                "androidx\\..*",
-                "android\\.arch\\..*",
-                "com\\.google\\.android\\..*",
+                "androidx.*",
+                "android\\.arch.*",
+                "com\\.google\\.android.*",
                 "com\\.google\\.gms",
-                "com\\.google\\.test",
-                "com\\.google\\.ads\\..*",
-                "com\\.google\\.ar\\..*",
+                "com\\.google\\.test.*",
+                "com\\.google\\.ads.*",
+                "com\\.google\\.ar.*",
                 "com\\.google\\.mlkit.*",
                 "com\\.google\\.devtools.*",
                 "com\\.google\\.assistant.*",
                 "com\\.google\\.oboe.*",
                 "com\\.google\\.prefab.*",
             )
-            googleLibraries.forEach(it::includeGroupByRegex)
+            googleLibraries.forEach(content::includeGroupByRegex)
         }
     }
     exclusiveContent { content ->
@@ -30,5 +30,4 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
         }
         content.filter { it.includeGroup("org.jacoco") }
     }
-    mavenCentral()
 }
