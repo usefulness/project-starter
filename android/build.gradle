@@ -21,7 +21,7 @@ dependencies {
     testImplementation project(":testing")
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 

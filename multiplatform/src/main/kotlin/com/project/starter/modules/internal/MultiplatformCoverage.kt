@@ -10,7 +10,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 internal fun Project.configureMultiplatformCoverage() {
     pluginManager.apply("jacoco")
 
-    tasks.withType(Test::class.java) {
+    tasks.withType(Test::class.java).configureEach {
         it.extensions.getByType<JacocoTaskExtension>().apply {
             isIncludeNoLocationClasses = true
             excludes = listOf("jdk.internal.*")
@@ -18,7 +18,7 @@ internal fun Project.configureMultiplatformCoverage() {
     }
 
     extensions.configure(JacocoPluginExtension::class.java) {
-        it.toolVersion = "0.8.6"
+        it.toolVersion = "0.8.7-SNAPSHOT"
     }
     tasks.register("jacocoTestReport", JacocoReport::class.java) {
         it.dependsOn(":$path:jvmTest")

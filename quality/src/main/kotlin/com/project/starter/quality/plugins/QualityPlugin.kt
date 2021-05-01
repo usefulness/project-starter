@@ -23,12 +23,6 @@ class QualityPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
         repositories.mavenCentral()
-        repositories.exclusiveContent {
-            it.forRepositories(repositories.jcenter())
-            it.filter {
-                it.includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
-            }
-        }
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt()

@@ -33,7 +33,12 @@ internal fun Project.configureDetekt() {
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {
         it.dependsOn("$path:detekt")
     }
-    tasks.withType(Detekt::class.java) {
+    tasks.withType(Detekt::class.java).configureEach {
         it.jvmTarget = rootConfig.javaVersion.toString()
+    }
+
+    // https://github.com/detekt/detekt/issues/3712
+    configurations.named("detekt") {
+        it.resolutionStrategy.force("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
     }
 }

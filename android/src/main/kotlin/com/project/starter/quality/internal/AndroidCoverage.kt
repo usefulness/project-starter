@@ -6,13 +6,17 @@ import com.project.starter.modules.internal.daggerCoverageExclusions
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out BaseVariant>, projectExclusions: List<String>) {
     pluginManager.apply("jacoco")
 
-    tasks.withType(Test::class.java) {
+    extensions.configure(JacocoPluginExtension::class.java) {
+        it.toolVersion = "0.8.7-SNAPSHOT"
+    }
+    tasks.withType(Test::class.java).configureEach {
         it.extensions.getByType(JacocoTaskExtension::class.java).apply {
             isIncludeNoLocationClasses = true
             excludes = listOf("jdk.internal.*")

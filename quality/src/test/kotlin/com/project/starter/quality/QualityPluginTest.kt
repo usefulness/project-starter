@@ -22,7 +22,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                             id('org.jetbrains.kotlin.jvm')
                         }
                         
-                        repositories.jcenter()
+                        repositories.mavenCentral()
                     """.trimIndent()
                 )
             }
