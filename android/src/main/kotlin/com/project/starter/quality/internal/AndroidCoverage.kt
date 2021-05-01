@@ -12,7 +12,7 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out BaseVariant>, projectExclusions: List<String>) {
     pluginManager.apply("jacoco")
 
-    tasks.withType(Test::class.java) {
+    tasks.withType(Test::class.java).configureEach {
         it.extensions.getByType(JacocoTaskExtension::class.java).apply {
             isIncludeNoLocationClasses = true
             excludes = listOf("jdk.internal.*")

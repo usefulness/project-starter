@@ -33,7 +33,7 @@ internal fun Project.configureDetekt() {
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {
         it.dependsOn("$path:detekt")
     }
-    tasks.withType(Detekt::class.java) {
+    tasks.withType(Detekt::class.java).configureEach {
         it.jvmTarget = rootConfig.javaVersion.toString()
     }
 }
