@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     implementation "com.gradle.publish:plugin-publish-plugin:0.13.0"
-    implementation "com.project.starter:jvm:0.26.1"
+    implementation "com.project.starter:jvm:0.26.2"
 }
 
 gradlePlugin {
