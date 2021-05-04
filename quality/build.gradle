@@ -15,7 +15,7 @@ dependencies {
     api 'org.jmailen.gradle:kotlinter-gradle:3.3.0'
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.16.0'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0'
-    compileOnly 'com.android.tools.build:gradle:4.1.3'
+    compileOnly 'com.android.tools.build:gradle:4.2.0'
     implementation 'com.github.usefulness:issuechecker:0.3.0'
     implementation project(":config")
 
