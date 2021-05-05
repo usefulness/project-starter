@@ -17,10 +17,13 @@ allprojects {
             useIR = true
         }
     }
-    configurations.configureEach {
-        resolutionStrategy.eachDependency {
-            if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
-                useVersion "1.5.0"
+    pluginManager.withPlugin("kotlin") { plugin ->
+        def kotlinVersion = plugins.getPlugin("kotlin").kotlinPluginVersion
+        configurations.configureEach {
+            resolutionStrategy.eachDependency {
+                if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
+                    useVersion kotlinVersion
+                }
             }
         }
     }
