@@ -2,12 +2,12 @@ package com.project.starter.config.plugins
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.kotlinClass
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 
 internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
