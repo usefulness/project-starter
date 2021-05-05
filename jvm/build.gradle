@@ -18,7 +18,7 @@ dependencies {
     testImplementation project(":testing")
 }
 
-test {
+tasks.named("test") {
     useJUnitPlatform()
 }
 
