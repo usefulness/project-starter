@@ -11,7 +11,7 @@ internal fun Project.configureKtlint() {
     extensions.configure(KotlinterExtension::class.java) {
         it.experimentalRules = true
         it.reporters = emptyArray()
-        it.disabledRules = arrayOf("import-ordering")
+        it.disabledRules = arrayOf("import-ordering", "experimental:argument-list-wrapping")
     }
 
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {

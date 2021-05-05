@@ -12,7 +12,7 @@ internal fun Project.configureAndroidLint(lintOptions: LintOptions) {
             "UnknownNullness" to LintOptions.SEVERITY_ERROR,
             "KotlinPropertyAccess" to LintOptions.SEVERITY_ERROR,
             "LambdaLast" to LintOptions.SEVERITY_ERROR,
-            "NoHardKeywords" to LintOptions.SEVERITY_ERROR
+            "NoHardKeywords" to LintOptions.SEVERITY_ERROR,
         )
     )
 

@@ -6,8 +6,6 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    google()
     gradlePluginPortal()
 }
 
@@ -22,7 +20,7 @@ dependencies {
     testImplementation project(":testing")
 }
 
-test {
+tasks.named("test") {
     useJUnitPlatform()
 }
 

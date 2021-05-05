@@ -10,9 +10,11 @@ commonConfig {
 }
 
 allprojects {
-    pluginManager.withPlugin("jacoco") {
-        jacoco {
-            toolVersion = "0.8.7"
+    pluginManager.withPlugin("org.jmailen.kotlinter") {
+        afterEvaluate {
+            kotlinter {
+                disabledRules += ["experimental:argument-list-wrapping"]
+            }
         }
     }
     tasks.withType(KotlinCompile).configureEach {
