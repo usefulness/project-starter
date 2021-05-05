@@ -10,13 +10,6 @@ commonConfig {
 }
 
 allprojects {
-    pluginManager.withPlugin("org.jmailen.kotlinter") {
-        afterEvaluate {
-            kotlinter {
-                disabledRules += ["experimental:argument-list-wrapping"]
-            }
-        }
-    }
     tasks.withType(KotlinCompile).configureEach {
         kotlinOptions {
             apiVersion = "1.4"
