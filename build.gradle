@@ -10,13 +10,6 @@ commonConfig {
 }
 
 allprojects {
-    tasks.withType(KotlinCompile).configureEach {
-        kotlinOptions {
-            apiVersion = "1.4"
-            languageVersion = "1.4"
-            useIR = true
-        }
-    }
     pluginManager.withPlugin("kotlin") { plugin ->
         def kotlinVersion = plugins.getPlugin("kotlin").kotlinPluginVersion
         configurations.configureEach {
@@ -24,6 +17,21 @@ allprojects {
                 if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
                     useVersion kotlinVersion
                 }
+            }
+        }
+    }
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            apiVersion = "1.4"
+            languageVersion = "1.4"
+            useIR = true
+        }
+    }
+
+    pluginManager.withPlugin("java") {
+        java {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(8))
             }
         }
     }

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.27.2] - 2021-05-05
+## Fixed
+- Support back Java 8
+
 ## [0.27.1] - 2021-05-05
 ## Changed
 - Disabled `experimental:argument-list-wrapping` rule
