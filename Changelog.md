@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
-- Update _Android Gradle Plugin_ to 4.2.0, see [release notes](https://developer.android.com/studio/releases/gradle-plugin) and bump minimum required Gradle version to 6.7.1
+- Update _Android Gradle Plugin_ to 4.2.0, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
+- Bump minimum supported Gradle version to 6.8.3
 - Update Jacoco version to `0.8.7`
 - Update _kotlinter-gradle_ to version _3.4.3_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.4.3)
 
