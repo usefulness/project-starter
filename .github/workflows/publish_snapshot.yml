@@ -27,3 +27,35 @@ jobs:
 
       - name: Publish to Github Package Registry
         run: ./gradlew publish --continue || true
+
+  diffuse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 16
+
+      - name: Cache .gradle
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          job-id: diffuse-jdk16
+          gradle-distribution-sha-256-sum-warning: false
+
+      - name: Assemble
+        run: ./gradlew assemble -PskipJarVersion
+
+      - name: Upload diffuse base artifact
+        uses: actions/cache@v2
+        with:
+          path: diffuse-base-file
+          key: diffuse-${{ github.sha }}
+
+      - name: Copy diffuse base artifact to be picked by cache save
+        run: cp android/libs/android.jar diffuse-base-file
+        shell: bash

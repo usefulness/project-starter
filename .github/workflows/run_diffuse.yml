@@ -1,0 +1,75 @@
+name: Diffuse
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - trunk
+      - develop
+      - maine
+      - mane
+
+jobs:
+  run-diffuse:
+    env:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 16
+
+      - name: Cache .gradle
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          job-id: run-diffuse-jdk16
+          gradle-distribution-sha-256-sum-warning: false
+
+      - uses: actions/cache@v2
+        name: Download base
+        with:
+          path: diffuse-base-file
+          key: diffuse-${{ github.event.pull_request.base.sha }}
+          restore-keys: diffuse-${{ github.event.pull_request.base.sha }}
+
+      - name: Assemble
+        run: ./gradlew assemble -PskipJarVersion
+
+      - id: diffuse
+        uses: usefulness/diffuse-action@master
+        with:
+          old-file-path: diffuse-base-file
+          new-file-path: android/libs/android.jar
+
+      - uses: peter-evans/find-comment@v1
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: Diffuse output
+
+      - uses: peter-evans/create-or-update-comment@v1
+        if: ${{ steps.diffuse.outputs.diff-gh-comment != null || steps.find_comment.outputs.comment-id != null }}
+        with:
+          body: |
+            Diffuse output:
+
+            ${{ steps.diffuse.outputs.diff-gh-comment }}
+
+            File path: `${{ steps.diffuse.outputs.diff-file }}`
+          edit-mode: replace
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diffuse-output
+          path: ${{ steps.diffuse.outputs.diff-file }}
