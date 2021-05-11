@@ -47,7 +47,7 @@ jobs:
         uses: usefulness/diffuse-action@master
         with:
           old-file-path: diffuse-base-file
-          new-file-path: android/libs/android.jar
+          new-file-path: android/build/libs/android.jar
 
       - uses: peter-evans/find-comment@v1
         id: find_comment
