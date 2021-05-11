@@ -33,5 +33,11 @@ allprojects {
                 languageVersion.set(JavaLanguageVersion.of(8))
             }
         }
+
+        if (project.hasProperty("skipJarVersion")) {
+            tasks.named("jar") {
+                archiveFile.set(new File(project.buildDir, "libs/${project.name}.jar"))
+            }
+        }
     }
 }

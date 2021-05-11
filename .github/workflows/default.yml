@@ -66,11 +66,11 @@ jobs:
           name: test-results
           path: "${{ github.workspace }}/**/build/reports/tests"
 
-  #      - name: Upload jacoco report
-  #        uses: actions/upload-artifact@v2
-  #        with:
-  #          name: jacoco-report
-  #          path: "${{ github.workspace }}/**/build/reports/jacoco"
+      #      - name: Upload jacoco report
+      #        uses: actions/upload-artifact@v2
+      #        with:
+      #          name: jacoco-report
+      #          path: "${{ github.workspace }}/**/build/reports/jacoco"
 
   build-all-sample-android-projects:
     runs-on: ubuntu-latest
