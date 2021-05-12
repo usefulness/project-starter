@@ -97,7 +97,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
 
-      - uses: eskatos/gradle-command-action@v1
+      - uses: eskatos/gradle-command-action@v1.3.3
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
@@ -128,7 +128,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
 
-      - uses: eskatos/gradle-command-action@v1
+      - uses: eskatos/gradle-command-action@v1.3.3
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
