@@ -51,7 +51,7 @@ jobs:
         run: ./gradlew assemble -PskipJarVersion
 
       - name: Upload diffuse base artifact
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.5
         with:
           path: diffuse-base-file
           key: diffuse-${{ github.sha }}

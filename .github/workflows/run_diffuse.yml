@@ -33,7 +33,7 @@ jobs:
           job-id: run-diffuse-jdk16
           gradle-distribution-sha-256-sum-warning: false
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         name: Download base
         with:
           path: diffuse-base-file
