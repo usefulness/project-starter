@@ -42,7 +42,7 @@ jobs:
           java-version: 16
 
       - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
+        uses: burrunan/gradle-cache-action@v1.10
         with:
           job-id: diffuse-jdk16
           gradle-distribution-sha-256-sum-warning: false
