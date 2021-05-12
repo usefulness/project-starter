@@ -37,7 +37,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
 
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v1.0.3
 
       - name: Check version
         run: ./gradlew currentVersion
