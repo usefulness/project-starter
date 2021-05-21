@@ -73,7 +73,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         class Test1 {
                         
                             @org.junit.Test
-                            fun test1() = Unit
+                            fun someTest() = Unit
                         }
                         
                         """.trimIndent()

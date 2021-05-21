@@ -11,5 +11,5 @@ dependencies {
     api gradleTestKit()
     api 'org.junit.jupiter:junit-jupiter:5.7.2'
     api 'org.assertj:assertj-core:3.19.0'
-    api "org.eclipse.jgit:org.eclipse.jgit:5.11.0.202103091610-r"
+    api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
 }

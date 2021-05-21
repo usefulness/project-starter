@@ -57,6 +57,8 @@ comments:
     active: false
   CommentOverPrivateProperty:
     active: false
+  DeprecatedBlockTag:
+    active: false
   EndOfSentenceFormat:
     active: false
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
@@ -87,7 +89,7 @@ complexity:
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
-    nestingFunctions: [ run, let, apply, with, also, use, forEach, isNotNull, ifNull ]
+    nestingFunctions: [ 'run', 'let', 'apply', 'with', 'also', 'use', 'forEach', 'isNotNull', 'ifNull' ]
   LabeledExpression:
     active: false
     ignoredLabels: [ ]
@@ -254,6 +256,8 @@ formatting:
   ArgumentListWrapping:
     active: false
     autoCorrect: true
+    indentSize: 4
+    maxLineLength: 140
   ChainWrapping:
     active: true
     autoCorrect: true
@@ -272,7 +276,7 @@ formatting:
   ImportOrdering:
     active: false
     autoCorrect: true
-    layout: 'idea'
+    layout: '*,java.**,javax.**,kotlin.**,^'
   Indentation:
     active: false
     autoCorrect: true
@@ -280,7 +284,8 @@ formatting:
     continuationIndentSize: 4
   MaximumLineLength:
     active: true
-    maxLineLength: 120
+    maxLineLength: 140
+    ignoreBackTickedIdentifier: false
   ModifierOrdering:
     active: true
     autoCorrect: true
@@ -329,6 +334,7 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
+    maxLineLength: 140
   SpacingAroundAngleBrackets:
     active: false
     autoCorrect: true
@@ -481,6 +487,8 @@ potential-bugs:
   Deprecation:
     active: false
   DontDowncastCollectionTypes:
+    active: false
+  DoubleMutabilityForCollection:
     active: false
   DuplicateCaseInWhenExpression:
     active: true
@@ -639,6 +647,8 @@ style:
     active: true
   NoTabs:
     active: false
+  ObjectLiteralToLambda:
+    active: false
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
@@ -648,7 +658,7 @@ style:
   PreferToOverPairSyntax:
     active: false
   ProtectedMemberInFinalClass:
-    active: false
+    active: true
   RedundantExplicitType:
     active: false
   RedundantHigherOrderMapUsage:
