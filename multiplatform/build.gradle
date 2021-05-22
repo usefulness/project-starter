@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:${plugins.getPlugin("kotlin").kotlinPluginVersion}'
+    api "org.jetbrains.kotlin:kotlin-gradle-plugin"
     implementation project(":jvm")
     implementation project(":quality")
     implementation project(":config")

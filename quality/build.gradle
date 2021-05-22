@@ -12,7 +12,7 @@ repositories {
 dependencies {
     api 'org.jmailen.gradle:kotlinter-gradle:3.4.4'
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1'
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0'
+    api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     compileOnly 'com.android.tools.build:gradle:4.2.1'
     implementation 'com.github.usefulness:issuechecker:0.3.0'
     implementation project(":config")
