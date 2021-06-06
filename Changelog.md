@@ -6,7 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## Change
+
+
+## [0.28.1] - 2021-06-06
+## Changed
+- Update _Detekt_ config. Disable `LongParametersList`, `NestedBlockDepth` and `TooManyFunctions`
+
+## [0.28.0] - 2021-06-05
+## Changed
+- Update Kotlin plugin to [1.5.10](https://github.com/JetBrains/kotlin/releases/tag/v1.5.10)
 - Update _Detekt_ to version _1.17.1_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.17.1)
 
 ## [0.27.2] - 2021-05-05
@@ -238,8 +246,12 @@ The new feature is available as automatically registered gradle task, but also c
 - Add Quality Plugin - `com.starter.quality`
 
 [Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.23.0...HEAD
-[0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.0.../release/0.29.0
+[0.30.0]: https://github.com/usefulness/project-starter/compare/release/0.29.0.../release/0.30.0
+[0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.1.../release/0.29.0
+[0.28.1]: https://github.com/usefulness/project-starter/compare/release/0.28.0.../release/0.28.1
 [0.28.0]: https://github.com/usefulness/project-starter/compare/release/0.27.0.../release/0.28.0
+[0.27.2]: https://github.com/usefulness/project-starter/compare/release/0.27.1.../release/0.27.2
+[0.27.1]: https://github.com/usefulness/project-starter/compare/release/0.27.0.../release/0.27.1
 [0.27.0]: https://github.com/usefulness/project-starter/compare/release/0.26.3.../release/0.27.0
 [0.26.3]: https://github.com/usefulness/project-starter/compare/release/0.26.2.../release/0.26.3
 [0.26.2]: https://github.com/usefulness/project-starter/compare/release/0.26.1.../release/0.26.2
