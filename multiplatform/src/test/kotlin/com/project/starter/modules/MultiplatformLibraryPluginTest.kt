@@ -23,6 +23,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     lateinit var origin: File
 
     @BeforeEach
+    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
@@ -32,6 +33,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
+                        // language=groovy
                         """
                         plugins {
                             id('com.starter.library.multiplatform')
@@ -58,6 +60,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             module2Root = resolve("module2") {
                 resolve("build.gradle") {
                     writeText(
+                        // language=groovy
                         """
                         plugins {
                             id('com.starter.library.multiplatform')

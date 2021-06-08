@@ -5,7 +5,6 @@ import com.project.starter.javaClass
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -23,8 +22,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
             resolve("build.gradle").writeText("")
             androidModuleRoot = resolve("module1") {
-                @Language("groovy")
                 val script =
+                    // language=groovy
                     """
                     plugins {
                         id 'com.starter.library.android' 
@@ -49,8 +48,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 }
             }
             kotlinModuleRoot = resolve("module2") {
-                @Language("groovy")
                 val script =
+                    // language=groovy
                     """
                     plugins {
                         id 'com.starter.library.kotlin' 
@@ -73,8 +72,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     fun `does not warn on regular project`() {
         androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
             val randomLinks =
+                // language=kotlin
                 """
                 /**
                 * https://issuetracker.google.com/issues/145439806
@@ -95,8 +94,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Disabled("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
         androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
             val randomLinks =
+                // language=kotlin
                 """
                 /**
                 * https://news.ycombinator.com/
@@ -116,8 +115,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `reports youtrack issues`() {
-        @Language("kotlin")
         val randomLinks =
+            // language=kotlin
             """
                 /**
                 * https://news.ycombinator.com/
@@ -153,8 +152,8 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     fun `reports github issues`() {
         androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
             val randomLinks =
+                // language=kotlin
                 """
                 /**
                 * https://github.com/isaacs/github/issues/5

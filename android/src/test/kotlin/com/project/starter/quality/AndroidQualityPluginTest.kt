@@ -5,7 +5,6 @@ import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -16,6 +15,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     private lateinit var module2Root: File
 
     @BeforeEach
+    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
@@ -24,6 +24,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
+                        // language=groovy
                         """
                         plugins {
                             id('com.starter.quality')
@@ -51,8 +52,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
             }
             module2Root = resolve("module2").apply {
                 mkdirs()
-                @Language("groovy")
                 val script =
+                    // language=groovy
                     """
                     plugins {
                         id('com.starter.quality')
@@ -118,8 +119,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `formatOnCompile option enables failing builds if code style errors found`() {
         val enableFormatOnCompile = {
-            @Language("groovy")
             val buildscript =
+                // language=groovy
                 """
                 plugins {
                     id('com.starter.config')
@@ -153,8 +154,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
         module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            @Language("java")
             val javaClass =
+                // language=groovy
                 """
                 public class JavaFileWithCheckstyleIssues {
     
@@ -183,8 +184,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectCodeStyle is not present if java files are not allowed`() {
-        @Language("groovy")
         val buildscript =
+            // language=groovy
             """
             plugins {
                 id('com.starter.config')
@@ -205,8 +206,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `detekt fails on magic number`() {
         module2Root.resolve("src/main/kotlin/MagicNumber.kt") {
-            @Language("kotlin")
             val kotlinClass =
+                // language=groovy
                 """
                 class MagicNumber {
                     var value: Int = 16

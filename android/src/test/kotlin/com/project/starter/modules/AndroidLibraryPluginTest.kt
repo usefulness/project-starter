@@ -6,7 +6,6 @@ import com.project.starter.kotlinClass
 import com.project.starter.kotlinTestClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -18,6 +17,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     lateinit var module2Root: File
 
     @BeforeEach
+    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
@@ -25,8 +25,8 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
-                @Language("groovy")
                 val buildScript =
+                    // language=groovy
                     """
                     plugins {
                         id('com.starter.library.android')
@@ -58,7 +58,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.module1" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
@@ -76,7 +76,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                             fun someTest() = Unit
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }
@@ -92,7 +92,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/AndroidManifest.xml") {
@@ -100,7 +100,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.module1" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
@@ -160,14 +160,14 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             { allFiles ->
                 allFiles.none { it.isFile && it.name == "BuildConfig.java" }
             },
-            "BuildConfig file found in $generated"
+            "BuildConfig file found in $generated",
         )
     }
 
     @Test
     fun `contains BuildConfig file if generation enabled`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 generateBuildConfig = true
@@ -184,14 +184,14 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             { allFiles ->
                 allFiles.any { it.isFile && it.name == "BuildConfig.java" }
             },
-            "BuildConfig file not found in $generated"
+            "BuildConfig file not found in $generated",
         )
     }
 
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
@@ -212,8 +212,8 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures android library extension`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 generateBuildConfig = false
@@ -241,8 +241,8 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `fail on java files if settings enabled at project level`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 javaFilesAllowed = false
