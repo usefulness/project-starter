@@ -61,13 +61,13 @@ private val databinding = listOf(
     "**/databinding/*Binding.class",
     "**/databinding/*BindingImpl.class",
     "**/BR.*",
-    "**/IssuesRegistry.*"
+    "**/IssuesRegistry.*",
 )
 private val framework = listOf(
     "**/R.class",
     "**/R$*.class",
     "**/BuildConfig.*",
-    "**/Manifest*.*"
+    "**/Manifest*.*",
 )
 
 private val excludes = databinding + framework + daggerCoverageExclusions

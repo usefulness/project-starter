@@ -13,7 +13,7 @@ internal fun Project.configureAndroidLint(lintOptions: LintOptions) {
             "KotlinPropertyAccess" to LintOptions.SEVERITY_ERROR,
             "LambdaLast" to LintOptions.SEVERITY_ERROR,
             "NoHardKeywords" to LintOptions.SEVERITY_ERROR,
-        )
+        ),
     )
 
     val baseline = file("lint-baseline.xml")

@@ -6,7 +6,6 @@ import com.project.starter.kotlinClass
 import com.project.starter.kotlinTestClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -18,14 +17,15 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     lateinit var module2Root: File
 
     @BeforeEach
+    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
-                @Language("groovy")
                 val buildScript =
+                    // language=groovy
                     """
                     plugins {
                         id('com.starter.application.android')
@@ -57,7 +57,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.module1" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
@@ -82,7 +82,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/AndroidManifest.xml") {
@@ -90,7 +90,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.module1" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
@@ -141,8 +141,8 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 defaultVariants = ["demoDebug", "fullRelease"]
@@ -163,8 +163,8 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures android library extension`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 javaFilesAllowed = false
@@ -191,8 +191,8 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `fails on java files if settings enabled at project level`() {
-        @Language("groovy")
         val config =
+            // language=groovy
             """
             projectConfig {
                 javaFilesAllowed = false

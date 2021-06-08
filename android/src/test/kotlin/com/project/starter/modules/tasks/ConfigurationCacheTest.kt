@@ -35,7 +35,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
                     writeText(
                         """
                         <manifest package="com.example.module1" />
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/java/ValidJava2.java") {

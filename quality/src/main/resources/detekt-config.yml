@@ -84,7 +84,7 @@ complexity:
     includeStaticDeclarations: false
     includePrivateDeclarations: false
   ComplexMethod:
-    active: true
+    active: false
     threshold: 15
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
@@ -94,10 +94,10 @@ complexity:
     active: false
     ignoredLabels: [ ]
   LargeClass:
-    active: true
+    active: false
     threshold: 600
   LongMethod:
-    active: true
+    active: false
     threshold: 60
   LongParameterList:
     active: false

@@ -3,12 +3,11 @@ package com.project.starter.modules.tasks
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import com.project.starter.kotlinClass
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 
 internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
@@ -16,6 +15,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
     lateinit var test: File
 
     @BeforeEach
+    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
@@ -23,8 +23,8 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
 
             resolve("build.gradle")
             resolve("module1") {
-                @Language("groovy")
                 val buildScript =
+                    // language=groovy
                     """
                     plugins {
                         id('com.starter.library.android')
@@ -48,7 +48,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                         writeText(
                             """
                         <manifest package="com.example.module1" />
-                            """.trimIndent()
+                            """.trimIndent(),
                         )
                     }
                 }
@@ -60,8 +60,8 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
             }
 
             resolve("parentModule") {
-                @Language("groovy")
                 val parentBuildScript =
+                    // language=groovy
                     """
                     plugins {
                         id('com.starter.library.android')
@@ -75,7 +75,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.parent" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main") {
@@ -84,8 +84,8 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     }
                 }
                 resolve("childModule") {
-                    @Language("groovy")
                     val childBuildscript =
+                        // language=groovy
                         """
                         plugins {
                             id('com.starter.library.kotlin')

@@ -20,7 +20,7 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
                         plugins {
                             id('com.starter.library.kotlin')
                         }
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
             }
             resolve("src/main/kotlin/ValidKotlinFile1.kt") {

@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @CacheableTask
 abstract class IssueLinksTask @Inject constructor(
-    private val workerExecutor: WorkerExecutor
+    private val workerExecutor: WorkerExecutor,
 ) : SourceTask() {
 
     @OutputFile

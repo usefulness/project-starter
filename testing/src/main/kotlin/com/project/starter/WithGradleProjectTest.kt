@@ -1,9 +1,9 @@
 package com.project.starter
 
-import java.io.File
-import java.io.InputStream
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
+import java.io.InputStream
 
 abstract class WithGradleProjectTest {
 

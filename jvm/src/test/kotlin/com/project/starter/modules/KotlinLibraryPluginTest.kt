@@ -7,13 +7,13 @@ import com.project.starter.kotlinClass
 import com.project.starter.kotlinTestClass
 import com.project.starter.setupGit
 import com.project.starter.tag
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
 
 internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
@@ -43,7 +43,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
@@ -65,7 +65,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                             testImplementation 'junit:junit:4.13'
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile2.kt") {
@@ -126,7 +126,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
             projectConfig {
                 javaFilesAllowed = false
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))

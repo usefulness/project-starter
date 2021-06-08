@@ -33,7 +33,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     id 'com.starter.versioning'
                 }
                 
-                """.trimIndent()
+                """.trimIndent(),
             )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
@@ -42,7 +42,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                         plugins {
                             id 'org.jetbrains.kotlin.jvm' version "1.5.0"
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }
@@ -53,7 +53,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                         plugins {
                             id 'org.jetbrains.kotlin.jvm' version "1.5.0"
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }
@@ -68,7 +68,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
             """
             apply plugin: "com.starter.versioning"
             
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         val result = runTask("help", shouldFail = true)
@@ -140,7 +140,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     }
                 }
                 
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
         git.commit("features in 1.2.0")

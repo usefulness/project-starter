@@ -31,7 +31,7 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
                         plugins {
                             id 'com.starter.library.kotlin'
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }
@@ -42,7 +42,7 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
                         plugins {
                             id 'com.starter.library.kotlin'
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }

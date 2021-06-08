@@ -17,22 +17,22 @@ import org.gradle.api.plugins.quality.CheckstyleExtension
 private val pluginsWithConfiguration = listOf(
     Config(
         plugin = "kotlin",
-        starterPlugin = "com.starter.library.kotlin"
+        starterPlugin = "com.starter.library.kotlin",
     ) { configureKotlinCheckstyle() },
     Config(
         plugin = "com.android.library",
-        starterPlugin = "com.starter.library.android"
+        starterPlugin = "com.starter.library.android",
     ) { configureAndroidCheckstyle() },
     Config(
         plugin = "com.android.application",
-        starterPlugin = "com.starter.application.android"
-    ) { configureAndroidCheckstyle() }
+        starterPlugin = "com.starter.application.android",
+    ) { configureAndroidCheckstyle() },
 )
 
 private data class Config(
     val plugin: String,
     val starterPlugin: String,
-    val configuration: Project.() -> Unit
+    val configuration: Project.() -> Unit,
 )
 
 internal fun Project.configureCheckstyle() {
@@ -119,7 +119,7 @@ private fun Project.configureTask(task: Checkstyle) {
 
     task.configProperties = mapOf(
         "suppressions.global.file" to suppressions,
-        "suppressions.local.file" to project.file("checkstyle-baseline.xml")
+        "suppressions.local.file" to project.file("checkstyle-baseline.xml"),
     )
     config?.let { task.configFile = it } ?: logger.warn("Missing Checkstyle configuration file")
 

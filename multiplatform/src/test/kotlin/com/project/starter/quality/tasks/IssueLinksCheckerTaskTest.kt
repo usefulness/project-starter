@@ -55,7 +55,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 """
                         👉 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)
                         ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
-                """.trimIndent()
+                """.trimIndent(),
             )
         assertThat(result.output).contains("\uD83D\uDC49 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)")
         assertThat(result.output).contains("✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)")

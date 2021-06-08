@@ -2,12 +2,12 @@ package com.project.starter.quality.tasks
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 
 internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
@@ -48,7 +48,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
                     writeText(
                         """
                         <manifest package="com.example.module2" />
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/java/ValidJava2.java") {
