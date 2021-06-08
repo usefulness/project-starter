@@ -28,7 +28,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                             id('org.jetbrains.kotlin.jvm') version "1.5.0"
                         }
                       
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {

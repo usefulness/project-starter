@@ -35,7 +35,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
                         kotlin {
                             ios()
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }
@@ -50,7 +50,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
                         kotlin {
                             jvm()
                         }
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
             }

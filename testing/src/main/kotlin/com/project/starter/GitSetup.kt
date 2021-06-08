@@ -1,12 +1,10 @@
 package com.project.starter
 
-import java.io.File
 import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION
-import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE
-import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE
+import org.eclipse.jgit.lib.ConfigConstants.*
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.URIish
+import java.io.File
 
 fun WithGradleProjectTest.setupGit(origin: File): Git {
     Git.init().setDirectory(origin).call()
@@ -27,7 +25,7 @@ fun WithGradleProjectTest.setupGit(origin: File): Git {
         """
         .gradle
         **/build/
-        """.trimIndent()
+        """.trimIndent(),
     )
     git.commit("init")
     git.push().apply {
@@ -54,7 +52,7 @@ fun Git.commit(commitMessage: String) {
     repository.directory.resolve("File.txt").appendText(
         """
             | Text
-            """.trimMargin()
+            """.trimMargin(),
     )
     add().apply {
         addFilepattern(".")

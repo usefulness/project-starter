@@ -52,7 +52,7 @@ open class QualityPluginConfig(
 open class AndroidPluginConfig(
     var compileSdkVersion: Int = 30,
     var minSdkVersion: Int = 23,
-    var targetSdkVersion: Int? = null
+    var targetSdkVersion: Int? = null,
 ) {
 
     fun compileSdkVersion(value: Int) {
@@ -69,7 +69,7 @@ open class AndroidPluginConfig(
 }
 
 open class VersioningPluginConfig(
-    var enabled: Boolean = true
+    var enabled: Boolean = true,
 ) {
 
     fun enabled(value: Boolean) {

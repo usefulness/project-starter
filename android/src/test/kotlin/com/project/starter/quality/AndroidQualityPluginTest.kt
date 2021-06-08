@@ -31,7 +31,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                             id('kotlin')
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/kotlin/ValidKotlinFile1.kt") {
@@ -79,7 +79,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         <manifest package="com.example.module2" />
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/java/ValidKotlinFile2.kt") {

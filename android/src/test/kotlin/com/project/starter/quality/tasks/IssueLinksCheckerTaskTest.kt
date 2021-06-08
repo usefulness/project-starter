@@ -37,7 +37,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                     writeText(
                         """
                         <manifest package="com.example.module1" />
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/main/java/ValidJava2.java") {
@@ -140,7 +140,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                         """
                         👉 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)
                         ✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 softly.assertThat(result.output).contains("\uD83D\uDC49 https://youtrack.jetbrains.com/issue/KT-31666 (Closed)")
                 softly.assertThat(result.output).contains("✅ https://youtrack.jetbrains.com/issue/KT-34230 (Opened)")
@@ -173,7 +173,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 """
                 ✅ https://github.com/isaacs/github/issues/5 (Opened)
                 👉 https://github.com/apollographql/apollo-android/issues/2207 (Closed)
-                """.trimIndent()
+                """.trimIndent(),
             )
         assertThat(result.output).contains("✅ https://github.com/isaacs/github/issues/5 (Opened)")
         assertThat(result.output).contains("\uD83D\uDC49 https://github.com/apollographql/apollo-android/issues/2207 (Closed)")

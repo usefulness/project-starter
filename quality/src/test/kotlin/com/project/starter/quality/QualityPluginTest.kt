@@ -23,7 +23,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                         }
                         
                         repositories.mavenCentral()
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
             }
             resolve("src/main/kotlin/ValidKotlinFile1.kt") {

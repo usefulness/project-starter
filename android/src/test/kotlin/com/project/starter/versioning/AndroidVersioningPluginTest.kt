@@ -3,12 +3,12 @@ package com.project.starter.versioning
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.commit
 import com.project.starter.setupGit
-import java.io.File
 import org.assertj.core.api.Assertions.assertThat
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import java.io.File
 
 internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
@@ -28,7 +28,7 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
                         """
                         <manifest package="com.example.module1" />
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("build.gradle") {

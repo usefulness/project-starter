@@ -47,7 +47,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                             "jvmTestImplementation"("junit:junit:4.13.2")
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/commonMain/kotlin/ValidKotlinFile1.kt") {
@@ -76,7 +76,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                             "jvmTestImplementation"("junit:junit:4.13.2")
                         }
                         
-                        """.trimIndent()
+                        """.trimIndent(),
                     )
                 }
                 resolve("src/commonMain/kotlin/ValidKotlinFile2.kt") {

@@ -1,9 +1,9 @@
 package com.project.starter.quality.internal
 
-import java.io.File
-import java.net.JarURLConnection
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
+import java.io.File
+import java.net.JarURLConnection
 
 private object ResourceLoader
 

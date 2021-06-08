@@ -33,5 +33,5 @@ val daggerCoverageExclusions = listOf(
     "**/Dagger*Component.class",
     "**/Dagger*Component${"$"}Builder.class",
     "**/*_*Factory.class",
-    "**/*_Factory.class"
+    "**/*_Factory.class",
 )
