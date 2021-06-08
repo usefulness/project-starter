@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.28.2] - 2021-06-07
+## Fixed
+-  Plugin will now depend on Kotlin Gradle plugin 1.5.10
+
 ## [0.28.1] - 2021-06-06
 ## Changed
 - Update _Detekt_ config. Disable `LongParametersList`, `NestedBlockDepth` and `TooManyFunctions`
@@ -247,7 +251,8 @@ The new feature is available as automatically registered gradle task, but also c
 
 [Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.23.0...HEAD
 [0.30.0]: https://github.com/usefulness/project-starter/compare/release/0.29.0.../release/0.30.0
-[0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.1.../release/0.29.0
+[0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.2.../release/0.29.0
+[0.28.2]: https://github.com/usefulness/project-starter/compare/release/0.28.1.../release/0.28.2
 [0.28.1]: https://github.com/usefulness/project-starter/compare/release/0.28.0.../release/0.28.1
 [0.28.0]: https://github.com/usefulness/project-starter/compare/release/0.27.0.../release/0.28.0
 [0.27.2]: https://github.com/usefulness/project-starter/compare/release/0.27.1.../release/0.27.2
