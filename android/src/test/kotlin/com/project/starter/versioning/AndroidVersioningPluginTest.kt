@@ -4,7 +4,6 @@ import com.project.starter.WithGradleProjectTest
 import com.project.starter.commit
 import com.project.starter.setupGit
 import org.assertj.core.api.Assertions.assertThat
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -32,7 +31,7 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
                     )
                 }
                 resolve("build.gradle") {
-                    @Language("gradle")
+                    // language=groovy
                     val buildscript =
                         """
                         plugins {

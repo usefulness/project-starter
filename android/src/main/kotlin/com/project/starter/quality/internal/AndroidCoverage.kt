@@ -35,12 +35,12 @@ internal fun Project.configureAndroidCoverage(variants: DomainObjectSet<out Base
             report.description = "Generates Jacoco coverage reports for the ${variant.name} variant."
 
             report.reports {
-                it.html.isEnabled = true
-                it.xml.isEnabled = true
+                it.html.required.set(true)
+                it.xml.required.set(true)
             }
 
             val sourceDirs = variant.sourceSets.flatMap { it.javaDirectories }
-            val classesDir = variant.javaCompileProvider.get().destinationDir
+            val classesDir = variant.javaCompileProvider.get().destinationDirectory.get().asFile
             val executionData = jacocoTestTaskExtension.destinationFile
 
             val coverageExcludes = excludes + projectExclusions

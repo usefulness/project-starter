@@ -26,8 +26,8 @@ internal fun Project.configureMultiplatformCoverage() {
         it.sourceDirectories.setFrom(files("src/commonMain/kotlin", "src/jvmMain/kotlin"))
         it.executionData.setFrom(buildDir.resolve("jacoco/jvmTest.exec"))
         it.reports.apply {
-            xml.isEnabled = true
-            html.isEnabled = true
+            xml.required.set(true)
+            html.required.set(true)
         }
     }
 }

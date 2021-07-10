@@ -4,7 +4,6 @@ import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -20,7 +19,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
             resolve("build.gradle").writeText("")
             moduleRoot = resolve("javaModule") {
-                @Language("groovy")
+                // language=groovy
                 val script =
                     """
                     plugins {
@@ -64,7 +63,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
     @Test
     fun `generating baseline makes build to pass on old code, but fail on new one`() {
         moduleRoot.resolve("src/test/java/OldCode.java") {
-            @Language("java")
+            // language=java
             val javaClass =
                 """
                 public class OldCode {
@@ -84,7 +83,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
         assertThat(checkStyleOldCode.task(":javaModule:checkstyle")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
 
         moduleRoot.resolve("src/test/java/NewCode.java") {
-            @Language("java")
+            // language=java
             val javaClass =
                 """
                 public class NewCode {

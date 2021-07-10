@@ -1,9 +1,7 @@
 package com.project.starter
 
-import org.intellij.lang.annotations.Language
-
-@Language("java")
 fun javaClass(className: String) =
+    // language=java
     """
     public class $className {
     
@@ -11,15 +9,15 @@ fun javaClass(className: String) =
         
     """.trimIndent()
 
-@Language("kotlin")
 fun kotlinClass(className: String) =
+    // language=kotlin
     """
     object $className
 
     """.trimIndent()
 
-@Language("kotlin")
 fun kotlinTestClass(className: String) =
+    // language=kotlin
     """
     class $className {
     

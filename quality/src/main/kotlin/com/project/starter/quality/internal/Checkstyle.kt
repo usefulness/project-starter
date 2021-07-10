@@ -108,7 +108,7 @@ private fun Project.getResourceFiles(sourceSet: AndroidSourceSet) = sourceSet.re
 private fun Project.applyCheckstyle() {
     pluginManager.apply("checkstyle")
     extensions.configure<CheckstyleExtension>("checkstyle") {
-        it.toolVersion = "8.41.1"
+        it.toolVersion = "8.44"
     }
 }
 
@@ -124,7 +124,7 @@ private fun Project.configureTask(task: Checkstyle) {
     config?.let { task.configFile = it } ?: logger.warn("Missing Checkstyle configuration file")
 
     task.reports { report ->
-        report.html.isEnabled = false
-        report.xml.isEnabled = true
+        report.html.required.set(false)
+        report.xml.required.set(true)
     }
 }

@@ -5,7 +5,6 @@ import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -62,7 +61,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `formatOnCompile option enables failing builds if code style errors found`() {
         val enableFormatOnCompile = {
-            @Language("groovy")
+            // language=groovy
             val buildscript =
                 """
                 plugins {
@@ -97,7 +96,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
         rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            @Language("java")
+            // language=java
             val javaClass =
                 """
                 import java.io.IOException;
@@ -128,7 +127,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectCodeStyle is not present if java files are not allowed`() {
-        @Language("groovy")
+        // language=groovy
         val buildscript =
             """
             plugins {
@@ -152,7 +151,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `detekt fails on magic number`() {
         rootDirectory.resolve("src/main/kotlin/MagicNumber.kt") {
-            @Language("kotlin")
+            // language=kotlin
             val kotlinClass =
                 """
                 class MagicNumber {
