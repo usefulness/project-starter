@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.29.0] - 2021-07-10
+## Changed
+- Update Kotlin plugin to _1.5.20_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.20)
+- Update _Android Gradle Plugin_ to _4.2.2_, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
+- Update _kotlinter-gradle_ to version _3.4.5_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.4.5)
 
 ## [0.28.2] - 2021-06-07
 ## Fixed
@@ -249,7 +254,7 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.23.0...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.29.0...HEAD
 [0.30.0]: https://github.com/usefulness/project-starter/compare/release/0.29.0.../release/0.30.0
 [0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.2.../release/0.29.0
 [0.28.2]: https://github.com/usefulness/project-starter/compare/release/0.28.1.../release/0.28.2
