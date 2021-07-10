@@ -2,7 +2,6 @@ package com.project.starter.modules.tasks
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -20,7 +19,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
 
             resolve("build.gradle").writeText("")
             androidModuleRoot = resolve("module1") {
-                @Language("groovy")
+                // language=groovy
                 val script =
                     """
                     plugins {
@@ -46,7 +45,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
                 }
             }
             kotlinModuleRoot = resolve("module2") {
-                @Language("groovy")
+                // language=groovy
                 val script =
                     """
                     plugins {

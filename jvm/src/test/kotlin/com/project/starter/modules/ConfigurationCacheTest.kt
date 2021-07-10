@@ -2,7 +2,6 @@ package com.project.starter.modules
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -12,7 +11,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            @Language("groovy")
+            // language=groovy
             val script =
                 """
                     plugins {

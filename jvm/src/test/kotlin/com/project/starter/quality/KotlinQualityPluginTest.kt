@@ -5,7 +5,6 @@ import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -59,7 +58,7 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
         rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            @Language("java")
+            // language=java
             val javaClass =
                 """
                 import java.io.IOException;

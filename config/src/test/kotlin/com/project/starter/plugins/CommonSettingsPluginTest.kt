@@ -1,10 +1,9 @@
-package com.project.starter.config.plugins
+package com.project.starter.plugins
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -40,7 +39,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures common config extension using property syntax`() {
-        @Language("groovy")
+        // language=groovy
         val buildscript =
             """
             plugins {
@@ -72,7 +71,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures common config extension using function syntax`() {
-        @Language("groovy")
+        // language=groovy
         val buildscript =
             """
             plugins {
@@ -104,7 +103,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `throws exception if not applied to the root project`() {
-        @Language("groovy")
+        // language=groovy
         val buildscript =
             """
             plugins {

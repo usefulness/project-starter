@@ -22,8 +22,8 @@ internal fun Project.configureKotlinCoverage() {
     tasks.named("jacocoTestReport", JacocoReport::class.java) {
         it.dependsOn(":$path:test")
         it.reports.apply {
-            xml.isEnabled = true
-            html.isEnabled = true
+            xml.required.set(true)
+            html.required.set(true)
         }
     }
 }

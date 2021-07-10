@@ -4,7 +4,6 @@ import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -14,7 +13,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            @Language("groovy")
+            // language=groovy
             val script =
                 """
                     plugins {
@@ -37,7 +36,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     fun `does not warn on regular project`() {
         rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
+            // language=kotlin
             val randomLinks =
                 """
                 /**
@@ -59,7 +58,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Disabled("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
         rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
+            // language=kotlin
             val randomLinks =
                 """
                 /**
@@ -80,7 +79,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `reports youtrack issues`() {
-        @Language("kotlin")
+        // language=kotlin
         val randomLinks =
             """
                 /**
@@ -113,7 +112,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     fun `reports github issues`() {
         rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
-            @Language("kotlin")
+            // language=kotlin
             val randomLinks =
                 """
                 /**

@@ -9,7 +9,6 @@ import com.project.starter.setupGit
 import com.project.starter.tag
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -158,7 +157,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `does not configure versioning plugin if disabled using configuration plugin`() {
-        @Language("groovy")
+        // language=groovy
         val versioningScript =
             """
             plugins {
