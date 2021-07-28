@@ -11,7 +11,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.FileTree
 import org.gradle.api.internal.HasConvention
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.SourceSet
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -93,6 +93,6 @@ internal inline fun Project.onMultiplatform(crossinline function: KotlinMultipla
     project.extensions.findByName("kotlin")?.let { (it as? KotlinMultiplatformExtension)?.function() }
 }
 
-internal inline fun Project.onJvm(crossinline function: JavaPluginConvention.() -> Unit) {
-    project.convention.findPlugin(JavaPluginConvention::class.java)?.let(function)
+internal inline fun Project.onJvm(crossinline function: JavaPluginExtension.() -> Unit) {
+    project.extensions.findByType(JavaPluginExtension::class.java)?.let(function)
 }
