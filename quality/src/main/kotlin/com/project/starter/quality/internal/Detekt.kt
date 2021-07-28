@@ -21,7 +21,6 @@ internal fun Project.configureDetekt() {
         onMultiplatform {
             sourceSets.configureEach {
                 detekt.input.from(it.kotlin.srcDirs)
-                // detekt.input.from(it.kotlin.srcDirTrees)
             }
         }
 

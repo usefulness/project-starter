@@ -18,8 +18,8 @@ import org.gradle.api.Project
 internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
         compileSdkVersion(rootConfig.android.compileSdkVersion)
-        minSdkVersion(rootConfig.android.minSdkVersion)
-        targetSdkVersion(rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion)
+        minSdk = rootConfig.android.minSdkVersion
+        targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
         setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
