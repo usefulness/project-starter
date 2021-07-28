@@ -1,6 +1,5 @@
 package com.project.starter.modules.plugins
 
-import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.KotlinLibraryConfigExtension
@@ -10,7 +9,7 @@ import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerP
 import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.plugins.JavaPluginConvention
 
 class KotlinLibraryPlugin : Plugin<Project> {
 
@@ -33,7 +32,7 @@ class KotlinLibraryPlugin : Plugin<Project> {
             val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed
             if (!javaFilesAllowed) {
                 val forbidJavaFiles = registerForbidJavaFilesTask { task ->
-                    val plugin = project.extensions.getByType<JavaPluginExtension>()
+                    val plugin = project.convention.getPlugin(JavaPluginConvention::class.java)
                     plugin.sourceSets.configureEach { sourceSet ->
                         if (sourceSet.name == "main" || sourceSet.name == "test") {
                             task.source += sourceSet.java
