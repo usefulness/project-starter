@@ -20,7 +20,7 @@ internal fun Project.configureDetekt() {
 
         onMultiplatform {
             sourceSets.configureEach {
-                detekt.input.from(it.kotlin.srcDirs)
+                detekt.source.from(it.kotlin.srcDirs)
             }
         }
 
