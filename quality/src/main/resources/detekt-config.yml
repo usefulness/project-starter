@@ -92,15 +92,15 @@ complexity:
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
     nestingFunctions:
-      - 'run'
-      - 'let'
-      - 'apply'
-      - 'with'
       - 'also'
-      - 'use'
+      - 'apply'
       - 'forEach'
       - 'isNotNull'
       - 'ifNull'
+      - 'let'
+      - 'run'
+      - 'use'
+      - 'with'
   LabeledExpression:
     active: false
     ignoredLabels: [ ]
@@ -199,10 +199,10 @@ exceptions:
   ExceptionRaisedInUnexpectedLocation:
     active: true
     methodNames:
-      - 'toString'
-      - 'hashCode'
       - 'equals'
       - 'finalize'
+      - 'hashCode'
+      - 'toString'
   InstanceOfCheckForException:
     active: false
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -220,10 +220,10 @@ exceptions:
   SwallowedException:
     active: true
     ignoredExceptionTypes:
-      - 'NumberFormatException'
       - 'InterruptedException'
-      - 'ParseException'
       - 'MalformedURLException'
+      - 'NumberFormatException'
+      - 'ParseException'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
   ThrowingExceptionFromFinally:
     active: true
@@ -236,9 +236,11 @@ exceptions:
       - 'ArrayIndexOutOfBoundsException'
       - 'Error'
       - 'Exception'
+      - 'IllegalArgumentException'
       - 'IllegalMonitorStateException'
-      - 'NullPointerException'
+      - 'IllegalStateException'
       - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
       - 'RuntimeException'
       - 'Throwable'
   ThrowingNewInstanceOfSameException:
@@ -251,8 +253,8 @@ exceptions:
       - 'Error'
       - 'Exception'
       - 'IllegalMonitorStateException'
-      - 'NullPointerException'
       - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
       - 'RuntimeException'
       - 'Throwable'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
@@ -261,8 +263,8 @@ exceptions:
     exceptionNames:
       - 'Error'
       - 'Exception'
-      - 'Throwable'
       - 'RuntimeException'
+      - 'Throwable'
 
 formatting:
   active: false
@@ -305,7 +307,7 @@ formatting:
     continuationIndentSize: 4
   MaximumLineLength:
     active: true
-    maxLineLength: 140
+    maxLineLength: 120
     ignoreBackTickedIdentifier: false
   ModifierOrdering:
     active: true
@@ -355,7 +357,7 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
-    maxLineLength: 140
+    maxLineLength: 120
   SpacingAroundAngleBrackets:
     active: false
     autoCorrect: true
@@ -401,6 +403,10 @@ formatting:
 
 naming:
   active: true
+  BooleanPropertyNaming:
+    active: false
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    allowedPattern: '^(is|has|are)'
   ClassNaming:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -434,7 +440,8 @@ naming:
     functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
     excludeClassPattern: '$^'
     ignoreOverridden: true
-    ignoreAnnotated: [ ]
+    ignoreAnnotated:
+      - 'Composable'
   FunctionParameterNaming:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -503,6 +510,10 @@ performance:
 
 potential-bugs:
   active: true
+  AvoidReferentialEquality:
+    active: false
+    forbiddenTypePatterns:
+      - 'kotlin.String'
   CastToNullableType:
     active: false
   Deprecation:
@@ -527,8 +538,10 @@ potential-bugs:
     active: false
     restrictToAnnotatedMethods: true
     returnValueAnnotations:
-      - '*.CheckReturnValue'
       - '*.CheckResult'
+      - '*.CheckReturnValue'
+    ignoreReturnValueAnnotations:
+      - '*.CanIgnoreReturnValue'
   ImplicitDefaultLocale:
     active: true
   ImplicitUnitReturnType:
@@ -603,9 +616,9 @@ style:
   ForbiddenComment:
     active: false
     values:
-      - 'TODO:'
       - 'FIXME:'
       - 'STOPSHIP:'
+      - 'TODO:'
     allowedPatterns: ''
   ForbiddenImport:
     active: false
@@ -614,8 +627,8 @@ style:
   ForbiddenMethodCall:
     active: false
     methods:
-      - 'kotlin.io.println'
       - 'kotlin.io.print'
+      - 'kotlin.io.println'
   ForbiddenPublicDataClass:
     active: false
     excludes: [ '**' ]
@@ -643,15 +656,13 @@ style:
     active: true
     maxJumpCount: 1
   MagicNumber:
-    active: true
+    active: false
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     ignoreNumbers:
-      - '-100'
       - '-1'
       - '0'
       - '1'
       - '2'
-      - '100'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
     ignoreLocalVariableDeclaration: false
