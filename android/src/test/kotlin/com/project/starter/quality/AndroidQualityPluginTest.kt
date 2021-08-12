@@ -204,12 +204,12 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `detekt fails on magic number`() {
+    fun `detekt fails on invalid class name`() {
         module2Root.resolve("src/main/kotlin/MagicNumber.kt") {
             val kotlinClass =
-                // language=groovy
+                // language=kotlin
                 """
-                class MagicNumber {
+                class invalidClassName {
                     var value: Int = 16
                 }
                 

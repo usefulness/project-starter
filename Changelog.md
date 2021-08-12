@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.32.0] - 2021-08-12
+## Changed
+- Update _kotlinter-gradle_ to version _3.5.0_, see [release notes](https://github.com/jeremymailen/kotlinter-gradle/releases/tag/3.5.0)
+- Update _Detekt_ to version _1.18.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.18.0)
+
 ## [0.31.0] - 2021-07-28
 ## Changed
 - Update _Android Gradle Plugin_ to _7.0.0_, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
@@ -261,7 +267,18 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.29.0...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.31.0...HEAD
+[0.40.0]: https://github.com/usefulness/project-starter/compare/release/0.39.0.../release/0.40.0
+[0.39.0]: https://github.com/usefulness/project-starter/compare/release/0.38.0.../release/0.39.0
+[0.38.0]: https://github.com/usefulness/project-starter/compare/release/0.37.0.../release/0.38.0
+[0.37.0]: https://github.com/usefulness/project-starter/compare/release/0.37.0.../release/0.37.0
+[0.37.0]: https://github.com/usefulness/project-starter/compare/release/0.36.0.../release/0.37.0
+[0.36.0]: https://github.com/usefulness/project-starter/compare/release/0.35.0.../release/0.36.0
+[0.35.0]: https://github.com/usefulness/project-starter/compare/release/0.34.0.../release/0.35.0
+[0.34.0]: https://github.com/usefulness/project-starter/compare/release/0.33.0.../release/0.34.0
+[0.33.0]: https://github.com/usefulness/project-starter/compare/release/0.32.0.../release/0.33.0
+[0.32.0]: https://github.com/usefulness/project-starter/compare/release/0.31.0.../release/0.32.0
+[0.31.0]: https://github.com/usefulness/project-starter/compare/release/0.30.0.../release/0.31.0
 [0.30.0]: https://github.com/usefulness/project-starter/compare/release/0.29.0.../release/0.30.0
 [0.29.0]: https://github.com/usefulness/project-starter/compare/release/0.28.2.../release/0.29.0
 [0.28.2]: https://github.com/usefulness/project-starter/compare/release/0.28.1.../release/0.28.2
