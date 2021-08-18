@@ -1,6 +1,7 @@
 package com.project.starter.quality.plugins
 
 import com.android.build.gradle.BaseExtension
+import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.quality.internal.configureCheckstyle
 import com.project.starter.quality.internal.configureDetekt
@@ -10,16 +11,10 @@ import com.project.starter.quality.tasks.ProjectCodeStyleTask.Companion.addProje
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.FileTree
-import org.gradle.api.internal.HasConvention
-import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.SourceSetContainer
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 class QualityPlugin : Plugin<Project> {
-
-    private val SourceSet.kotlin
-        get() = ((getConvention("kotlin") ?: getConvention("kotlin2js")) as? KotlinSourceSet)?.kotlin
 
     override fun apply(project: Project) = with(project) {
         repositories.mavenCentral()
@@ -46,10 +41,8 @@ class QualityPlugin : Plugin<Project> {
                 }
             }
             onJvm {
-                sourceSets.configureEach { sourceSet ->
-                    source += sourceSet.java
-                    val kotlin = sourceSet.kotlin ?: return@configureEach
-                    source += kotlin.sourceDirectories.asFileTree
+                this.configureEach { sourceSet ->
+                    source += sourceSet.allSource
                 }
             }
             report.set(buildDir.resolve("reports/issue_comments.txt"))
@@ -80,9 +73,6 @@ class QualityPlugin : Plugin<Project> {
             }
         }
     }
-
-    private fun SourceSet.getConvention(name: String) =
-        (this as HasConvention).convention.plugins[name]
 }
 
 internal inline fun Project.onAndroid(crossinline function: BaseExtension.() -> Unit) {
@@ -93,6 +83,6 @@ internal inline fun Project.onMultiplatform(crossinline function: KotlinMultipla
     project.extensions.findByName("kotlin")?.let { (it as? KotlinMultiplatformExtension)?.function() }
 }
 
-internal inline fun Project.onJvm(crossinline function: JavaPluginConvention.() -> Unit) {
-    project.convention.findPlugin(JavaPluginConvention::class.java)?.let(function)
+internal inline fun Project.onJvm(crossinline function: SourceSetContainer.() -> Unit) {
+    project.extensions.findByType<SourceSetContainer>()?.let(function)
 }
