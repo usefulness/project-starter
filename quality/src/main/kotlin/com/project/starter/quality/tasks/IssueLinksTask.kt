@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 package com.project.starter.quality.tasks
 
 import com.starter.issuechecker.CheckResult
@@ -21,6 +19,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.NormalizeLineEndings
 import org.gradle.workers.WorkAction
 import org.gradle.workers.WorkParameters
 import org.gradle.workers.WorkerExecutor
@@ -44,6 +43,7 @@ abstract class IssueLinksTask @Inject constructor(
     }
 
     @InputFiles
+    @NormalizeLineEndings
     @PathSensitive(PathSensitivity.RELATIVE)
     override fun getSource(): FileTree = super.getSource()
 
