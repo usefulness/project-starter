@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - Update _Android Gradle Plugin_ to _7.0.1_, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
 
+## Fixed
+- Support back Java 8
 
 ## [0.32.0] - 2021-08-12
 ## Changed
