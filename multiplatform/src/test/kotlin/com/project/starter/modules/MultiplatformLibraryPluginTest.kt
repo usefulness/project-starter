@@ -23,7 +23,6 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     lateinit var origin: File
 
     @BeforeEach
-    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()

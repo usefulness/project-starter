@@ -17,7 +17,6 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     lateinit var module2Root: File
 
     @BeforeEach
-    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()

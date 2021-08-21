@@ -15,7 +15,6 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
     lateinit var test: File
 
     @BeforeEach
-    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             mkdirs()

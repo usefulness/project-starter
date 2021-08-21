@@ -17,7 +17,6 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     lateinit var module2Root: File
 
     @BeforeEach
-    @Suppress("LongMethod")
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
