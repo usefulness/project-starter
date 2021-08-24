@@ -40,7 +40,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.5.0"
+                            id 'org.jetbrains.kotlin.jvm' version "1.5.30"
                         }
                         """.trimIndent(),
                     )
@@ -51,7 +51,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.5.0"
+                            id 'org.jetbrains.kotlin.jvm' version "1.5.30"
                         }
                         """.trimIndent(),
                     )

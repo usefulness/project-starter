@@ -1,7 +1,7 @@
 plugins {
     id 'java-gradle-plugin'
     id "org.jmailen.kotlinter" version "3.5.0"
-    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30'
 }
 
 repositories {
@@ -11,7 +11,13 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation "com.gradle.publish:plugin-publish-plugin:0.15.0"
-    implementation "com.project.starter:jvm:0.32.0"
+    implementation "com.project.starter:jvm:0.33.0"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
 }
 
 gradlePlugin {
