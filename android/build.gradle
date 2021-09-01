@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    api 'com.android.tools.build:gradle:7.0.1'
+    api 'com.android.tools.build:gradle:7.0.2'
     implementation project(":jvm")
     implementation project(":config")
     implementation project(":versioning")
