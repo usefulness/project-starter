@@ -6,7 +6,7 @@ All submodules will use this config as default
 
 ``` groovy
 plugins {
-  id("com.starter.config") version("x.y.z)
+  id("com.starter.config") version("x.y.z")
 }
  
 commonConfig {
