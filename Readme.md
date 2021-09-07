@@ -26,7 +26,7 @@ Each module consists of configuration code most commonly used in Android project
 ### Module plugins
 #### Kotlin Library Plugin
 Plugin configures [code style tasks](#quality-plugin), hooks for [common tasks](#day-to-day-use), 
-sets coverage reports generation or manages [versioning](#versioning-plugin) of the artifact
+sets coverage reports generation and manages [versioning](#versioning-plugin) of the artifact
     
 Apply plugin to **project** level `build.gradle`
 

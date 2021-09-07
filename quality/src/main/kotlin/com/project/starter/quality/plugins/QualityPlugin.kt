@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class QualityPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
-        repositories.mavenCentral()
+        runCatching { repositories.mavenCentral() }
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt()
@@ -27,6 +27,7 @@ class QualityPlugin : Plugin<Project> {
         configureFormatOnRecompile()
     }
 
+    @Suppress("DEPRECATION") // https://issuetracker.google.com/issues/170650362
     private fun Project.configureIssueCheckerTask() {
         registerIssueCheckerTask {
             onAndroid {
