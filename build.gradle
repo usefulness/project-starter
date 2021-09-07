@@ -29,13 +29,18 @@ allprojects {
         kotlinOptions {
             apiVersion = "1.4"
             languageVersion = "1.4"
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
+    }
+    tasks.withType(JavaCompile).configureEach {
+        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+        targetCompatibility = JavaVersion.VERSION_1_8.toString()
     }
 
     pluginManager.withPlugin("java") {
         java {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(8))
+                languageVersion.set(JavaLanguageVersion.of(16))
             }
         }
 
