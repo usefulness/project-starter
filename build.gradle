@@ -7,6 +7,7 @@ plugins {
 
 commonConfig {
     javaFilesAllowed false
+    javaVersion JavaVersion.VERSION_1_8
 }
 
 allprojects {
@@ -25,22 +26,17 @@ allprojects {
             Thread.sleep(2000) // https://github.com/gradle/gradle/issues/16603
         }
     }
-    tasks.withType(KotlinCompile).configureEach {
-        kotlinOptions {
-            apiVersion = "1.4"
-            languageVersion = "1.4"
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
-    }
-    tasks.withType(JavaCompile).configureEach {
-        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
-        targetCompatibility = JavaVersion.VERSION_1_8.toString()
-    }
 
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     pluginManager.withPlugin("java") {
+        tasks.withType(JavaCompile).configureEach {
+            options.release.set(JavaVersion.VERSION_1_8.majorVersion.toInteger())
+        }
         java {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(16))
+                languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_16.toString())
             }
         }
 

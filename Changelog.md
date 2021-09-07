@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## Changed
 - Update Kotlin plugin to _1.5.30_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.30)
+- Set default Java compatibility version to Java 11
+- Set minimum supported Gradle version to 7.0
 
 ## [0.33.0] - 2021-08-21
 ## Changed

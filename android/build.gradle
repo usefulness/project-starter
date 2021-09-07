@@ -23,9 +23,6 @@ dependencies {
 
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
-    javaLauncher = javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(16)
-    }
 }
 
 gradlePlugin {

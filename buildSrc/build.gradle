@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'java-gradle-plugin'
     id "org.jmailen.kotlinter" version "3.6.0"
@@ -11,7 +13,11 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation "com.gradle.publish:plugin-publish-plugin:0.15.0"
-    implementation "com.project.starter:jvm:0.33.0"
+    implementation "com.project.starter:jvm:0.35.0"
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions.jvmTarget = JavaVersion.current()
 }
 
 gradlePlugin {

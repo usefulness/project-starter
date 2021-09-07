@@ -97,7 +97,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
 
-      - uses: eskatos/gradle-command-action@v1
+      - uses: gradle/gradle-command-action@v1
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gradle: [ 6.8.3, current, rc ]
+        gradle: [ '7.0', current, rc ]
         task: [ build, projectTest, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -119,7 +119,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: 15
+          java-version: 16
 
       - name: Pre-compile plugin using gradle wrapper
         uses: burrunan/gradle-cache-action@v1
@@ -128,7 +128,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
 
-      - uses: eskatos/gradle-command-action@v1
+      - uses: gradle/gradle-command-action@v1
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
