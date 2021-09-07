@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class QualityPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
-        repositories.mavenCentral()
+        runCatching { repositories.mavenCentral() }
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt()
