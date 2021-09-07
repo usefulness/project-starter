@@ -4,7 +4,7 @@ import org.gradle.api.Action
 import org.gradle.api.JavaVersion
 
 open class RootConfigExtension(
-    var javaVersion: JavaVersion = JavaVersion.VERSION_1_8,
+    var javaVersion: JavaVersion = JavaVersion.VERSION_11,
     var javaFilesAllowed: Boolean = true,
 ) {
 
