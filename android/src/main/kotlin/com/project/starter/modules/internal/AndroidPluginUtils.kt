@@ -23,8 +23,6 @@ internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtensio
         setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
-    addKotlinSourceSets()
-
     compileOptions.apply {
         sourceCompatibility = rootConfig.javaVersion
         targetCompatibility = rootConfig.javaVersion
@@ -64,12 +62,5 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
         tasks.named("preBuild") {
             it.dependsOn(forbidJavaFiles)
         }
-    }
-}
-
-private fun BaseExtension.addKotlinSourceSets() {
-    sourceSets.configureEach { set ->
-        val withKotlin = set.java.srcDirs.map { it.path.replace("java", "kotlin") }
-        set.java.setSrcDirs(set.java.srcDirs + withKotlin)
     }
 }

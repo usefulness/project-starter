@@ -14,12 +14,6 @@ dependencies {
     implementation "com.project.starter:jvm:0.33.0"
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
 gradlePlugin {
     plugins {
         publishingPlugin {

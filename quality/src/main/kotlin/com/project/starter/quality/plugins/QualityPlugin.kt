@@ -1,5 +1,6 @@
 package com.project.starter.quality.plugins
 
+import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.gradle.BaseExtension
 import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig
@@ -31,6 +32,9 @@ class QualityPlugin : Plugin<Project> {
             onAndroid {
                 sourceSets.configureEach { sourceSet ->
                     source += sourceSet.java.srcDirs
+                        .map { dir -> project.fileTree(dir) }
+                        .reduce { merged: FileTree, tree: FileTree -> merged + tree }
+                    source += (sourceSet.kotlin as com.android.build.gradle.api.AndroidSourceDirectorySet).srcDirs
                         .map { dir -> project.fileTree(dir) }
                         .reduce { merged: FileTree, tree: FileTree -> merged + tree }
                 }
