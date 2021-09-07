@@ -119,7 +119,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: 16
+          java-version: 15
 
       - name: Pre-compile plugin using gradle wrapper
         uses: burrunan/gradle-cache-action@v1
