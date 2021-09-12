@@ -6,12 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.37.0] - 2021-09-12
+## Fixed
+- Do not control JavaCompile tasks output in Android projects
+
+## [0.36.0] - 2021-09-07
 ## Changed
 - Update Kotlin plugin to _1.5.30_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.30)
 - Set default Java compatibility version to Java 11
 - Set minimum supported Gradle version to 7.0
 ## Fixed
 - Add support for `FAIL_ON_PROJECT_REPOS` option
+
+## [0.35.0] - 2021-09-01
+## Changed
+- Update _Android Gradle Plugin_ to _7.0.2_, see [release notes](https://developer.android.com/studio/releases/gr
+
+## [0.34.0] - 2021-08-24
+## Changed
+- Update Kotlin plugin to _1.5.30_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.30)adle-plugin)
 
 ## [0.33.0] - 2021-08-21
 ## Changed

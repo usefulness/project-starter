@@ -14,6 +14,7 @@ import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProje
 import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
@@ -49,6 +50,9 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
     registerProjectCoverageTask { projectCoverage ->
         val childTasks = findBuildVariants().map { "$path:jacoco${it.capitalize()}TestReport" }
         childTasks.forEach { projectCoverage.dependsOn(it) }
+    }
+    tasks.withType(KotlinCompile::class.java).configureEach {
+        it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
     }
     val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
     if (!javaFilesAllowed) {
