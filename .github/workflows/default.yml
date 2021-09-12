@@ -52,7 +52,7 @@ jobs:
         run: ./gradlew validatePlugins
 
       - name: Jacoco test report
-        run: ./gradlew test
+        run: ./gradlew projectCoverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
