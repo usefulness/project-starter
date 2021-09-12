@@ -11,6 +11,8 @@ import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProje
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.api.tasks.compile.JavaCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class KotlinLibraryPlugin : Plugin<Project> {
 
@@ -21,6 +23,12 @@ class KotlinLibraryPlugin : Plugin<Project> {
 
         extensions.create("projectConfig", KotlinLibraryConfigExtension::class.java)
 
+        tasks.withType(KotlinCompile::class.java).configureEach {
+            it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
+        }
+        tasks.withType(JavaCompile::class.java).configureEach {
+            it.options.release.set(rootConfig.javaVersion.majorVersion.toInt())
+        }
         registerProjectTestTask {
             it.dependsOn("test")
         }
