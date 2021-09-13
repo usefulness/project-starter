@@ -18,10 +18,11 @@ jobs:
           distribution: 'adopt'
           java-version: 16
 
-      - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
+      - name: Cache
+        uses: gradle/gradle-build-action@v1
         with:
-          gradle-distribution-sha-256-sum-warning: false
+          arguments: assemble -m
+          dependencies-cache-enabled: true
 
       - id: dependency-diff-jvm
         name: Generate dependency diff

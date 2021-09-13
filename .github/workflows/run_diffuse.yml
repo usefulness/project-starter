@@ -27,12 +27,6 @@ jobs:
           distribution: 'adopt'
           java-version: 16
 
-      - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          job-id: run-diffuse-jdk16
-          gradle-distribution-sha-256-sum-warning: false
-
       - uses: actions/cache@v2
         name: Download base
         with:
@@ -41,7 +35,10 @@ jobs:
           restore-keys: diffuse-${{ github.event.pull_request.base.sha }}
 
       - name: Assemble
-        run: ./gradlew assemble -PskipJarVersion
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: assemble -PskipJarVersion
+          dependencies-cache-enabled: true
 
       - id: diffuse
         uses: usefulness/diffuse-action@master

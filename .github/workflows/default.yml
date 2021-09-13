@@ -30,29 +30,38 @@ jobs:
           distribution: 'adopt'
           java-version: 16
 
-      - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          job-id: build
-          gradle-distribution-sha-256-sum-warning: false
-
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
 
       - name: Check version
-        run: ./gradlew currentVersion
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: currentVersion
+          dependencies-cache-enabled: true
 
       - name: Code style
-        run: ./gradlew projectCodestyle
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: projectCodestyle
+          dependencies-cache-enabled: true
 
       - name: Assemble
-        run: ./gradlew assemble
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: assemble
+          dependencies-cache-enabled: true
 
       - name: Validate Plugins
-        run: ./gradlew validatePlugins
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: validatePlugins
+          dependencies-cache-enabled: true
 
       - name: Jacoco test report
-        run: ./gradlew projectCoverage
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: projectCoverage
+          dependencies-cache-enabled: true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
@@ -76,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gradle: [ 7.0.2, current, rc ]
+        gradle: [ '7.0.2', current, release-candidate ]
         task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -91,23 +100,24 @@ jobs:
           java-version: 16
 
       - name: Pre-compile plugin using gradle wrapper
-        uses: burrunan/gradle-cache-action@v1
+        uses: gradle/gradle-build-action@v1
         with:
-          job-id: build-all-sample-android-projects
-          gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
+          dependencies-cache-enabled: true
 
-      - uses: gradle/gradle-command-action@v1
+      - name: Run ${{ matrix.task }}
+        uses: gradle/gradle-build-action@v1
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal
+          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          dependencies-cache-enabled: true
 
   build-all-sample-kotlin-projects:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gradle: [ '7.0', current, release-candidate ]
+        gradle: [ '7.0.2', current, release-candidate ]
         task: [ build, projectTest, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -122,14 +132,15 @@ jobs:
           java-version: 16
 
       - name: Pre-compile plugin using gradle wrapper
-        uses: burrunan/gradle-cache-action@v1
+        uses: gradle/gradle-build-action@v1
         with:
-          job-id: build-all-sample-kotlin-projects
-          gradle-distribution-sha-256-sum-warning: false
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
+          dependencies-cache-enabled: true
 
-      - uses: gradle/gradle-command-action@v1
+      - name: Run ${{ matrix.task }}
+        uses: gradle/gradle-build-action@v1
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal
+          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          dependencies-cache-enabled: true
