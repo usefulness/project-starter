@@ -25,7 +25,10 @@ jobs:
           java-version: 16
 
       - name: Build app with Gradle
-        run: ./gradlew assemble
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: assemble
+          dependencies-cache-enabled: true
 
       - name: Publish to Github Package Registry
         run: ./gradlew publish --continue || true
@@ -43,14 +46,11 @@ jobs:
           distribution: 'adopt'
           java-version: 16
 
-      - name: Cache .gradle
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          job-id: diffuse-jdk16
-          gradle-distribution-sha-256-sum-warning: false
-
       - name: Assemble
-        run: ./gradlew assemble -PskipJarVersion
+        uses: gradle/gradle-build-action@v1
+        with:
+          arguments: assemble -PskipJarVersion
+          dependencies-cache-enabled: true
 
       - name: Upload diffuse base artifact
         uses: actions/cache@v2
