@@ -34,31 +34,31 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Check version
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: currentVersion
           dependencies-cache-enabled: true
 
       - name: Code style
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: projectCodestyle
           dependencies-cache-enabled: true
 
       - name: Assemble
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble
           dependencies-cache-enabled: true
 
       - name: Validate Plugins
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: validatePlugins
           dependencies-cache-enabled: true
 
       - name: Jacoco test report
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: projectCoverage
           dependencies-cache-enabled: true
@@ -100,13 +100,13 @@ jobs:
           java-version: 16
 
       - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
           dependencies-cache-enabled: true
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
@@ -132,13 +132,13 @@ jobs:
           java-version: 16
 
       - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: publishToMavenLocal -Pgroup=com.project.starter.local
           dependencies-cache-enabled: true
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}

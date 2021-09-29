@@ -25,7 +25,7 @@ jobs:
           java-version: 16
 
       - name: Publish to Gradle Plugin Portal
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
           dependencies-cache-enabled: true

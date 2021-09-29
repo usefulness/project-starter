@@ -25,7 +25,7 @@ jobs:
           java-version: 16
 
       - name: Build app with Gradle
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble
           dependencies-cache-enabled: true
@@ -47,7 +47,7 @@ jobs:
           java-version: 16
 
       - name: Assemble
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble -PskipJarVersion
           dependencies-cache-enabled: true
