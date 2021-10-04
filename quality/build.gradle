@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    api 'org.jmailen.gradle:kotlinter-gradle:3.5.0'
+    api 'org.jmailen.gradle:kotlinter-gradle:3.6.0'
     api 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.1'
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     compileOnly 'com.android.tools.build:gradle:7.0.2'
