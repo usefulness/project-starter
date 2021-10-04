@@ -19,10 +19,9 @@ jobs:
           java-version: 16
 
       - name: Cache
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble -m
-          dependencies-cache-enabled: true
 
       - id: dependency-diff-jvm
         name: Generate dependency diff
