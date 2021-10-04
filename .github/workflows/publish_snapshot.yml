@@ -25,10 +25,9 @@ jobs:
           java-version: 16
 
       - name: Build app with Gradle
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble
-          dependencies-cache-enabled: true
 
       - name: Publish to Github Package Registry
         run: ./gradlew publish --continue || true
@@ -47,10 +46,9 @@ jobs:
           java-version: 16
 
       - name: Assemble
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: assemble -PskipJarVersion
-          dependencies-cache-enabled: true
 
       - name: Upload diffuse base artifact
         uses: actions/cache@v2
