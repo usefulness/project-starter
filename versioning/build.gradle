@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     compileOnly 'com.android.tools.build:gradle:7.0.3'
-    implementation 'pl.allegro.tech.build:axion-release-plugin:1.13.3'
+    implementation 'pl.allegro.tech.build:axion-release-plugin:1.13.5'
     implementation project(":config")
 
     testImplementation project(":testing")
