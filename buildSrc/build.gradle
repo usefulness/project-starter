@@ -13,7 +13,7 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation "com.gradle.publish:plugin-publish-plugin:0.16.0"
-    implementation "com.project.starter:jvm:0.37.0"
+    implementation "com.project.starter:jvm:0.38.0"
 }
 
 tasks.withType(KotlinCompile).configureEach {
