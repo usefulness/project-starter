@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.39.0] - 2021-11-15
 ## Changed
 - Update Kotlin plugin to _1.6.0_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.6.0)
-- 
+
 ## [0.38.0] - 2021-10-04
 ## Changed
 - Update Kotlin plugin to _1.5.31_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.31)
