@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Changed
+- Set minimum supported Gradle version to 7.3 (It will work with lower Gradle versions, but it won't be tested against it anymore so YMMV)
+
 ## [0.39.0] - 2021-11-15
 ## Changed
 - Update Kotlin plugin to _1.6.0_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.6.0)
@@ -29,11 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.35.0] - 2021-09-01
 ## Changed
-- Update _Android Gradle Plugin_ to _7.0.2_, see [release notes](https://developer.android.com/studio/releases/gr
+- Update _Android Gradle Plugin_ to _7.0.2_, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
 
 ## [0.34.0] - 2021-08-24
 ## Changed
-- Update Kotlin plugin to _1.5.30_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.30)adle-plugin)
+- Update Kotlin plugin to _1.5.30_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.5.30)
 
 ## [0.33.0] - 2021-08-21
 ## Changed

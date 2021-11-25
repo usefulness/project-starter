@@ -21,8 +21,8 @@ jobs:
       - name: set up Java
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: 16
+          distribution: 'temurin'
+          java-version: 17
 
       - name: Publish to Gradle Plugin Portal
         uses: gradle/gradle-build-action@v2

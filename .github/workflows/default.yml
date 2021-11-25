@@ -27,8 +27,8 @@ jobs:
       - name: set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: 16
+          distribution: 'temurin'
+          java-version: 17
 
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
@@ -79,8 +79,9 @@ jobs:
   build-all-sample-android-projects:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        gradle: [ '7.0.2', current, release-candidate ]
+        gradle: [ '7.3', current, release-candidate ]
         task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -91,8 +92,8 @@ jobs:
       - name: set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: 16
+          distribution: 'temurin'
+          java-version: 17
 
       - name: Pre-compile plugin using gradle wrapper
         uses: gradle/gradle-build-action@v2
@@ -109,8 +110,9 @@ jobs:
   build-all-sample-kotlin-projects:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        gradle: [ '7.0.2', current, release-candidate ]
+        gradle: [ '7.3', current, release-candidate ]
         task: [ build, projectTest, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -121,8 +123,8 @@ jobs:
       - name: set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: 16
+          distribution: 'temurin'
+          java-version: 17
 
       - name: Pre-compile plugin using gradle wrapper
         uses: gradle/gradle-build-action@v2
