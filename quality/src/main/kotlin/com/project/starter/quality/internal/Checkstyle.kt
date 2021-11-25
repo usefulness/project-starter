@@ -12,7 +12,6 @@ import com.project.starter.quality.tasks.ProjectCodeStyleTask
 import org.gradle.api.Project
 import org.gradle.api.file.FileTree
 import org.gradle.api.plugins.quality.Checkstyle
-import org.gradle.api.plugins.quality.CheckstyleExtension
 
 private val pluginsWithConfiguration = listOf(
     Config(
@@ -107,9 +106,6 @@ private fun Project.getResourceFiles(sourceSet: AndroidSourceSet) = sourceSet.re
 
 private fun Project.applyCheckstyle() {
     pluginManager.apply("checkstyle")
-    extensions.configure<CheckstyleExtension>("checkstyle") {
-        it.toolVersion = "8.44"
-    }
 }
 
 private fun Project.configureTask(task: Checkstyle) {
