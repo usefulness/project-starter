@@ -154,7 +154,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     fun `projectCodeStyle fails if Checkstyle violation found`() {
         module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
             val javaClass =
-                // language=groovy
+                // language=java
                 """
                 public class JavaFileWithCheckstyleIssues {
     
@@ -175,14 +175,14 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
         val result = runTask("projectCodeStyle", shouldFail = true)
 
         assertThat(result.task(":module1:checkstyle")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:checkstyleTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
+        assertThat(result.task(":module2:checkstyleDebugUnitTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
         assertThat(result.output)
             .contains("WhitespaceAround: 'if' is not followed by whitespace.")
             .contains("WhitespaceAround: '{' is not preceded with whitespace")
     }
 
     @Test
-    fun `projectCodeStyle is not present if java files are not allowed`() {
+    fun `checkstyle is not present if java files are not allowed`() {
         val buildscript =
             // language=groovy
             """

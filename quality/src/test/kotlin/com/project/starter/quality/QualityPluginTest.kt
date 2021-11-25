@@ -126,7 +126,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCodeStyle is not present if java files are not allowed`() {
+    fun `checkstyle is not present if java files are not allowed`() {
         // language=groovy
         val buildscript =
             """

@@ -27,7 +27,6 @@ class QualityPlugin : Plugin<Project> {
         configureFormatOnRecompile()
     }
 
-    @Suppress("DEPRECATION") // https://issuetracker.google.com/issues/170650362
     private fun Project.configureIssueCheckerTask() {
         registerIssueCheckerTask {
             onAndroid {

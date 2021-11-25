@@ -98,7 +98,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
 
         val checkstyleNewCode = runTask("checkstyle", shouldFail = true)
 
-        assertThat(checkstyleNewCode.task(":javaModule:checkstyleTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
+        assertThat(checkstyleNewCode.task(":javaModule:checkstyleDebugUnitTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
         assertThat(checkstyleNewCode.output).contains("""NewCode.java:3:16: WhitespaceAround: '{' is not preceded with whitespace""")
     }
 }

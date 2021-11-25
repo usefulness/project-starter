@@ -16,8 +16,10 @@ dependencies {
     implementation "com.project.starter:jvm:0.39.0"
 }
 
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions.jvmTarget = JavaVersion.current()
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
+    }
 }
 
 gradlePlugin {

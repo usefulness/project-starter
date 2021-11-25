@@ -16,6 +16,7 @@ internal open class GenerateCheckstyleBaselineTask : DefaultTask() {
     init {
         project.tasks.withType(Checkstyle::class.java).forEach {
             it.isIgnoreFailures = true
+            it.reports.xml.required.set(true)
             dependsOn(it)
         }
     }
