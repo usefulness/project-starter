@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
+- Update _Detekt_ to version _1.19.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.19.0)
 - Set minimum supported Gradle version to 7.3 (It will work with lower Gradle versions, but it won't be tested against it anymore so YMMV)
 - Stop pinning checkstyle version.
 

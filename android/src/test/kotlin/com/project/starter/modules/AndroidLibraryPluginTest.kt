@@ -68,7 +68,10 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 }
                 resolve("src/test/kotlin/Test1.kt") {
                     writeText(
+                        // language=kotlin
                         """
+                        package com.example
+                        
                         class Test1 {
                         
                             @org.junit.Test

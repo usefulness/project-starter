@@ -56,6 +56,10 @@ jobs:
           path: diffuse-base-file
           key: diffuse-${{ github.sha }}
 
+      - name: Check size
+        run: du -H android/build/libs/android.jar diffuse-base-file
+        shell: bash
+
       - name: Copy diffuse base artifact to be picked by cache save
         run: cp android/build/libs/android.jar diffuse-base-file
         shell: bash
