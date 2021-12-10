@@ -1,8 +1,12 @@
 package com.project.starter
 
+import java.util.*
+
 fun javaClass(className: String) =
     // language=java
     """
+    package com.example;
+    
     public class $className {
     
     }
@@ -12,6 +16,8 @@ fun javaClass(className: String) =
 fun kotlinClass(className: String) =
     // language=kotlin
     """
+    package com.example
+
     object $className
 
     """.trimIndent()
@@ -19,10 +25,12 @@ fun kotlinClass(className: String) =
 fun kotlinTestClass(className: String) =
     // language=kotlin
     """
+    package com.example
+
     class $className {
     
         @org.junit.Test
-        fun test${className.toLowerCase()}() = Unit
+        fun test${className.lowercase()}() = Unit
     }
 
     """.trimIndent()
