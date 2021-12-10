@@ -6,7 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.40.1] - 2021-12-10
+## Fixed
+- Fix default _Detekt_ config on `UnnecessaryAbstractClass` rule
+
+## [0.40.0] - 2021-12-10
 ## Changed
+- Update _Android Gradle Plugin_ to _7.0.4_, see [release notes](https://developer.android.com/studio/releases/gradle-plugin)
 - Update _Detekt_ to version _1.19.0_ see [release notes](https://github.com/detekt/detekt/releases/tag/v1.19.0)
 - Set minimum supported Gradle version to 7.3 (It will work with lower Gradle versions, but it won't be tested against it anymore so YMMV)
 - Stop pinning checkstyle version.
@@ -307,7 +314,15 @@ The new feature is available as automatically registered gradle task, but also c
 ### Added
 - Add Quality Plugin - `com.starter.quality`
 
-[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.31.0...HEAD
+[Unreleased]: https://github.com/usefulness/project-starter/compare/release/0.41.0...HEAD
+[0.47.0]: https://github.com/usefulness/project-starter/compare/release/0.46.0.../release/0.47.0
+[0.46.0]: https://github.com/usefulness/project-starter/compare/release/0.45.0.../release/0.46.0
+[0.45.0]: https://github.com/usefulness/project-starter/compare/release/0.44.0.../release/0.45.0
+[0.44.0]: https://github.com/usefulness/project-starter/compare/release/0.43.0.../release/0.44.0
+[0.43.0]: https://github.com/usefulness/project-starter/compare/release/0.42.0.../release/0.43.0
+[0.42.0]: https://github.com/usefulness/project-starter/compare/release/0.41.0.../release/0.42.0
+[0.41.0]: https://github.com/usefulness/project-starter/compare/release/0.40.1.../release/0.41.0
+[0.40.1]: https://github.com/usefulness/project-starter/compare/release/0.40.0.../release/0.40.1
 [0.40.0]: https://github.com/usefulness/project-starter/compare/release/0.39.0.../release/0.40.0
 [0.39.0]: https://github.com/usefulness/project-starter/compare/release/0.38.0.../release/0.39.0
 [0.38.0]: https://github.com/usefulness/project-starter/compare/release/0.37.0.../release/0.38.0
