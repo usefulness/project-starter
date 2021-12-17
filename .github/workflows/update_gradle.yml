@@ -12,9 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
       - name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1
         with:
           repo-token: ${{ secrets.PUBLIC_REPO_TOKEN }}
           set-distribution-checksum: false
-
