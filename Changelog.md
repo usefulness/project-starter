@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.41.0] - 2021-12-17
+## Changed
+- Update Kotlin plugin to _1.6.10_, see [release notes](https://github.com/JetBrains/kotlin/releases/tag/v1.6.10)
+
 ## [0.40.1] - 2021-12-10
 ## Fixed
 - Fix default _Detekt_ config on `UnnecessaryAbstractClass` rule
