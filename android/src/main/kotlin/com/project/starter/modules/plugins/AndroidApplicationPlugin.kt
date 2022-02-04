@@ -4,7 +4,6 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
@@ -28,9 +27,6 @@ class AndroidApplicationPlugin : Plugin<Project> {
             configureAndroidLint(lint)
         }
 
-        withExtension<AndroidApplicationConfigExtension> { projectConfig ->
-            val androidComponents = extensions.getByType<ApplicationAndroidComponentsExtension>()
-            configureAndroidProject(androidComponents, projectConfig)
-        }
+        configureAndroidProject<AndroidApplicationConfigExtension, ApplicationAndroidComponentsExtension>()
     }
 }

@@ -4,7 +4,6 @@ import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidLibraryConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
@@ -32,9 +31,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             configureAndroidLint(lint)
         }
 
-        withExtension<AndroidLibraryConfigExtension> { projectConfig ->
-            val androidComponents = extensions.getByType<LibraryAndroidComponentsExtension>()
-            configureAndroidProject(androidComponents, projectConfig)
-        }
+        configureAndroidProject<AndroidLibraryConfigExtension, LibraryAndroidComponentsExtension>()
     }
 }

@@ -6,6 +6,7 @@ import com.android.build.gradle.TestedExtension
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
+import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidExtension
 import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.registerForbidJavaFilesTask
 import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
@@ -30,39 +31,39 @@ internal fun CommonExtension<*, *, *, *>.configureAndroidPlugin(rootConfig: Root
     }
 }
 
-internal fun Project.configureAndroidProject(androidComponents: AndroidComponentsExtension<*, *, *>, projectConfig: AndroidExtension) {
-    configureAndroidCoverage(androidComponents, projectConfig.coverageExclusions)
+internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidProject()
+    where TStarter : AndroidExtension, TAgp : AndroidComponentsExtension<*, *, *> {
+    val androidComponents = extensions.getByType(TAgp::class.java)
+
+    configureAndroidCoverage(androidComponents) { extensions.getByType(TStarter::class.java).coverageExclusions }
     val projectLint = registerProjectLintTask()
     val projectTest = registerProjectTestTask()
     val projectCoverage = registerProjectCoverageTask()
     tasks.withType(KotlinCompile::class.java).configureEach {
         it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
     }
-    val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
-    if (!javaFilesAllowed) {
-        val forbidJavaFiles = registerForbidJavaFilesTask { task ->
-            val extension = project.extensions.getByType<TestedExtension>()
-            extension.sourceSets.configureEach { sourceSet ->
-                task.source += sourceSet.java.getSourceFiles()
+
+    withExtension<TStarter> { projectConfig ->
+        val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
+        if (!javaFilesAllowed) {
+            val forbidJavaFiles = registerForbidJavaFilesTask { task ->
+                val extension = project.extensions.getByType<TestedExtension>()
+                extension.sourceSets.configureEach { sourceSet ->
+                    task.source += sourceSet.java.getSourceFiles()
+                }
+            }
+
+            tasks.named("preBuild") {
+                it.dependsOn(forbidJavaFiles)
             }
         }
-
-        tasks.named("preBuild") {
-            it.dependsOn(forbidJavaFiles)
-        }
     }
 
-    val selectors = if (projectConfig.defaultVariants.isEmpty()) {
-        listOf(androidComponents.selector().all())
-    } else {
-        projectConfig.defaultVariants.map { androidComponents.selector().withName(it) }
-    }
-    selectors.forEach { selector ->
-        androidComponents.onVariants(selector) { variant ->
-            projectLint.dependsOn("$path:lint${variant.name.capitalize()}")
-            projectTest.dependsOn("$path:test${variant.name.capitalize()}UnitTest")
-            projectCoverage.dependsOn("$path:jacoco${variant.name.capitalize()}TestReport")
-        }
+    androidComponents.beforeVariants { variant ->
+        val capitalizedName = variant.name.capitalize()
+        projectLint.dependsOn("$path:lint$capitalizedName")
+        projectTest.dependsOn("$path:test${capitalizedName}UnitTest")
+        projectCoverage.dependsOn("$path:jacoco${capitalizedName}TestReport")
     }
 }
 

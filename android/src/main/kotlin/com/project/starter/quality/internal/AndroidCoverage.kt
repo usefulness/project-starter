@@ -11,7 +11,10 @@ import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
-internal fun Project.configureAndroidCoverage(androidComponents: AndroidComponentsExtension<*, *, *>, projectExclusions: List<String>) {
+internal fun Project.configureAndroidCoverage(
+    androidComponents: AndroidComponentsExtension<*, *, *>,
+    projectExclusions: () -> List<String>,
+) {
     pluginManager.apply("jacoco")
 
     extensions.configure(JacocoPluginExtension::class.java) {
@@ -50,7 +53,7 @@ internal fun Project.configureAndroidCoverage(androidComponents: AndroidComponen
             val classesDir = oldVariant.javaCompileProvider.get().destinationDirectory.get().asFile
             val executionData = jacocoTestTaskExtension.destinationFile
 
-            val coverageExcludes = excludes + projectExclusions
+            val coverageExcludes = excludes + projectExclusions()
             val kotlinClassesDir = "$buildDir/tmp/kotlin-classes/${variant.name}"
             val kotlinTree = fileTree(mapOf("dir" to kotlinClassesDir, "excludes" to coverageExcludes))
             val javaTree = fileTree(mapOf("dir" to classesDir, "excludes" to coverageExcludes))
