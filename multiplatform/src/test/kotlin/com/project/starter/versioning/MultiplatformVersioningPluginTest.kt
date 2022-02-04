@@ -15,6 +15,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var module1Root: File
     private lateinit var module2Root: File
+    private lateinit var rootBuildScript: File
     private lateinit var git: Git
 
     @TempDir
@@ -24,6 +25,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -61,6 +63,14 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `sets version to all projects`() {
+        rootBuildScript.writeText(
+            // language=groovy
+            """
+            plugins {
+                id 'com.starter.versioning'
+            }
+            """.trimIndent(),
+        )
         git.commit("features in 1.2.0")
         git.tag("v1.2.0")
 
