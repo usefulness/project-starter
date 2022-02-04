@@ -1,8 +1,8 @@
 package com.project.starter.modules.internal
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.TestedExtension
-import com.android.build.gradle.api.BaseVariant
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
@@ -12,16 +12,16 @@ import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerP
 import com.project.starter.modules.tasks.ProjectLintTask.Companion.registerProjectLintTask
 import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
 import com.project.starter.quality.internal.configureAndroidCoverage
-import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
+internal fun CommonExtension<*, *, *, *>.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
-        compileSdkVersion(rootConfig.android.compileSdkVersion)
+        compileSdk = rootConfig.android.compileSdkVersion
         minSdk = rootConfig.android.minSdkVersion
-        targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
-        setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions.apply {
@@ -30,27 +30,11 @@ internal fun BaseExtension.configureAndroidPlugin(rootConfig: RootConfigExtensio
     }
 }
 
-internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseVariant>, projectConfig: AndroidExtension) {
-    configureAndroidCoverage(variants, projectConfig.coverageExclusions)
-    val findBuildVariants = {
-        projectConfig.defaultVariants.ifEmpty {
-            val default = variants.firstOrNull { it.buildType.name == "debug" } ?: variants.first()
-
-            listOf(default.name.capitalize())
-        }
-    }
-    registerProjectLintTask { projectLint ->
-        val childTasks = findBuildVariants().map { "$path:lint${it.capitalize()}" }
-        childTasks.forEach { projectLint.dependsOn(it) }
-    }
-    registerProjectTestTask { projectTest ->
-        val childTasks = findBuildVariants().map { "$path:test${it.capitalize()}UnitTest" }
-        childTasks.forEach { projectTest.dependsOn(it) }
-    }
-    registerProjectCoverageTask { projectCoverage ->
-        val childTasks = findBuildVariants().map { "$path:jacoco${it.capitalize()}TestReport" }
-        childTasks.forEach { projectCoverage.dependsOn(it) }
-    }
+internal fun Project.configureAndroidProject(androidComponents: AndroidComponentsExtension<*, *, *>, projectConfig: AndroidExtension) {
+    configureAndroidCoverage(androidComponents, projectConfig.coverageExclusions)
+    val projectLint = registerProjectLintTask()
+    val projectTest = registerProjectTestTask()
+    val projectCoverage = registerProjectCoverageTask()
     tasks.withType(KotlinCompile::class.java).configureEach {
         it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
     }
@@ -67,4 +51,22 @@ internal fun Project.configureAndroidProject(variants: DomainObjectSet<out BaseV
             it.dependsOn(forbidJavaFiles)
         }
     }
+
+
+    val selectors = if (projectConfig.defaultVariants.isEmpty()) {
+        listOf(androidComponents.selector().all())
+    } else {
+        projectConfig.defaultVariants.map { androidComponents.selector().withName(it) }
+    }
+    selectors.forEach { selector ->
+        androidComponents.onVariants(selector) { variant ->
+            projectLint.dependsOn("$path:lint${variant.name.capitalize()}")
+            projectTest.dependsOn("$path:test${variant.name.capitalize()}UnitTest")
+            projectCoverage.dependsOn("$path:jacoco${variant.name.capitalize()}TestReport")
+        }
+    }
+}
+
+private fun <T : Task> TaskProvider<out T>.dependsOn(name: String) {
+    configure { it.dependsOn(name) }
 }

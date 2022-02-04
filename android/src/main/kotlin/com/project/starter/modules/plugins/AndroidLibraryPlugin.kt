@@ -1,6 +1,9 @@
 package com.project.starter.modules.plugins
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.AndroidComponentsExtension
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.config.withExtension
@@ -24,18 +27,16 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
         val android = extensions.getByType<LibraryExtension>().apply {
             configureAndroidPlugin(rootConfig)
-            configureAndroidLint(lintOptions)
+            defaultConfig.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
+
+            buildFeatures.buildConfig = false
+
+            configureAndroidLint(lint)
         }
 
         withExtension<AndroidLibraryConfigExtension> { projectConfig ->
-            val variants = android.libraryVariants
-
-            configureAndroidProject(variants, projectConfig)
-
-            // Use `buildFeatures.buildConfig` after https://issuetracker.google.com/issues/159540417 is fixed
-            variants.configureEach { variant ->
-                variant.generateBuildConfigProvider.configure { it.enabled = projectConfig.generateBuildConfig }
-            }
+            val androidComponents = extensions.getByType<LibraryAndroidComponentsExtension>()
+            configureAndroidProject(androidComponents, projectConfig)
         }
     }
 }

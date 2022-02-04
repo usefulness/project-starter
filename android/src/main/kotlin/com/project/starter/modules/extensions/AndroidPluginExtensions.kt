@@ -9,8 +9,6 @@ abstract class AndroidExtension : JavaSourcesAware {
     var coverageExclusions: List<String> = emptyList()
 }
 
-open class AndroidLibraryConfigExtension : AndroidExtension() {
-    var generateBuildConfig: Boolean = false
-}
+open class AndroidLibraryConfigExtension : AndroidExtension()
 
 open class AndroidApplicationConfigExtension : AndroidExtension()
