@@ -154,26 +154,4 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
         assertThat(versioningEnabled.output).contains("version: 1.3.0-SNAPSHOT")
     }
-
-    @Test
-    fun `does not configure versioning plugin if disabled using configuration plugin`() {
-        // language=groovy
-        val versioningScript =
-            """
-            plugins {
-                id('com.starter.config')
-            }
-            
-            commonConfig {
-                versioningPlugin {
-                    enabled = false
-                }
-            }
-            """.trimIndent()
-        rootBuildScript.writeText(versioningScript)
-
-        val versioningDisabled = runTask("currentVersion", shouldFail = true)
-
-        assertThat(versioningDisabled.output).contains("Task 'currentVersion' not found ")
-    }
 }

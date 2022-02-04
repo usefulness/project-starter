@@ -57,9 +57,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 qualityPlugin {
                     formatOnCompile = true
                 }
-                versioningPlugin {
-                    enabled = true
-                }
             }
             """.trimIndent()
         rootBuildScript.appendText(buildscript)
@@ -88,9 +85,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 }
                 qualityPlugin {
                     formatOnCompile true
-                }
-                versioningPlugin {
-                    enabled true
                 }
             }
             """.trimIndent()

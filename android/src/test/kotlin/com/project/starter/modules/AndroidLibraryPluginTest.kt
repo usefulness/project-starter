@@ -167,41 +167,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `contains BuildConfig file if generation enabled`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                generateBuildConfig = true
-            }
-            
-            """.trimIndent()
-        module2Root.resolve("build.gradle").appendText(config)
-
-        val result = runTask("assembleDebug")
-
-        assertThat(result.task(":module2:assembleDebug")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        val generated = module2Root.resolve("build/generated/")
-        assertThat(generated.walk()).matches(
-            { allFiles ->
-                allFiles.any { it.isFile && it.name == "BuildConfig.java" }
-            },
-            "BuildConfig file not found in $generated",
-        )
-    }
-
-    @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                defaultVariants = ["demoDebug", "fullRelease"]
-            }
-            
-            """.trimIndent()
-        module1Root.resolve("build.gradle").appendText(config)
-
         val result = runTask("module1:projectTest", "module1:projectLint", "module1:projectCoverage")
 
         assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
@@ -218,9 +184,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             // language=groovy
             """
             projectConfig {
-                generateBuildConfig = false
                 javaFilesAllowed = false
-                defaultVariants = ["demoDebug", "fullRelease"]
                 coverageExclusions = ["**/view/**"]
             }
             
