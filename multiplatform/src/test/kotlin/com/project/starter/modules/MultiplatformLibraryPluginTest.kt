@@ -124,7 +124,15 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `configures versioning plugin by default`() {
+    fun `configures versioning plugin when applied`() {
+        rootBuildScript.writeText(
+            // language=groovy
+            """
+            plugins {
+                id 'com.starter.versioning'
+            }
+            """.trimIndent(),
+        )
         val git = setupGit(origin)
         git.tag("v1.2.2")
         git.commit("random commit")

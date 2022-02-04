@@ -146,6 +146,14 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures versioning plugin by default`() {
+        rootBuildScript.writeText(
+            // language=groovy
+            """
+            plugins {
+                id 'com.starter.versioning'
+            }
+            """.trimIndent(),
+        )
         val git = setupGit(origin)
         git.tag("v1.2.2")
         git.commit("random commit")
