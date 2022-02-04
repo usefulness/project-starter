@@ -48,8 +48,8 @@ internal fun Project.configureAndroidCoverage(
                 is AppExtension -> android.applicationVariants.firstOrNull { it.name == variant.name }
                 is LibraryExtension -> android.libraryVariants.firstOrNull { it.name == variant.name }
                 else -> null
-            } ?: return@register logger.warn("Coulnd't find variant ${variant.name}")
-            val sourceDirs = oldVariant.sourceSets.flatMap { it.javaDirectories }
+            } ?: return@register logger.warn("Couldn't find variant ${variant.name}")
+            val sourceDirs = oldVariant.sourceSets.flatMap { it.javaDirectories + it.kotlinDirectories }
             val classesDir = oldVariant.javaCompileProvider.get().destinationDirectory.get().asFile
             val executionData = jacocoTestTaskExtension.destinationFile
 
