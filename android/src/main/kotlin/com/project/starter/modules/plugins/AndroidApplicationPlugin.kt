@@ -1,10 +1,7 @@
 package com.project.starter.modules.plugins
 
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.AppExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.config.withExtension

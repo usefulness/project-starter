@@ -52,7 +52,6 @@ internal fun Project.configureAndroidProject(androidComponents: AndroidComponent
         }
     }
 
-
     val selectors = if (projectConfig.defaultVariants.isEmpty()) {
         listOf(androidComponents.selector().all())
     } else {
