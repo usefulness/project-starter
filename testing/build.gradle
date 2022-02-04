@@ -9,6 +9,6 @@ repositories {
 dependencies {
     api gradleTestKit()
     api 'org.junit.jupiter:junit-jupiter:5.8.2'
-    api 'org.assertj:assertj-core:3.21.0'
+    api 'org.assertj:assertj-core:3.22.0'
     api "org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r"
 }
