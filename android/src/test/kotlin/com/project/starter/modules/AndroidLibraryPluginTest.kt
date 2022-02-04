@@ -138,11 +138,19 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
+    fun `filters out unnecessary build variants`() {
+        val result = runTask(":module2:assemble", "-m")
+
+        assertThat(result.output).doesNotContain(":module2:assembleRelease")
+    }
+
+    @Test
     fun `projectCoverage runs coverage for all modules`() {
         val result = runTask("projectCoverage")
 
         assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":module2:testDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module2:testReleaseUnitTest")).isNull()
         println(module1Root.resolve("build/reports/").list()?.toList().toString())
         assertThat(module1Root.resolve("build/reports/jacoco/jacocoDemoDebugTestReport")).isDirectoryContaining {
             it.name.startsWith("jacoco") && it.name.endsWith(".xml")

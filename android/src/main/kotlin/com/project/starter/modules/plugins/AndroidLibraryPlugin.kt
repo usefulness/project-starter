@@ -22,13 +22,18 @@ class AndroidLibraryPlugin : Plugin<Project> {
         val rootConfig = this.rootConfig
         extensions.create("projectConfig", AndroidLibraryConfigExtension::class.java)
 
-        val android = extensions.getByType<LibraryExtension>().apply {
+        extensions.getByType<LibraryExtension>().apply {
             configureAndroidPlugin(rootConfig)
             defaultConfig.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
 
             buildFeatures.buildConfig = false
 
             configureAndroidLint(lint)
+        }
+        extensions.getByType<LibraryAndroidComponentsExtension>().beforeVariants { variantBuilder ->
+            if (variantBuilder.productFlavors.isEmpty()) {
+                variantBuilder.enable = variantBuilder.buildType != "release"
+            }
         }
 
         configureAndroidProject<AndroidLibraryConfigExtension, LibraryAndroidComponentsExtension>()
