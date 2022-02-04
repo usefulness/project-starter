@@ -20,9 +20,6 @@ commonConfig {
     qualityPlugin {
         formatOnCompile = false
     }
-    versioningPlugin {
-        enabled = true
-    }
 }
 ```
 

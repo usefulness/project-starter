@@ -1,23 +1,17 @@
 package com.project.starter.modules.internal
 
-import com.android.build.gradle.internal.dsl.LintOptions
+import com.android.build.api.dsl.Lint
 import org.gradle.api.Project
 
-internal fun Project.configureAndroidLint(lintOptions: LintOptions) {
-    lintOptions.enable("UnknownNullness", "KotlinPropertyAccess", "LambdaLast", "NoHardKeywords")
-    lintOptions.disable("ObsoleteLintCustomCheck", "UseSparseArrays")
+internal fun Project.configureAndroidLint(lintOptions: Lint) {
+    val additionalErrors = setOf("UnknownNullness", "KotlinPropertyAccess", "LambdaLast", "NoHardKeywords")
+    lintOptions.enable += additionalErrors
+    lintOptions.error += additionalErrors
 
-    lintOptions.severityOverrides.putAll(
-        mapOf(
-            "UnknownNullness" to LintOptions.SEVERITY_ERROR,
-            "KotlinPropertyAccess" to LintOptions.SEVERITY_ERROR,
-            "LambdaLast" to LintOptions.SEVERITY_ERROR,
-            "NoHardKeywords" to LintOptions.SEVERITY_ERROR,
-        ),
-    )
+    lintOptions.disable += setOf("ObsoleteLintCustomCheck", "UseSparseArrays")
 
     val baseline = file("lint-baseline.xml")
     if (baseline.exists() || hasProperty("refreshBaseline")) {
-        lintOptions.baselineFile = baseline
+        lintOptions.baseline = baseline
     }
 }

@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  generate-diff:
+  generate-diff-jvm:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,44 @@ jobs:
           configuration: 'runtimeClasspath'
           project: 'jvm'
 
+      - uses: peter-evans/find-comment@v1
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: Dependency diff (JVM)
+
+      - uses: peter-evans/create-or-update-comment@v1
+        if: ${{ steps.dependency-diff-jvm.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
+        with:
+          body: |
+            Dependency diff (JVM)
+              ```diff
+              ${{ steps.dependency-diff-jvm.outputs.text-diff }}
+              ```
+          edit-mode: replace
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  generate-diff-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assemble -m
+
       - id: dependency-diff-android
         name: Generate dependency diff
         uses: usefulness/dependency-tree-diff-action@v1
@@ -41,18 +79,13 @@ jobs:
         id: find_comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body-includes: Dependency diff
+          body-includes: Dependency diff (Android)
 
       - uses: peter-evans/create-or-update-comment@v1
-        if: ${{ steps.dependency-diff-jvm.outputs.text-diff != null || steps.dependency-diff-android.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
+        if: ${{ steps.dependency-diff-android.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
         with:
           body: |
-            Dependency diff:
-              `:jvm`:
-              ```diff
-              ${{ steps.dependency-diff-jvm.outputs.text-diff }}
-              ```
-              `:android`:
+            Dependency diff (Android):
               ```diff
               ${{ steps.dependency-diff-android.outputs.text-diff }}
               ```

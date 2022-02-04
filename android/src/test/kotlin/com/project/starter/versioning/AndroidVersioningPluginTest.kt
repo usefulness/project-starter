@@ -53,6 +53,14 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     internal fun `sets android application version`() {
+        rootDirectory.resolve("build.gradle").writeText(
+            // language=groovy
+            """
+            plugins {
+                id 'com.starter.versioning'
+            }
+            """.trimIndent(),
+        )
         val git = setupGit(origin)
         runTask("markNextVersion", "-Prelease.version=1.2.3")
         git.commit("contains 1.2.3 features")

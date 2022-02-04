@@ -22,7 +22,4 @@ apply plugin: 'com.starter.config'
 
 commonConfig {
     javaFilesAllowed = false
-    versioningPlugin {
-        enabled = false
-    }
 }

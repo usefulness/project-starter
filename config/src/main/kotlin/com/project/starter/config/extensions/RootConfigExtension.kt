@@ -57,11 +57,4 @@ open class AndroidPluginConfig(
     }
 }
 
-open class VersioningPluginConfig(
-    var enabled: Boolean = true,
-) {
-
-    fun enabled(value: Boolean) {
-        enabled = value
-    }
-}
+open class VersioningPluginConfig

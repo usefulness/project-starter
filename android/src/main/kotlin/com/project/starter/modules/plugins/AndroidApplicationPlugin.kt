@@ -1,9 +1,9 @@
 package com.project.starter.modules.plugins
 
-import com.android.build.gradle.AppExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
@@ -21,13 +21,12 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
         extensions.create("projectConfig", AndroidApplicationConfigExtension::class.java)
 
-        val android = extensions.getByType<AppExtension>().apply {
+        extensions.getByType<ApplicationExtension>().apply {
             configureAndroidPlugin(rootConfig)
-            configureAndroidLint(lintOptions)
+            defaultConfig.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
+            configureAndroidLint(lint)
         }
 
-        withExtension<AndroidApplicationConfigExtension> { projectConfig ->
-            configureAndroidProject(android.applicationVariants, projectConfig)
-        }
+        configureAndroidProject<AndroidApplicationConfigExtension, ApplicationAndroidComponentsExtension>()
     }
 }

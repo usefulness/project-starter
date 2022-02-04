@@ -68,8 +68,6 @@ plugins {
 // optional config with default values
 projectConfig {
     javaFilesAllowed false
-    generateBuildConfig false // for library plugin only 
-    defaultVariants ["debug"]
     coverageExclusions [""]
 }
 
@@ -83,11 +81,6 @@ android {
 
 - `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise.  
 (Useful in large projects where you want to enforce new code written in new modules to be written in Java.)
-- `generateBuildConfig` - defines if `BuildConfig.java` class should be generated or not.  
-General suggestion is to prefer Dependency Injection over Android's flavor setup for libraries
-- `defaultVariants` - defines build variants used as a dependency for common `projectXXX` tasks.  
-for example setting `fullDebug` as default variant would make `testFullDebugUnitTest.` as a dependency for `projectTest` task.
-`["freeRelease", "fullRelease"]` would make add `testFreeReleaseUnitTest` to `projectTest` and `testFreeReleaseLint` to `projectLint`.
 - `coverageExclusions` - defines jacoco coverage exclusions for specific module
 
 ##### Day-to-day use

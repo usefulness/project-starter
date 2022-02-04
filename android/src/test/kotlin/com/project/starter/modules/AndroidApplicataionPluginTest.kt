@@ -139,35 +139,12 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `configures projectXXX tasks when default variants provided`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                defaultVariants = ["demoDebug", "fullRelease"]
-            }
-            
-            """.trimIndent()
-        module1Root.resolve("build.gradle").appendText(config)
-
-        val result = runTask("module1:projectTest", "module1:projectLint", "module1:projectCoverage")
-
-        assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:testFullReleaseUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:lintDemoDebug")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:lintFullRelease")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:jacocoDemoDebugTestReport")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:jacocoFullReleaseTestReport")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-    }
-
-    @Test
     fun `configures android library extension`() {
         val config =
             // language=groovy
             """
             projectConfig {
                 javaFilesAllowed = false
-                defaultVariants = ["demoDebug", "fullRelease"]
                 coverageExclusions = ["**/view/**"]
             }
             

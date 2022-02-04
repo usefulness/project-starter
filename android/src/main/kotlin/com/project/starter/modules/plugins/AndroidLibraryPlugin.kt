@@ -1,9 +1,9 @@
 package com.project.starter.modules.plugins
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidLibraryConfigExtension
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
@@ -22,20 +22,20 @@ class AndroidLibraryPlugin : Plugin<Project> {
         val rootConfig = this.rootConfig
         extensions.create("projectConfig", AndroidLibraryConfigExtension::class.java)
 
-        val android = extensions.getByType<LibraryExtension>().apply {
+        extensions.getByType<LibraryExtension>().apply {
             configureAndroidPlugin(rootConfig)
-            configureAndroidLint(lintOptions)
+            defaultConfig.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
+
+            buildFeatures.buildConfig = false
+
+            configureAndroidLint(lint)
         }
-
-        withExtension<AndroidLibraryConfigExtension> { projectConfig ->
-            val variants = android.libraryVariants
-
-            configureAndroidProject(variants, projectConfig)
-
-            // Use `buildFeatures.buildConfig` after https://issuetracker.google.com/issues/159540417 is fixed
-            variants.configureEach { variant ->
-                variant.generateBuildConfigProvider.configure { it.enabled = projectConfig.generateBuildConfig }
+        extensions.getByType<LibraryAndroidComponentsExtension>().beforeVariants { variantBuilder ->
+            if (variantBuilder.productFlavors.isEmpty()) {
+                variantBuilder.enable = variantBuilder.buildType != "release"
             }
         }
+
+        configureAndroidProject<AndroidLibraryConfigExtension, LibraryAndroidComponentsExtension>()
     }
 }

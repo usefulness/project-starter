@@ -124,7 +124,15 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `configures versioning plugin by default`() {
+    fun `configures versioning plugin when applied`() {
+        rootBuildScript.writeText(
+            // language=groovy
+            """
+            plugins {
+                id 'com.starter.versioning'
+            }
+            """.trimIndent(),
+        )
         val git = setupGit(origin)
         git.tag("v1.2.2")
         git.commit("random commit")
@@ -132,27 +140,5 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
         val versioningEnabled = runTask("currentVersion")
 
         assertThat(versioningEnabled.output).contains("version: 1.3.0-SNAPSHOT")
-    }
-
-    @Test
-    fun `does not configure versioning plugin if disabled using configuration plugin`() {
-        //language=groovy
-        val versioningScript =
-            """
-            plugins {
-                id('com.starter.config')
-            }
-            
-            commonConfig {
-                versioningPlugin {
-                    enabled false
-                }
-            }
-            """.trimIndent()
-        rootBuildScript.writeText(versioningScript)
-
-        val versioningDisabled = runTask("currentVersion", shouldFail = true)
-
-        assertThat(versioningDisabled.output).contains("Task 'currentVersion' not found ")
     }
 }

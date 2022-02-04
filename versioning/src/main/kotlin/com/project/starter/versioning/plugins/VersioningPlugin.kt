@@ -1,8 +1,6 @@
 package com.project.starter.versioning.plugins
 
-import com.android.build.gradle.AppExtension
-import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.ApplicationExtension
 import com.project.starter.config.getByType
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -33,18 +31,16 @@ class VersioningPlugin : Plugin<Project> {
     }
 
     private fun Project.setupAndroidVersioning(scmConfig: VersionConfig) {
-        val configureVersion: BaseExtension.(String) -> Unit = { version ->
-            val minor = version.split(".")[0].toInt()
-            val major = version.split(".")[1].toInt()
-            val patch = version.split(".")[2].toInt()
-            defaultConfig.versionCode = minor * MINOR_MULTIPLIER + major * MAJOR_MULTIPLIER + patch
-            defaultConfig.versionName = "$minor.$major.$patch"
-        }
-        pluginManager.withPlugin("com.android.library") {
-            extensions.getByType<LibraryExtension>().configureVersion(scmConfig.undecoratedVersion)
-        }
         pluginManager.withPlugin("com.android.application") {
-            extensions.getByType<AppExtension>().configureVersion(scmConfig.undecoratedVersion)
+            extensions.getByType<ApplicationExtension>().defaultConfig {
+                val versionParts = scmConfig.undecoratedVersion.split(".")
+                val minor = versionParts[0].toInt()
+                val major = versionParts[1].toInt()
+                val patch = versionParts[2].toInt()
+
+                versionCode = minor * MINOR_MULTIPLIER + major * MAJOR_MULTIPLIER + patch
+                versionName = "$minor.$major.$patch"
+            }
         }
     }
 
