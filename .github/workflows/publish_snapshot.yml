@@ -51,7 +51,7 @@ jobs:
           arguments: assemble -PskipJarVersion
 
       - name: Upload diffuse base artifact
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: diffuse-base-file
           key: diffuse-${{ github.sha }}
