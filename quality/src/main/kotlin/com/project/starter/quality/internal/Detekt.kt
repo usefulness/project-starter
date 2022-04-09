@@ -12,12 +12,6 @@ internal fun Project.configureDetekt() {
     pluginManager.apply(DetektPlugin::class.java)
 
     extensions.configure(DetektExtension::class.java) { detekt ->
-        detekt.reports.apply {
-            html.enabled = false
-            xml.enabled = false
-            txt.enabled = false
-        }
-
         onMultiplatform {
             sourceSets.configureEach {
                 detekt.source.from(it.kotlin.srcDirs)
@@ -34,5 +28,10 @@ internal fun Project.configureDetekt() {
     }
     tasks.withType(Detekt::class.java).configureEach {
         it.jvmTarget = rootConfig.javaVersion.toString()
+        it.reports.apply {
+            html.required.set(false)
+            xml.required.set(false)
+            txt.required.set(false)
+        }
     }
 }
