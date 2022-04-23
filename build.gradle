@@ -1,6 +1,6 @@
 plugins {
-    id 'com.starter.config'
-    id 'com.starter.versioning'
+    id("com.starter.config")
+    id("com.starter.versioning")
 }
 
 commonConfig {

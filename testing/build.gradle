@@ -2,13 +2,9 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-repositories {
-    gradlePluginPortal()
-}
-
 dependencies {
     api gradleTestKit()
-    api 'org.junit.jupiter:junit-jupiter:5.8.2'
-    api 'org.assertj:assertj-core:3.22.0'
-    api "org.eclipse.jgit:org.eclipse.jgit:6.1.0.202203080745-r"
+    api libs.junit.jupiter
+    api libs.assertj.core
+    api libs.eclipse.jgit
 }
