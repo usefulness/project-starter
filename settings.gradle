@@ -1,6 +1,35 @@
-plugins {
-    id "com.gradle.enterprise" version "3.9"
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    dependencyResolutionManagement {
+        repositories {
+            mavenCentral()
+            gradlePluginPortal()
+            exclusiveContent {
+                forRepository {
+                    gradlePluginPortal()
+                }
+                filter {
+                    includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
+                }
+            }
+        }
+    }
 }
+
+plugins {
+    id "com.gradle.enterprise" version "3.10"
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+
 rootProject.name = 'com.project.starter'
 include ":jvm",
         ":android",
@@ -9,4 +38,3 @@ include ":jvm",
         ":quality",
         ":versioning",
         ":multiplatform"
-

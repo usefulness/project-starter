@@ -1,7 +1,5 @@
 package com.project.starter
 
-import java.util.*
-
 fun javaClass(className: String) =
     // language=java
     """
