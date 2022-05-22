@@ -174,7 +174,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
         val result = runTask("projectCodeStyle", shouldFail = true)
 
-        assertThat(result.task(":module1:checkstyle")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:checkstyleMain")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":module2:checkstyleDebugUnitTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
         assertThat(result.output)
             .contains("WhitespaceAround: 'if' is not followed by whitespace.")
