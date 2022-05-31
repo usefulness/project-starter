@@ -8,7 +8,7 @@ maven-kotlin = "1.6.21"
 maven-issuechecker = "0.3.0"
 gradle-detekt = "1.20.0"
 maven-junit = "5.8.2"
-maven-assertj = "3.22.0"
+maven-assertj = "3.23.0"
 maven-jgit = "6.1.0.202203080745-r"
 gradle-axion = "1.13.9"
 
