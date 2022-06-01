@@ -10,7 +10,7 @@ gradle-detekt = "1.20.0"
 maven-junit = "5.8.2"
 maven-assertj = "3.23.1"
 maven-jgit = "6.1.0.202203080745-r"
-gradle-axion = "1.13.9"
+gradle-axion = "1.13.10"
 
 [libraries]
 starter-gradle = { module = "com.project.starter:android", version.ref = "gradle-starter" }
