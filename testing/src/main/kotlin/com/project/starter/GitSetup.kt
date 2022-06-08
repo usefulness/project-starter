@@ -1,7 +1,9 @@
 package com.project.starter
 
 import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.lib.ConfigConstants.*
+import org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION
+import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE
+import org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.URIish
 import java.io.File
@@ -52,7 +54,7 @@ fun Git.commit(commitMessage: String) {
     repository.directory.resolve("File.txt").appendText(
         """
             | Text
-            """.trimMargin(),
+        """.trimMargin(),
     )
     add().apply {
         addFilepattern(".")
