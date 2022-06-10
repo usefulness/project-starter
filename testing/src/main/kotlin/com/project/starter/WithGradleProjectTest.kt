@@ -5,6 +5,7 @@ import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.io.InputStream
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class WithGradleProjectTest {
 
     @TempDir

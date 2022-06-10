@@ -25,6 +25,7 @@ class KotlinLibraryPlugin : Plugin<Project> {
 
         tasks.withType(KotlinCompile::class.java).configureEach {
             it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
+            it.kotlinOptions.freeCompilerArgs += "-Xjdk-release=${rootConfig.javaVersion}"
         }
         tasks.withType(JavaCompile::class.java).configureEach {
             it.options.release.set(rootConfig.javaVersion.majorVersion.toInt())
