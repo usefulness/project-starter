@@ -20,7 +20,7 @@ class VersioningPlugin : Plugin<Project> {
                 PredefinedVersionIncrementer.versionIncrementerFor(
                     "incrementMinorIfNotOnRelease",
                     mapOf("releaseBranchPattern" to "^release/.*\$"),
-                )
+                ),
             )
         }
 
