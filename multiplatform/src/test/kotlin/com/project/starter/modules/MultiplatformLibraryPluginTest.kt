@@ -26,7 +26,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            resolve("settings.gradle").writeText("""include ":module1", ":module2"""")
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
@@ -69,7 +69,6 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                             ios()
                             jvm()
                         }
-                        
                         
                         dependencies {
                             "jvmTestImplementation"("junit:junit:4.13.2")
