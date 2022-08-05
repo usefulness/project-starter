@@ -16,9 +16,11 @@ class VersioningPlugin : Plugin<Project> {
         pluginManager.apply(ReleasePlugin::class.java)
 
         val scmConfig = extensions.getByType<VersionConfig>().apply {
-            versionIncrementer = PredefinedVersionIncrementer.versionIncrementerFor(
-                "incrementMinorIfNotOnRelease",
-                mapOf("releaseBranchPattern" to "^release/.*\$"),
+            versionIncrementer.set(
+                PredefinedVersionIncrementer.versionIncrementerFor(
+                    "incrementMinorIfNotOnRelease",
+                    mapOf("releaseBranchPattern" to "^release/.*\$"),
+                )
             )
         }
 

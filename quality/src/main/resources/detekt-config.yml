@@ -36,16 +36,17 @@ console-reports:
     - 'ProjectStatisticsReport'
     - 'ComplexityReport'
     - 'NotificationReport'
-    #  - 'FindingsReport'
+    - 'FindingsReport'
     - 'FileBasedFindingsReport'
-    - 'LiteFindingsReport'
+  #  - 'LiteFindingsReport'
 
 output-reports:
-  active: false
+  active: true
   exclude:
   # - 'TxtOutputReport'
   # - 'XmlOutputReport'
   # - 'HtmlOutputReport'
+  # - 'MdOutputReport'
 
 comments:
   active: true
@@ -62,6 +63,9 @@ comments:
   EndOfSentenceFormat:
     active: false
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  KDocReferencesNonPublicProperty:
+    active: false
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
   OutdatedDocumentation:
     active: false
     matchTypeParameters: true
@@ -133,6 +137,15 @@ complexity:
   NestedBlockDepth:
     active: false
     threshold: 4
+  NestedScopeFunctions:
+    active: false
+    threshold: 1
+    functions:
+      - 'kotlin.apply'
+      - 'kotlin.run'
+      - 'kotlin.with'
+      - 'kotlin.let'
+      - 'kotlin.also'
   ReplaceSafeCallChainWithRun:
     active: false
   StringLiteralDuplication:
@@ -331,7 +344,7 @@ naming:
     active: true
     ignoreOverridden: true
   NoNameShadowing:
-    active: false
+    active: true
   NonBooleanPropertyPrefixedWithIs:
     active: false
   ObjectPropertyNaming:
@@ -364,6 +377,9 @@ performance:
   active: true
   ArrayPrimitive:
     active: true
+  CouldBeSequence:
+    active: false
+    threshold: 3
   ForEachOnRange:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
@@ -376,7 +392,7 @@ performance:
 potential-bugs:
   active: true
   AvoidReferentialEquality:
-    active: false
+    active: true
     forbiddenTypePatterns:
       - 'kotlin.String'
   CastToNullableType:
@@ -386,7 +402,7 @@ potential-bugs:
   DontDowncastCollectionTypes:
     active: false
   DoubleMutabilityForCollection:
-    active: false
+    active: true
     mutableTypes:
       - 'kotlin.collections.MutableList'
       - 'kotlin.collections.MutableMap'
@@ -409,9 +425,9 @@ potential-bugs:
   ExplicitGarbageCollectionCall:
     active: true
   HasPlatformType:
-    active: false
+    active: true
   IgnoredReturnValue:
-    active: false
+    active: true
     restrictToAnnotatedMethods: true
     returnValueAnnotations:
       - '*.CheckResult'
@@ -435,7 +451,7 @@ potential-bugs:
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     ignoreOnClassesPattern: ''
   MapGetWithNotNullAssertionOperator:
-    active: false
+    active: true
   MissingPackageDeclaration:
     active: true
     excludes: [ '**/*.kts' ]
@@ -455,7 +471,7 @@ potential-bugs:
   UnnecessarySafeCall:
     active: true
   UnreachableCatchBlock:
-    active: false
+    active: true
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
@@ -464,9 +480,9 @@ potential-bugs:
   UnsafeCast:
     active: true
   UnusedUnaryOperator:
-    active: false
+    active: true
   UselessPostfixExpression:
-    active: false
+    active: true
   WrongEqualsTypeParameter:
     active: true
 
@@ -474,6 +490,9 @@ style:
   active: true
   CanBeNonNullable:
     active: false
+  CascadingCallWrapping:
+    active: false
+    includeElvis: true
   ClassOrdering:
     active: false
   CollapsibleIfStatements:
@@ -484,7 +503,7 @@ style:
   DataClassShouldBeImmutable:
     active: false
   DestructuringDeclarationWithTooManyEntries:
-    active: false
+    active: true
     maxDestructuringEntries: 3
   EqualsNullCall:
     active: true
@@ -520,8 +539,11 @@ style:
     ignorePackages:
       - '*.internal'
       - '*.internal.*'
-  ForbiddenVoid:
+  ForbiddenSuppress:
     active: false
+    rules: [ ]
+  ForbiddenVoid:
+    active: true
     ignoreOverridden: false
     ignoreUsageInGenerics: false
   FunctionOnlyReturningConstant:
@@ -560,6 +582,9 @@ style:
     active: false
   MandatoryBracesLoops:
     active: false
+  MaxChainedCallsOnSameLine:
+    active: false
+    maxChainedCalls: 5
   MaxLineLength:
     active: true
     maxLineLength: 140
@@ -573,13 +598,15 @@ style:
   MultilineLambdaItParameter:
     active: false
   NestedClassesVisibility:
-    active: false
+    active: true
   NewLineAtEndOfFile:
     active: true
   NoTabs:
     active: false
+  NullableBooleanCheck:
+    active: true
   ObjectLiteralToLambda:
-    active: false
+    active: true
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
@@ -593,7 +620,7 @@ style:
   RedundantExplicitType:
     active: false
   RedundantHigherOrderMapUsage:
-    active: false
+    active: true
   RedundantVisibilityModifierRule:
     active: false
   ReturnCount:
@@ -617,17 +644,18 @@ style:
     active: false
   UnderscoresInNumericLiterals:
     active: false
-    acceptableLength: 5
+    acceptableLength: 4
     allowNonStandardGrouping: false
   UnnecessaryAbstractClass:
     active: true
-    ignoreAnnotated: [ 'dagger.Module', 'Module' ]
   UnnecessaryAnnotationUseSiteTarget:
     active: false
   UnnecessaryApply:
     active: true
-  UnnecessaryFilter:
+  UnnecessaryBackticks:
     active: false
+  UnnecessaryFilter:
+    active: true
   UnnecessaryInheritance:
     active: true
   UnnecessaryInnerClass:
@@ -645,38 +673,38 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
-    ignoreAnnotated: [ 'Preview' ]
   UseAnyOrNoneInsteadOfFind:
-    active: false
+    active: true
   UseArrayLiteralsInAnnotations:
-    active: false
+    active: true
   UseCheckNotNull:
     active: true
   UseCheckOrError:
-    active: false
+    active: true
   UseDataClass:
     active: false
     allowVars: false
   UseEmptyCounterpart:
     active: false
   UseIfEmptyOrIfBlank:
-    active: true
+    active: false
   UseIfInsteadOfWhen:
-    active: true
+    active: false
   UseIsNullOrEmpty:
     active: true
   UseOrEmpty:
     active: true
   UseRequire:
-    active: false
+    active: true
   UseRequireNotNull:
-    active: false
+    active: true
   UselessCallOnNotNull:
     active: true
   UtilityClassWithPublicConstructor:
     active: true
   VarCouldBeVal:
     active: true
+    ignoreLateinitVar: false
   WildcardImport:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
