@@ -15,10 +15,12 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("build.gradle") {
                 writeText(
+                    // language=groovy
                     """
-                        plugins {
-                            id('com.starter.library.kotlin')
-                        }
+                    plugins {
+                        id('com.starter.library.kotlin')
+                    }
+                    
                     """.trimIndent(),
                 )
             }
@@ -57,6 +59,16 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
+        rootDirectory.resolve("build.gradle") {
+            appendText(
+                // language=groovy
+                """
+                projectConfig {
+                    javaFilesAllowed = true
+                }
+                """.trimIndent(),
+            )
+        }
         rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
             // language=java
             val javaClass =

@@ -17,7 +17,18 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ':javaModule' """)
 
-            resolve("build.gradle").writeText("")
+            resolve("build.gradle").writeText(
+                // language=groovy
+                """
+                plugins {
+                        id('com.starter.config')
+                    }
+                    
+                    commonConfig {
+                        javaFilesAllowed = true
+                    }
+                """.trimIndent(),
+            )
             moduleRoot = resolve("javaModule") {
                 // language=groovy
                 val script =

@@ -5,7 +5,7 @@ import org.gradle.api.JavaVersion
 
 open class RootConfigExtension(
     var javaVersion: JavaVersion = JavaVersion.VERSION_11,
-    var javaFilesAllowed: Boolean = true,
+    var javaFilesAllowed: Boolean = false,
 ) {
 
     val quality = QualityPluginConfig()
