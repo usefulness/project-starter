@@ -19,17 +19,34 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            resolve("build.gradle")
+            rootDirectory.resolve("build.gradle").writeText(
+                // language=groovy
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                commonConfig {
+                    javaFilesAllowed true
+                }
+                """.trimIndent(),
+            )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
                         // language=groovy
                         """
                         plugins {
-                            id('com.starter.quality')
-                            id('kotlin')
+                            id('com.starter.library.android')
                         }
                         
+                        """.trimIndent(),
+                    )
+                }
+                resolve("src/main/AndroidManifest.xml") {
+                    writeText(
+                        """
+                        <manifest package="com.example.module1" />
                         """.trimIndent(),
                     )
                 }
@@ -126,6 +143,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 }
                 
                 commonConfig {
+                    javaFilesAllowed true
                     qualityPlugin {
                         formatOnCompile = true
                     }
@@ -174,7 +192,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
         val result = runTask("projectCodeStyle", shouldFail = true)
 
-        assertThat(result.task(":module1:checkstyleMain")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.task(":module1:checkstyleDebug")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":module2:checkstyleDebugUnitTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
         assertThat(result.output)
             .contains("WhitespaceAround: 'if' is not followed by whitespace.")

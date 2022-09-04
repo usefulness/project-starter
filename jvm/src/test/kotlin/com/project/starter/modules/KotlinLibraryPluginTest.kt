@@ -108,7 +108,14 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `does not fail on java files by default`() {
+    fun `does not fail on java files if failing disabled`() {
+        module2Root.resolve("build.gradle").appendText(
+            """
+            projectConfig {
+                javaFilesAllowed = true
+            }
+            """.trimIndent(),
+        )
         module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }
@@ -119,14 +126,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `fail on java files if failing enabled`() {
-        module2Root.resolve("build.gradle").appendText(
-            """
-            projectConfig {
-                javaFilesAllowed = false
-            }
-            """.trimIndent(),
-        )
+    fun `fails on java files by default`() {
         module2Root.resolve("src/main/java/JavaClass.java") {
             writeText(javaClass("JavaClass"))
         }

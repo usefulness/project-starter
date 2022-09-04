@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
-internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
+internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
 
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
@@ -155,7 +155,16 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `does not fail on java sources by default`() {
+    fun `does not fail on java files if settings enabled at project level`() {
+        val config =
+            // language=groovy
+            """
+            projectConfig {
+                javaFilesAllowed = true
+            }
+            
+            """.trimIndent()
+        module2Root.resolve("build.gradle").appendText(config)
         module2Root.resolve("src/main/java/JavaAllowed.java") {
             writeText(javaClass(className = "JavaAllowed"))
         }
@@ -166,16 +175,7 @@ internal class AndroidApplicataionPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `fails on java files if settings enabled at project level`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                javaFilesAllowed = false
-            }
-            
-            """.trimIndent()
-        module2Root.resolve("build.gradle").appendText(config)
+    fun `fails on java files by default`() {
         module2Root.resolve("src/main/java/JavaFile.java") {
             writeText(javaClass(className = "JavaFile"))
         }

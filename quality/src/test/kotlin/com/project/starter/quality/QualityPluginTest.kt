@@ -95,6 +95,22 @@ internal class QualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `projectCodeStyle fails if Checkstyle violation found`() {
+        // language=groovy
+        val buildscript =
+            """
+            plugins {
+                id('com.starter.config')
+                id('com.starter.quality')
+                id('org.jetbrains.kotlin.jvm')
+            }
+            
+            commonConfig {
+                javaFilesAllowed = true
+            }
+            
+            """.trimIndent()
+        rootDirectory.resolve("build.gradle").writeText(buildscript)
+
         rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
             // language=java
             val javaClass =
@@ -127,22 +143,6 @@ internal class QualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `checkstyle is not present if java files are not allowed`() {
-        // language=groovy
-        val buildscript =
-            """
-            plugins {
-                id('com.starter.config')
-                id('com.starter.quality')
-                id('org.jetbrains.kotlin.jvm')
-            }
-            
-            commonConfig {
-                javaFilesAllowed = false
-            }
-            
-            """.trimIndent()
-        rootDirectory.resolve("build.gradle").writeText(buildscript)
-
         val result = runTask("projectCodeStyle")
 
         assertThat(result.task(":checkstyle")).isNull()
