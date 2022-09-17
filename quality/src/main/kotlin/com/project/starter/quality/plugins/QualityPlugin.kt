@@ -30,13 +30,14 @@ class QualityPlugin : Plugin<Project> {
     private fun Project.configureIssueCheckerTask() {
         registerIssueCheckerTask {
             onAndroid {
+                val emptyFileTree = project.files().asFileTree
                 sourceSets.configureEach { sourceSet ->
                     source += sourceSet.java.srcDirs
                         .map { dir -> project.fileTree(dir) }
-                        .reduce { merged: FileTree, tree: FileTree -> merged + tree }
+                        .fold(emptyFileTree) { merged: FileTree, tree: FileTree -> merged + tree }
                     source += (sourceSet.kotlin as com.android.build.gradle.api.AndroidSourceDirectorySet).srcDirs
                         .map { dir -> project.fileTree(dir) }
-                        .reduce { merged: FileTree, tree: FileTree -> merged + tree }
+                        .fold(emptyFileTree) { merged: FileTree, tree: FileTree -> merged + tree }
                 }
             }
             onMultiplatform {
