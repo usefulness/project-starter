@@ -1,5 +1,6 @@
 plugins {
     id("com.starter.config")
+    id("com.starter.library.android") apply false
 }
 
 commonConfig {

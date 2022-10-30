@@ -1,19 +1,5 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode
 
-pluginManagement {
-    repositories {
-        mavenCentral()
-        exclusiveContent {
-            forRepository {
-                gradlePluginPortal()
-            }
-            filter {
-                includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
-            }
-        }
-    }
-}
-
 plugins {
     id "com.gradle.enterprise" version "3.11.2"
 }

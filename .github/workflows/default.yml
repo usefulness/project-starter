@@ -105,7 +105,7 @@ jobs:
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
 
   build-all-sample-kotlin-projects:
     runs-on: ubuntu-latest
@@ -136,4 +136,4 @@ jobs:
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
