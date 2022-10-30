@@ -1,3 +1,22 @@
+pluginManagement {
+    includeBuild("../..")
+    repositories {
+        google {
+            content {
+                includeGroupByRegex "com\\.android.*"
+                includeGroupByRegex "androidx.*"
+                includeGroupByRegex "android.arch.*"
+                includeGroupByRegex "com\\.google.*"
+            }
+        }
+        gradlePluginPortal {
+            content {
+                excludeGroup("com.project.starter")
+            }
+        }
+    }
+}
+
 rootProject.name = "com.project.starter.sample"
 
 include ":moduleAndroidApplication"
@@ -9,7 +28,3 @@ include ":moduleRoot:moduleKotlinLibrary"
 include ":moduleRootAndroid"
 include ":moduleRootAndroid:moduleAndroidLibrary"
 include ":moduleRootAndroid:moduleKotlinLibrary"
-
-if (!hasProperty("useMavenLocal")) {
-    includeBuild "../.."
-}
