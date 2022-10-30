@@ -24,7 +24,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id('org.jetbrains.kotlin.jvm') version "1.5.0"
+                            id('org.jetbrains.kotlin.jvm') version "1.7.20"
                         }
                       
                         """.trimIndent(),
