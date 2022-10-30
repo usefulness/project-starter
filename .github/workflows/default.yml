@@ -95,17 +95,12 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publishToMavenLocal -Pgroup=com.project.starter.local
-
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
 
   build-all-sample-kotlin-projects:
     runs-on: ubuntu-latest
@@ -126,14 +121,9 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publishToMavenLocal -Pgroup=com.project.starter.local
-
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -PuseMavenLocal -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace

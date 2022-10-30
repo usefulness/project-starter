@@ -10,9 +10,14 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+      SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -30,4 +35,4 @@ jobs:
           arguments: publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
 
       - name: Publish to Github Package Registry
-        run: ./gradlew publish --continue || true
+        run: ./gradlew publishAllPublicationsToGithubRepository

@@ -1,3 +1,7 @@
 plugins {
     id("com.starter.library.android")
 }
+
+android {
+    namespace "com.starter.sample.nested.library.android"
+}

@@ -1,7 +1,7 @@
 plugins {
     id("java-gradle-plugin")
     alias(libs.plugins.droidsonroids.jacocotestkit)
-    id("com.starter.library.kotlin")
+    alias(libs.plugins.starter.library.kotlin)
     id("com.starter.publishing")
 }
 

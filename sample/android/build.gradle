@@ -1,32 +1,7 @@
-buildscript {
-    repositories {
-        google {
-            content {
-                includeGroupByRegex "com\\.android.*"
-                includeGroupByRegex "androidx.*"
-                includeGroupByRegex "android.arch.*"
-                includeGroupByRegex "com\\.google.*"
-            }
-        }
-        gradlePluginPortal {
-            content {
-                excludeGroup("com.project.starter")
-            }
-        }
-        if (project.hasProperty("useMavenLocal")) {
-            mavenLocal()
-        }
-    }
-    dependencies {
-        if (project.hasProperty("useMavenLocal")) {
-            classpath "com.project.starter.local:android:+"
-        } else {
-            classpath "com.project.starter:android"
-        }
-    }
+plugins {
+    id("com.starter.config")
+    id("com.starter.library.android") apply false
 }
-
-apply plugin: 'com.starter.config'
 
 commonConfig {
     javaFilesAllowed = false

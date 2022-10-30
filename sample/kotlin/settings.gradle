@@ -1,5 +1,16 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode
 
+pluginManagement {
+    includeBuild("../..")
+    repositories {
+        gradlePluginPortal {
+            content {
+                excludeGroup("com.project.starter")
+            }
+        }
+    }
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -12,7 +23,3 @@ rootProject.name = "com.project.starter.sample"
 
 include ":moduleKotlinLibrary"
 include ":moduleRoot:moduleKotlinLibrary"
-
-if (!hasProperty("useMavenLocal")) {
-    includeBuild "../.."
-}

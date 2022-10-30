@@ -13,6 +13,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+      SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,11 +33,11 @@ jobs:
 
       - name: Build app with Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assemble
+
+      - run: ./gradlew assemble
 
       - name: Publish to Github Package Registry
-        run: ./gradlew publish --continue || true
+        run: ./gradlew publishAllPublicationsToGithubRepository
 
   diffuse:
     runs-on: ubuntu-latest
@@ -47,8 +54,8 @@ jobs:
 
       - name: Assemble
         uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assemble -PskipJarVersion
+
+      - run: ./gradlew assemble -PskipJarVersion
 
       - name: Upload diffuse base artifact
         uses: actions/cache@v3
