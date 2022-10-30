@@ -5,12 +5,14 @@ import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.plugins.signing.SigningExtension
 
 class PublishingPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("maven-publish")
         pluginManager.apply("com.gradle.plugin-publish")
+        pluginManager.apply("signing")
 
         extensions.configure<JavaPluginExtension> {
             withSourcesJar()
@@ -26,12 +28,21 @@ class PublishingPlugin : Plugin<Project> {
                     }
                 }
             }
-            with(publications) {
-                register("mavenJava", MavenPublication::class.java) {
-                    it.from(components.getByName("java"))
+        }
+        pluginManager.withPlugin("signing") {
+            with(extensions.extraProperties) {
+                set("signing.keyId", findConfig("SIGNING_KEY_ID"))
+                set("signing.password", findConfig("SIGNING_PASSWORD"))
+                set("signing.secretKeyRingFile", findConfig("SIGNING_SECRET_KEY_RING_FILE"))
+            }
+
+            extensions.configure<SigningExtension>("signing") { signing ->
+                if (findConfig("SIGNING_PASSWORD").isNotEmpty()) {
+                    signing.sign(extensions.getByType(PublishingExtension::class.java).publications)
                 }
             }
         }
+
         extensions.configure<PluginBundleExtension> {
             website = "https://github.com/usefulness/project-starter/"
             vcsUrl = "https://github.com/usefulness/project-starter.git"
