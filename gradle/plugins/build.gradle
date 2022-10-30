@@ -7,7 +7,6 @@ plugins {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation libs.publishplugin.gradle
-    implementation libs.starter.gradle
 }
 
 java {

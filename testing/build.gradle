@@ -1,5 +1,5 @@
 plugins {
-    id("com.starter.library.kotlin")
+    alias(libs.plugins.starter.library.kotlin)
 }
 
 dependencies {
