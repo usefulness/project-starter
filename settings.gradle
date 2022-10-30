@@ -1,17 +1,14 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode
 
 pluginManagement {
-    dependencyResolutionManagement {
-        repositories {
-            mavenCentral()
-            gradlePluginPortal()
-            exclusiveContent {
-                forRepository {
-                    gradlePluginPortal()
-                }
-                filter {
-                    includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
-                }
+    repositories {
+        mavenCentral()
+        exclusiveContent {
+            forRepository {
+                gradlePluginPortal()
+            }
+            filter {
+                includeModule 'pl.allegro.tech.build', 'axion-release-plugin'
             }
         }
     }
@@ -24,8 +21,9 @@ plugins {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
         mavenCentral()
+        gradlePluginPortal()
+        google()
     }
 }
 
