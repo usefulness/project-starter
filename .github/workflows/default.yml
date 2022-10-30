@@ -95,11 +95,6 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publishToMavenLocal -Pgroup=com.project.starter.local
-
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
         with:
@@ -125,11 +120,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-
-      - name: Pre-compile plugin using gradle wrapper
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publishToMavenLocal -Pgroup=com.project.starter.local
 
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
