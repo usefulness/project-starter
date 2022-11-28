@@ -10,7 +10,7 @@ gradle-detekt = "1.22.0"
 maven-junit = "5.9.1"
 maven-assertj = "3.23.1"
 maven-jgit = "6.3.0.202209071007-r"
-gradle-axion = "1.14.2"
+gradle-axion = "1.14.3"
 
 [libraries]
 agp-gradle = { module = "com.android.tools.build:gradle", version.ref = "google-agp" }
