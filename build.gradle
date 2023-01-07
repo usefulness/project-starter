@@ -22,6 +22,9 @@ allprojects {
                 }
             }
         }
+        kotlin {
+            jvmToolchain(17)
+        }
     }
     tasks.withType(Test).configureEach {
         doLast {
@@ -30,12 +33,6 @@ allprojects {
     }
 
     pluginManager.withPlugin("java") {
-        java {
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_17.toString())
-            }
-        }
-
         if (project.hasProperty("skipJarVersion")) {
             tasks.named("jar") {
                 archiveFile.set(new File(project.buildDir, "libs/${project.name}.jar"))
