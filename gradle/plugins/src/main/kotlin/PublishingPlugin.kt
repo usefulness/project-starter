@@ -4,12 +4,13 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
 import org.gradle.plugins.signing.SigningExtension
 
 class PublishingPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
+        if (gradle.parent != null) return
         pluginManager.apply("maven-publish")
         pluginManager.apply("com.gradle.plugin-publish")
         pluginManager.apply("signing")
@@ -43,11 +44,13 @@ class PublishingPlugin : Plugin<Project> {
             }
         }
 
-        extensions.configure<PluginBundleExtension> {
-            website = "https://github.com/usefulness/project-starter/"
-            vcsUrl = "https://github.com/usefulness/project-starter.git"
-            description = "Set of plugins that might be useful for Multi-Module Android projects."
-            tags = listOf("android", "kotlin", "quickstart", "codestyle", "library", "baseline")
+        extensions.configure<GradlePluginDevelopmentExtension> {
+            website.set("https://github.com/usefulness/project-starter/")
+            vcsUrl.set("https://github.com/usefulness/project-starter.git")
+            plugins.configureEach { plugin ->
+                plugin.tags.set(listOf("android", "kotlin", "quickstart", "codestyle", "library", "baseline"))
+                plugin.description = "Set of plugins that might be useful for Multi-Module Android projects."
+            }
         }
     }
 
