@@ -2,7 +2,7 @@
 gradle-starter = "0.54.0"
 gradle-kotlinter = "3.13.0"
 gradle-gradlepublish = "1.1.0"
-google-agp = "7.3.1"
+google-agp = "7.4.0"
 gradle-jacocotestkit = "1.0.9"
 maven-kotlin = "1.8.0"
 maven-issuechecker = "0.3.0"
