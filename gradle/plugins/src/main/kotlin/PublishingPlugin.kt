@@ -10,7 +10,6 @@ import org.gradle.plugins.signing.SigningExtension
 class PublishingPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        if (gradle.parent != null) return
         pluginManager.apply("maven-publish")
         pluginManager.apply("com.gradle.plugin-publish")
         pluginManager.apply("signing")
