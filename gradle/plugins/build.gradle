@@ -1,11 +1,9 @@
 plugins {
     id 'java-gradle-plugin'
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.jmailen.kotlinter)
+    alias(libs.plugins.starter.library.kotlin)
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin'
     implementation libs.publishplugin.gradle
 }
 

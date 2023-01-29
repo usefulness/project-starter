@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
-    api libs.jmailen.kotlinter
+    api libs.usefulness.ktlint
     api libs.detekt.gradle
     implementation libs.usefulness.issuechecker
     implementation project(":config")

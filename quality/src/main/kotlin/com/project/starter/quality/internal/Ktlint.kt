@@ -1,16 +1,15 @@
 package com.project.starter.quality.internal
 
 import com.project.starter.quality.tasks.ProjectCodeStyleTask
+import io.github.usefulness.KtlintGradleExtension
+import io.github.usefulness.KtlintGradlePlugin
 import org.gradle.api.Project
-import org.jmailen.gradle.kotlinter.KotlinterExtension
-import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 internal fun Project.configureKtlint() {
-    pluginManager.apply(KotlinterPlugin::class.java)
+    pluginManager.apply(KtlintGradlePlugin::class.java)
 
-    extensions.configure(KotlinterExtension::class.java) {
+    extensions.configure(KtlintGradleExtension::class.java) {
         it.experimentalRules = true
-        it.reporters = emptyArray()
         it.disabledRules += arrayOf("import-ordering", "filename", "experimental:function-signature")
     }
 
