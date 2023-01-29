@@ -22,20 +22,16 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
             resolve("settings.gradle").writeText("""include ":androidApp"""")
 
             androidAppRoot = resolve("androidApp") {
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        
-                        """.trimIndent(),
-                    )
-                }
                 resolve("build.gradle") {
                     // language=groovy
                     val buildscript =
                         """
                         plugins {
                             id 'com.starter.application.android'
+                        }
+                    
+                        android {
+                            namespace "com.example.module1"
                         }
                         
                         android {

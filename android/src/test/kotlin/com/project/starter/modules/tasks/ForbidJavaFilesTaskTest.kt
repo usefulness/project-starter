@@ -36,6 +36,10 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     projectConfig {
                         javaFilesAllowed = false
                     }
+                    
+                    android {
+                        namespace "com.example.module1"
+                    }
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(buildScript)
@@ -46,13 +50,6 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     }
                     resolve("java/com/example/KotlinInJavaDir.kt") {
                         writeText(kotlinClass("KotlinInJavaDir"))
-                    }
-                    resolve("AndroidManifest.xml") {
-                        writeText(
-                            """
-                            <manifest />
-                            """.trimIndent(),
-                        )
                     }
                 }
                 test = resolve("src/test") {
@@ -76,14 +73,6 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(parentBuildScript)
-                }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        
-                        """.trimIndent(),
-                    )
                 }
                 resolve("src/main") {
                     resolve("kotlin/ValidKotlinInParent.kt") {

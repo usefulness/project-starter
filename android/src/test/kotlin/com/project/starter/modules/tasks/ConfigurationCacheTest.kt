@@ -25,7 +25,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
                     plugins {
                         id 'com.starter.library.android' 
                     }
-                        
+
                     android {
                         namespace "com.example.module1"
                     }
@@ -33,13 +33,6 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(script)
-                }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        """.trimIndent(),
-                    )
                 }
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))

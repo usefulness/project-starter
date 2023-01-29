@@ -53,14 +53,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 resolve("build.gradle") {
                     writeText(buildScript)
                 }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        
-                        """.trimIndent(),
-                    )
-                }
+
                 resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
@@ -92,7 +85,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                         android {
-                            namespace "com.example.module1"
+                            namespace "com.example.module2"
                         }
                         
                         dependencies {
@@ -102,14 +95,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        
-                        """.trimIndent(),
-                    )
-                }
+
                 resolve("src/main/kotlin/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
