@@ -32,6 +32,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                     }
                     
                     android {
+                        namespace "com.example.module1"
                         buildTypes {
                             debug { }
                             superType { }
@@ -55,7 +56,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module1" />
+                        <manifest />
                         
                         """.trimIndent(),
                     )
@@ -90,6 +91,10 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                             id('com.starter.library.android')
                         }
                         
+                        android {
+                            namespace "com.example.module1"
+                        }
+                        
                         dependencies {
                             testImplementation 'junit:junit:4.13'
                         }
@@ -100,7 +105,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module1" />
+                        <manifest />
                         
                         """.trimIndent(),
                     )

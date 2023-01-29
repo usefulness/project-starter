@@ -32,3 +32,16 @@ fun kotlinTestClass(className: String) =
     }
 
     """.trimIndent()
+
+fun kotlinMultiplatformTestClass(className: String) =
+    // language=kotlin
+    """
+    package com.example
+
+    class $className {
+    
+        @kotlin.test.Test
+        fun test${className.lowercase()}() = Unit
+    }
+
+    """.trimIndent()

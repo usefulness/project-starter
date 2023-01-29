@@ -3,7 +3,7 @@ package com.project.starter.modules
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.commit
 import com.project.starter.kotlinClass
-import com.project.starter.kotlinTestClass
+import com.project.starter.kotlinMultiplatformTestClass
 import com.project.starter.setupGit
 import com.project.starter.tag
 import org.assertj.core.api.Assertions.assertThat
@@ -27,16 +27,9 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             mkdirs()
             resolve("settings.gradle").writeText(
-                """
-                dependencyResolutionManagement {
-                    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-                    repositories {
-                        mavenCentral()
-                        gradlePluginPortal()
-                    }
-                }
-                    
-                include ":module1", ":module2"
+                // language=groovy
+                """  
+                    include ":module1", ":module2"
                 """.trimIndent(),
             )
 
@@ -46,17 +39,21 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                     writeText(
                         // language=groovy
                         """
-                        plugins {
-                            id('com.starter.library.multiplatform')
-                        }
-                        
-                        kotlin {
-                            jvm()
-                        }
-                        
-                        dependencies {
-                            "jvmTestImplementation"("junit:junit:4.13.2")
-                        }
+                            plugins {
+                                id('com.starter.library.multiplatform')
+                            }
+                            
+                            kotlin {
+                                jvm()
+                                
+                                sourceSets {
+                                    commonTest {
+                                        dependencies {
+                                            implementation kotlin("test")
+                                        }
+                                    }
+                                }
+                            }
                         
                         """.trimIndent(),
                     )
@@ -65,7 +62,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
                 resolve("src/jvmTest/kotlin/com/example/JvmTest1.kt") {
-                    writeText(kotlinTestClass("JvmTest1"))
+                    writeText(kotlinMultiplatformTestClass("JvmTest1"))
                 }
             }
             module2Root = resolve("module2") {
@@ -73,27 +70,43 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                     writeText(
                         // language=groovy
                         """
-                        plugins {
-                            id('com.starter.library.multiplatform')
-                        }
-                        
-                        kotlin {
-                            ios()
-                            jvm()
-                        }
-                        
-                        dependencies {
-                            "jvmTestImplementation"("junit:junit:4.13.2")
-                        }
+                            plugins {
+                                id('com.starter.library.multiplatform')
+                            }
+                            
+                            kotlin {
+                                jvm()
+                                ios()
+                                
+                                sourceSets {
+                                    commonTest {
+                                        dependencies {
+                                            implementation kotlin("test")
+                                        }
+                                    }
+                                }
+                            }
                         
                         """.trimIndent(),
                     )
                 }
-                resolve("src/commonMain/kotlin/com/example/ValidKotlinFile2.kt") {
-                    writeText(kotlinClass("ValidKotlinFile2"))
+                resolve("src/commonMain/kotlin/com/example/ValidKotlinFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/jvmTest/kotlin/com/example/JvmTest2.kt") {
-                    writeText(kotlinTestClass("JvmTest2"))
+                resolve("src/commonTest/kotlin/com/example/ValidKotlinTest1.kt") {
+                    writeText(kotlinMultiplatformTestClass("ValidKotlinTest1"))
+                }
+                resolve("src/jvmMain/kotlin/com/example/ValidKotlinJvmFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinJvmFile1"))
+                }
+                resolve("src/jvmTest/kotlin/com/example/ValidJvmKotlinTest1.kt") {
+                    writeText(kotlinMultiplatformTestClass("ValidJvmKotlinTest1"))
+                }
+                resolve("src/iosMain/kotlin/com/example/ValidKotlinIosFile1.kt") {
+                    writeText(kotlinClass("ValidKotlinIosFile1"))
+                }
+                resolve("src/iosTest/kotlin/com/example/ValidIosKotlinTest1.kt") {
+                    writeText(kotlinMultiplatformTestClass("ValidIosKotlinTest1"))
                 }
             }
         }

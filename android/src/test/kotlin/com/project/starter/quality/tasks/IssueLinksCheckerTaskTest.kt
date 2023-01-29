@@ -28,6 +28,10 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                     plugins {
                         id 'com.starter.library.android' 
                     }
+                    
+                    android {
+                        namespace "com.example.module1"
+                    }
 
                     """.trimIndent()
                 resolve("build.gradle") {
@@ -36,7 +40,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module1" />
+                        <manifest />
                         """.trimIndent(),
                     )
                 }
