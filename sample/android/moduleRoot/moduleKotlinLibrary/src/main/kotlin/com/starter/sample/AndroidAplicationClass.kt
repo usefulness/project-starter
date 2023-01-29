@@ -1,3 +1,3 @@
-package com.starter.sample.application.android
+package com.starter.sample
 
 class AndroidAplicationClass

@@ -24,7 +24,7 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
             resolve("src/main/java/ValidJava2.java") {
                 writeText(javaClass("ValidJava2"))
             }
-            resolve("src/test/java/ValidJavaTest2.java") {
+            resolve("src/test/java/com/example/ValidJavaTest2.java") {
                 writeText(javaClass("ValidJavaTest2"))
             }
         }

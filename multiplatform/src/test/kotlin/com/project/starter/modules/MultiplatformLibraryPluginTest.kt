@@ -26,7 +26,19 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
-            resolve("settings.gradle").writeText("""include ":module1", ":module2"""")
+            resolve("settings.gradle").writeText(
+                """
+                dependencyResolutionManagement {
+                    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                    repositories {
+                        mavenCentral()
+                        gradlePluginPortal()
+                    }
+                }
+                    
+                include ":module1", ":module2"
+                """.trimIndent(),
+            )
 
             rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
@@ -49,10 +61,10 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/commonMain/kotlin/ValidKotlinFile1.kt") {
+                resolve("src/commonMain/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/jvmTest/kotlin/JvmTest1.kt") {
+                resolve("src/jvmTest/kotlin/com/example/JvmTest1.kt") {
                     writeText(kotlinTestClass("JvmTest1"))
                 }
             }
@@ -77,10 +89,10 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/commonMain/kotlin/ValidKotlinFile2.kt") {
+                resolve("src/commonMain/kotlin/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/jvmTest/kotlin/JvmTest2.kt") {
+                resolve("src/jvmTest/kotlin/com/example/JvmTest2.kt") {
                     writeText(kotlinTestClass("JvmTest2"))
                 }
             }

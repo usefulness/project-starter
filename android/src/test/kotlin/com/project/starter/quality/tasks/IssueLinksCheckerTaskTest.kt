@@ -43,7 +43,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }
-                resolve("src/test/java/ValidJavaTest2.java") {
+                resolve("src/test/java/com/example/ValidJavaTest2.java") {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }
@@ -62,7 +62,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }
-                resolve("src/test/java/ValidJavaTest2.java") {
+                resolve("src/test/java/com/example/ValidJavaTest2.java") {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }
@@ -71,7 +71,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `does not warn on regular project`() {
-        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             val randomLinks =
                 // language=kotlin
                 """
@@ -93,7 +93,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     @Disabled("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
-        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             val randomLinks =
                 // language=kotlin
                 """
@@ -129,7 +129,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
         assertSoftly { softly ->
             listOf("module1" to androidModuleRoot, "module2" to kotlinModuleRoot).forEach { (name, folder) ->
-                folder.resolve("src/main/kotlin/ValidKotlin.kt") {
+                folder.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
                     writeText(randomLinks)
                 }
 
@@ -151,7 +151,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `reports github issues`() {
-        androidModuleRoot.resolve("src/main/kotlin/ValidKotlin.kt") {
+        androidModuleRoot.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             val randomLinks =
                 // language=kotlin
                 """

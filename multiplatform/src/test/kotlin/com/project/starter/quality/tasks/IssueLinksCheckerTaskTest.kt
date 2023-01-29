@@ -44,7 +44,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                  }
             """.trimIndent()
 
-        rootDirectory.resolve("src/commonMain/kotlin/ValidKotlin.kt") {
+        rootDirectory.resolve("src/commonMain/kotlin/com/example/ValidKotlin.kt") {
             writeText(randomLinks)
         }
 

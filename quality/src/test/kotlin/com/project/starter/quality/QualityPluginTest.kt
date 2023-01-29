@@ -25,7 +25,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     """.trimIndent(),
                 )
             }
-            resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+            resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                 writeText(kotlinClass("ValidKotlinFile1"))
             }
             resolve("src/main/java/ValidJava1.java") {
@@ -34,10 +34,10 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             resolve("src/debug/java/DebugJava.java") {
                 writeText(javaClass("DebugJava"))
             }
-            resolve("src/test/kotlin/ValidKotlinTest1.kt") {
+            resolve("src/test/kotlin/com/example/ValidKotlinTest1.kt") {
                 writeText(kotlinClass("ValidKotlinTest1"))
             }
-            resolve("src/test/java/ValidJavaTest1.java") {
+            resolve("src/test/java/com/example/ValidJavaTest1.java") {
                 writeText(javaClass("ValidJavaTest1"))
             }
         }

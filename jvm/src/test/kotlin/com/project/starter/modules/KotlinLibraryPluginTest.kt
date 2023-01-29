@@ -45,10 +45,10 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/test/kotlin/Test1.kt") {
+                resolve("src/test/kotlin/com/example/Test1.kt") {
                     writeText(kotlinTestClass("Test1"))
                 }
             }
@@ -67,10 +67,10 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile2.kt") {
+                resolve("src/main/kotlin/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/test/kotlin/Test2.kt") {
+                resolve("src/test/kotlin/com/example/Test2.kt") {
                     writeText(kotlinTestClass("Test2"))
                 }
             }

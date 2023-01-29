@@ -1,6 +1,5 @@
 package com.project.starter.quality.plugins
 
-import com.android.build.api.dsl.AndroidSourceDirectorySet
 import com.android.build.gradle.BaseExtension
 import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig

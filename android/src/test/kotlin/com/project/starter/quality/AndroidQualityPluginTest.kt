@@ -40,29 +40,33 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                             id('com.starter.library.android')
                         }
                         
+                        android {
+                            namespace "com.example.module1"
+                        }
+                        
                         """.trimIndent(),
                     )
                 }
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module1" />
+                        <manifest />
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/main/java/ValidJava1.java") {
+                resolve("src/main/java/com/example/ValidJava1.java") {
                     writeText(javaClass("ValidJava1"))
                 }
-                resolve("src/debug/java/DebugJava.java") {
+                resolve("src/debug/java/com/example/DebugJava.java") {
                     writeText(javaClass("DebugJava"))
                 }
-                resolve("src/test/kotlin/ValidKotlinTest1.kt") {
+                resolve("src/test/kotlin/com/example/ValidKotlinTest1.kt") {
                     writeText(kotlinClass("ValidKotlinTest1"))
                 }
-                resolve("src/test/java/ValidJavaTest1.java") {
+                resolve("src/test/java/com/example/ValidJavaTest1.java") {
                     writeText(javaClass("ValidJavaTest1"))
                 }
             }
@@ -83,6 +87,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     }
                     
                     android {
+                        namespace "com.example.module2"
                         compileSdkVersion 29
                         defaultConfig {
                             minSdkVersion 23
@@ -94,20 +99,20 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module2" />
+                        <manifest />
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/java/ValidKotlinFile2.kt") {
+                resolve("src/main/java/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/main/java/ValidJava2.java") {
+                resolve("src/main/java/com/example/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }
-                resolve("src/test/java/ValidKotlinTest2.kt") {
+                resolve("src/test/java/com/example/ValidKotlinTest2.kt") {
                     writeText(kotlinClass("ValidKotlinTest2"))
                 }
-                resolve("src/test/java/ValidJavaTest2.java") {
+                resolve("src/test/java/com/example/ValidJavaTest2.java") {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }
@@ -222,7 +227,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `detekt fails on invalid class name`() {
-        module2Root.resolve("src/main/kotlin/MagicNumber.kt") {
+        module2Root.resolve("src/main/kotlin/com/example/MagicNumber.kt") {
             val kotlinClass =
                 // language=kotlin
                 """
