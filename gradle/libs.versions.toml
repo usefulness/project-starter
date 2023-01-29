@@ -1,32 +1,30 @@
 [versions]
-gradle-starter = "0.55.0"
-gradle-kotlinter = "3.13.0"
-gradle-gradlepublish = "1.1.0"
 google-agp = "7.4.0"
+gradle-starter = "0.55.0"
+gradle-gradlepublish = "1.1.0"
 gradle-jacocotestkit = "1.0.9"
-maven-kotlin = "1.8.0"
-maven-issuechecker = "0.3.0"
-gradle-detekt = "1.22.0"
-maven-junit = "5.9.2"
-maven-assertj = "3.24.2"
-maven-jgit = "6.4.0.202211300538-r"
 gradle-axion = "1.14.3"
+gradle-detekt = "1.22.0"
+mavencentral-kotlin = "1.8.0"
+mavencentral-issuechecker = "0.3.0"
+mavencentral-junit = "5.9.2"
+mavencentral-assertj = "3.24.2"
+mavencentral-jgit = "6.4.0.202211300538-r"
+mavencentral-ktlint-gradle = "0.1.0"
 
 [libraries]
 agp-gradle = { module = "com.android.tools.build:gradle", version.ref = "google-agp" }
 publishplugin-gradle = { module = "com.gradle.publish:plugin-publish-plugin", version.ref = "gradle-gradlepublish" }
-usefulness-issuechecker = { module = "com.github.usefulness:issuechecker", version.ref = "maven-issuechecker" }
+usefulness-issuechecker = { module = "com.github.usefulness:issuechecker", version.ref = "mavencentral-issuechecker" }
+usefulness-ktlint = { module = "io.github.usefulness:ktlint-gradle-plugin", version.ref = "mavencentral-ktlint-gradle" }
 detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "gradle-detekt" }
-jmailen-kotlinter = { module = "org.jmailen.gradle:kotlinter-gradle", version.ref = "gradle-kotlinter" }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "maven-junit" }
-assertj-core = { module = "org.assertj:assertj-core", version.ref = "maven-assertj" }
-eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "maven-jgit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "mavencentral-junit" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentral-assertj" }
+eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
 axion-gradle = { module = "pl.allegro.tech.build:axion-release-plugin", version.ref = "gradle-axion" }
 
-
 [plugins]
-jmailen-kotlinter = { id = "org.jmailen.kotlinter", version.ref = "gradle-kotlinter" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "maven-kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "mavencentral-kotlin" }
 droidsonroids-jacocotestkit = { id = "pl.droidsonroids.jacoco.testkit", version.ref = "gradle-jacocotestkit" }
 starter-config = { id = "com.starter.config", version.ref = "gradle-starter" }
 starter-library-kotlin = { id = "com.starter.library.kotlin", version.ref = "gradle-starter" }
