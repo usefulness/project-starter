@@ -44,6 +44,7 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
                     }
                     
                     android {
+                        namespace "com.example.module2"
                         compileSdkVersion 33
                         defaultConfig {
                             minSdkVersion 26
@@ -57,14 +58,14 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module2" />
+                        <manifest />
                         """.trimIndent(),
                     )
                 }
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }
-                resolve("src/test/java/ValidJavaTest2.java") {
+                resolve("src/test/java/com/example/ValidJavaTest2.java") {
                     writeText(javaClass("ValidJavaTest2"))
                 }
             }

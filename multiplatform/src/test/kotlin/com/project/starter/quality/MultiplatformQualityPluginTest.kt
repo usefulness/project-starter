@@ -27,22 +27,22 @@ internal class MultiplatformQualityPluginTest : WithGradleProjectTest() {
             resolve("build.gradle") {
                 writeText(script)
             }
-            resolve("src/commonMain/kotlin/ValidKotlinFile1.kt") {
+            resolve("src/commonMain/kotlin/com/example/ValidKotlinFile1.kt") {
                 writeText(kotlinClass("ValidKotlinFile1"))
             }
-            resolve("src/commonTest/kotlin/ValidKotlinTest1.kt") {
+            resolve("src/commonTest/kotlin/com/example/ValidKotlinTest1.kt") {
                 writeText(kotlinClass("ValidKotlinTest1"))
             }
-            resolve("src/jvmMain/kotlin/ValidKotlinJvmFile1.kt") {
+            resolve("src/jvmMain/kotlin/com/example/ValidKotlinJvmFile1.kt") {
                 writeText(kotlinClass("ValidKotlinJvmFile1"))
             }
-            resolve("src/jvmTest/kotlin/ValidJvmKotlinTest1.kt") {
+            resolve("src/jvmTest/kotlin/com/example/ValidJvmKotlinTest1.kt") {
                 writeText(kotlinClass("ValidJvmKotlinTest1"))
             }
-            resolve("src/iosMain/kotlin/ValidKotlinIosFile1.kt") {
+            resolve("src/iosMain/kotlin/com/example/ValidKotlinIosFile1.kt") {
                 writeText(kotlinClass("ValidKotlinIosFile1"))
             }
-            resolve("src/iosTest/kotlin/ValidIosKotlinTest1.kt") {
+            resolve("src/iosTest/kotlin/com/example/ValidIosKotlinTest1.kt") {
                 writeText(kotlinClass("ValidIosKotlinTest1"))
             }
         }

@@ -1,4 +1,4 @@
-package com.starter.sample.sample.android
+package com.starter.sample
 
 /**
  * Sample issue link https://youtrack.jetbrains.com/issue/KT-31641

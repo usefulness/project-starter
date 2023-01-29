@@ -9,7 +9,7 @@ import org.gradle.api.Project
 
 class MultiplatformLibraryPlugin : Plugin<Project> {
 
-    override fun apply(target: Project) = with(target) {
+    override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply("org.jetbrains.kotlin.multiplatform")
         pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)

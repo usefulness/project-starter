@@ -29,7 +29,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
             resolve("src/main/java/ValidJava2.java") {
                 writeText(javaClass("ValidJava2"))
             }
-            resolve("src/test/java/ValidJavaTest2.java") {
+            resolve("src/test/java/com/example/ValidJavaTest2.java") {
                 writeText(javaClass("ValidJavaTest2"))
             }
         }
@@ -37,7 +37,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `does not warn on regular project`() {
-        rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
+        rootDirectory.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             // language=kotlin
             val randomLinks =
                 """
@@ -59,7 +59,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
     @Test
     @Disabled("Google Issue tracker is not supported yet")
     fun `reports issuetracker issues`() {
-        rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
+        rootDirectory.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             // language=kotlin
             val randomLinks =
                 """
@@ -93,7 +93,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
                  }
             """.trimIndent()
 
-        rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
+        rootDirectory.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             writeText(randomLinks)
         }
 
@@ -113,7 +113,7 @@ internal class IssueLinksCheckerTaskTest : WithGradleProjectTest() {
 
     @Test
     fun `reports github issues`() {
-        rootDirectory.resolve("src/main/kotlin/ValidKotlin.kt") {
+        rootDirectory.resolve("src/main/kotlin/com/example/ValidKotlin.kt") {
             // language=kotlin
             val randomLinks =
                 """

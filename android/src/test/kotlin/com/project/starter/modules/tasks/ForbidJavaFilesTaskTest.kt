@@ -29,6 +29,10 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                         id('com.starter.library.android')
                     }
                     
+                    android {
+                        namespace "com.example.module1"
+                    }
+                    
                     projectConfig {
                         javaFilesAllowed = false
                     }
@@ -37,16 +41,16 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     writeText(buildScript)
                 }
                 main = resolve("src/main") {
-                    resolve("kotlin/ValidKotlin.kt") {
+                    resolve("kotlin/com/example/ValidKotlin.kt") {
                         writeText(kotlinClass("ValidKotlin"))
                     }
-                    resolve("java/KotlinInJavaDir.kt") {
+                    resolve("java/com/example/KotlinInJavaDir.kt") {
                         writeText(kotlinClass("KotlinInJavaDir"))
                     }
                     resolve("AndroidManifest.xml") {
                         writeText(
                             """
-                        <manifest package="com.example.module1" />
+                            <manifest />
                             """.trimIndent(),
                         )
                     }
@@ -65,6 +69,10 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                     plugins {
                         id('com.starter.library.android')
                     }
+                    
+                    android {
+                        namespace "com.example.parent"
+                    }
                     """.trimIndent()
                 resolve("build.gradle") {
                     writeText(parentBuildScript)
@@ -72,7 +80,7 @@ internal class ForbidJavaFilesTaskTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.parent" />
+                        <manifest />
                         
                         """.trimIndent(),
                     )

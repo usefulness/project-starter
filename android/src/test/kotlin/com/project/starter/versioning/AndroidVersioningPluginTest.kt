@@ -25,7 +25,7 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
                 resolve("src/main/AndroidManifest.xml") {
                     writeText(
                         """
-                        <manifest package="com.example.module1" />
+                        <manifest />
                         
                         """.trimIndent(),
                     )
@@ -36,6 +36,10 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
                         """
                         plugins {
                             id 'com.starter.application.android'
+                        }
+                        
+                        android {
+                            namespace "com.example.module1"
                         }
                         
                         tasks.register("printVersion") {

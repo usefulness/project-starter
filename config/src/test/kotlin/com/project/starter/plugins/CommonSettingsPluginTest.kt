@@ -30,7 +30,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/kotlin/ValidKotlinFile1.kt") {
+                resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
             }
