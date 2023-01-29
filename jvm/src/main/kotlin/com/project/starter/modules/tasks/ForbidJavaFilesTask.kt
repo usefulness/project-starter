@@ -21,7 +21,7 @@ open class ForbidJavaFilesTask : SourceTask() {
 
     companion object {
 
-        private const val TASK_NAME = "forbidJavaFiles"
+        const val TASK_NAME = "forbidJavaFiles"
 
         fun Project.registerForbidJavaFilesTask(action: (ForbidJavaFilesTask) -> Unit = {}) =
             tasks.register(TASK_NAME, ForbidJavaFilesTask::class.java, action)

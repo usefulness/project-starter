@@ -2,11 +2,12 @@ plugins {
     id("java-gradle-plugin")
     alias(libs.plugins.droidsonroids.jacocotestkit)
     alias(libs.plugins.starter.library.kotlin)
+    alias(libs.plugins.kotlin.samwithreceiver)
     id("com.starter.publishing")
 }
 
 dependencies {
-    compileOnly libs.agp.gradle
+    compileOnly libs.agp.gradle.api
     implementation libs.axion.gradle
     implementation project(":config")
 

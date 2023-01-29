@@ -10,7 +10,12 @@ internal fun Project.configureKtlint() {
 
     extensions.configure(KtlintGradleExtension::class.java) {
         it.experimentalRules = true
-        it.disabledRules += arrayOf("import-ordering", "filename", "experimental:function-signature")
+        it.disabledRules += arrayOf(
+            "import-ordering",
+            "filename",
+            "experimental:function-signature",
+            "experimental:property-naming",
+        )
     }
 
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {

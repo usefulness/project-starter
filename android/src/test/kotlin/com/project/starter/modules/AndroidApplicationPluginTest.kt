@@ -77,14 +77,15 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
                         plugins {
                             id('com.starter.application.android')
                         }
-                        android {
-                            namespace "com.example.module1"
-                        }
                         
+                        android {
+                            namespace "com.example.module2"
+                        }
+
                         dependencies {
                             testImplementation 'junit:junit:4.13'
                         }
-                        
+
                         """.trimIndent(),
                     )
                 }

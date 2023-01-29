@@ -55,13 +55,6 @@ internal class GenerateCheckstyleBaselineTaskTest : WithGradleProjectTest() {
                 resolve("build.gradle") {
                     writeText(script)
                 }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        """.trimIndent(),
-                    )
-                }
                 resolve("src/main/java/ValidJava2.java") {
                     writeText(javaClass("ValidJava2"))
                 }

@@ -39,6 +39,10 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         plugins {
                             id('com.starter.library.android')
                         }
+                    
+                        android {
+                            namespace "com.example.module1"
+                        }
                         
                         android {
                             namespace "com.example.module1"
@@ -47,13 +51,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         """.trimIndent(),
                     )
                 }
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        """.trimIndent(),
-                    )
-                }
+
                 resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
@@ -88,7 +86,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     
                     android {
                         namespace "com.example.module2"
-                        compileSdkVersion 29
+                        compileSdkVersion 33
+
                         defaultConfig {
                             minSdkVersion 23
                         }
@@ -96,13 +95,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     
                     """.trimIndent()
                 resolve("build.gradle").writeText(script)
-                resolve("src/main/AndroidManifest.xml") {
-                    writeText(
-                        """
-                        <manifest />
-                        """.trimIndent(),
-                    )
-                }
+
                 resolve("src/main/java/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
