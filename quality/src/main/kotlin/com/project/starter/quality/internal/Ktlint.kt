@@ -16,7 +16,7 @@ internal fun Project.configureKtlint() {
                 "filename",
                 "experimental:function-signature",
                 "experimental:property-naming",
-            )
+            ),
         )
     }
 
