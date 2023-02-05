@@ -9,12 +9,14 @@ internal fun Project.configureKtlint() {
     pluginManager.apply(KtlintGradlePlugin::class.java)
 
     extensions.configure(KtlintGradleExtension::class.java) {
-        it.experimentalRules = true
-        it.disabledRules += arrayOf(
-            "import-ordering",
-            "filename",
-            "experimental:function-signature",
-            "experimental:property-naming",
+        it.experimentalRules.set(true)
+        it.disabledRules.set(
+            it.disabledRules.get() + listOf(
+                "import-ordering",
+                "filename",
+                "experimental:function-signature",
+                "experimental:property-naming",
+            ),
         )
     }
 
