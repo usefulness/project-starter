@@ -1,7 +1,6 @@
 package com.project.starter.quality
 
 import com.project.starter.WithGradleProjectTest
-import com.project.starter.javaClass
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -17,17 +16,37 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            resolve("settings.gradle").writeText(
+                // language=groovy
+                """
+                plugins {
+                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+                }
+                
+                dependencyResolutionManagement {
+                    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                    repositories {
+                        google()
+                        mavenCentral()
+                    }
+                }
+                    
+                include ":module1", ":module2"
+                
+                """.trimIndent(),
+            )
 
             rootDirectory.resolve("build.gradle").writeText(
                 // language=groovy
                 """
+                import org.gradle.api.JavaVersion 
+                
                 plugins {
                     id('com.starter.config')
                 }
                 
                 commonConfig {
-                    javaFilesAllowed true
+                    javaVersion = JavaVersion.VERSION_17
                 }
                 """.trimIndent(),
             )
@@ -39,13 +58,17 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         plugins {
                             id('com.starter.library.android')
                         }
-                    
-                        android {
-                            namespace "com.example.module1"
-                        }
                         
                         android {
                             namespace "com.example.module1"
+                            compileOptions {
+                                sourceCompatibility = JavaVersion.VERSION_17
+                                targetCompatibility = JavaVersion.VERSION_17
+                            }
+                        }
+                        
+                        kotlin {
+                            jvmToolchain(17)
                         }
                         
                         """.trimIndent(),
@@ -55,17 +78,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/main/java/com/example/ValidJava1.java") {
-                    writeText(javaClass("ValidJava1"))
-                }
-                resolve("src/debug/java/com/example/DebugJava.java") {
-                    writeText(javaClass("DebugJava"))
-                }
                 resolve("src/test/kotlin/com/example/ValidKotlinTest1.kt") {
                     writeText(kotlinClass("ValidKotlinTest1"))
-                }
-                resolve("src/test/java/com/example/ValidJavaTest1.java") {
-                    writeText(javaClass("ValidJavaTest1"))
                 }
             }
             module2Root = resolve("module2").apply {
@@ -73,40 +87,39 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 val script =
                     // language=groovy
                     """
+                    import org.gradle.api.JavaVersion 
+                    
                     plugins {
                         id('com.starter.quality')
                         id('com.android.library')
                         id('kotlin-android')
                     }
                     
-                    repositories {
-                        google()
-                        mavenCentral()
-                    }
-                    
                     android {
                         namespace "com.example.module2"
                         compileSdkVersion 33
-
+                        
                         defaultConfig {
                             minSdkVersion 23
                         }
+                        compileOptions {
+                            sourceCompatibility = JavaVersion.VERSION_17
+                            targetCompatibility = JavaVersion.VERSION_17
+                        }
+                    }
+                        
+                    kotlin {
+                        jvmToolchain(17)
                     }
                     
                     """.trimIndent()
                 resolve("build.gradle").writeText(script)
 
-                resolve("src/main/java/com/example/ValidKotlinFile2.kt") {
+                resolve("src/main/kotlin/com/example/ValidKotlinFile2.kt") {
                     writeText(kotlinClass("ValidKotlinFile2"))
                 }
-                resolve("src/main/java/com/example/ValidJava2.java") {
-                    writeText(javaClass("ValidJava2"))
-                }
-                resolve("src/test/java/com/example/ValidKotlinTest2.kt") {
+                resolve("src/test/kotlin/com/example/ValidKotlinTest2.kt") {
                     writeText(kotlinClass("ValidKotlinTest2"))
-                }
-                resolve("src/test/java/com/example/ValidJavaTest2.java") {
-                    writeText(javaClass("ValidJavaTest2"))
                 }
             }
         }
@@ -136,12 +149,14 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
             val buildscript =
                 // language=groovy
                 """
+                import org.gradle.api.JavaVersion 
+                
                 plugins {
                     id('com.starter.config')
                 }
                 
                 commonConfig {
-                    javaFilesAllowed true
+                    javaVersion = JavaVersion.VERSION_17
                     qualityPlugin {
                         formatOnCompile = true
                     }
@@ -150,7 +165,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
             rootDirectory.resolve("build.gradle").writeText(buildscript)
         }
 
-        module1Root.resolve("src/main//kotlin/WrongFileName.kt") {
+        module1Root.resolve("src/main/kotlin/WrongFileName.kt") {
             writeText(kotlinClass("DifferentClassName"))
         }
 
@@ -164,58 +179,6 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
         assertThat(formatOnCompileOn.task(":module1:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(formatOnCompileOn.task(":module2:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `projectCodeStyle fails if Checkstyle violation found`() {
-        module2Root.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            val javaClass =
-                // language=java
-                """
-                public class JavaFileWithCheckstyleIssues {
-    
-                    int test() {
-                        int variable = System.in.read();
-                        if(variable % 2 == 1){
-                            return 2;
-                        } else {
-                            return 3;
-                        }
-                    }
-                }
-                
-                """.trimIndent()
-            writeText(javaClass)
-        }
-
-        val result = runTask("projectCodeStyle", shouldFail = true)
-
-        assertThat(result.task(":module1:checkstyleDebug")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:checkstyleDebugUnitTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
-        assertThat(result.output)
-            .contains("WhitespaceAround: 'if' is not followed by whitespace.")
-            .contains("WhitespaceAround: '{' is not preceded with whitespace")
-    }
-
-    @Test
-    fun `checkstyle is not present if java files are not allowed`() {
-        val buildscript =
-            // language=groovy
-            """
-            plugins {
-                id('com.starter.config')
-            }
-            
-            commonConfig {
-                javaFilesAllowed = false
-            }
-            """.trimIndent()
-        rootDirectory.resolve("build.gradle").writeText(buildscript)
-
-        val result = runTask("projectCodeStyle")
-
-        assertThat(result.task(":module1:checkstyle")).isNull()
-        assertThat(result.task(":module2:checkstyle")).isNull()
     }
 
     @Test

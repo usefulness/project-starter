@@ -60,7 +60,7 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
     }
 
     androidComponents.onVariants { variant ->
-        val capitalizedName = variant.name.capitalize()
+        val capitalizedName = variant.name.replaceFirstChar(Char::titlecase)
         projectLint.dependsOn("$path:lint$capitalizedName")
         projectTest.dependsOn("$path:test${capitalizedName}UnitTest")
         projectCoverage.dependsOn("$path:jacoco${capitalizedName}TestReport")

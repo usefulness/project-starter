@@ -3,7 +3,6 @@ package com.project.starter.quality.plugins
 import com.android.build.gradle.BaseExtension
 import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.quality.internal.configureCheckstyle
 import com.project.starter.quality.internal.configureDetekt
 import com.project.starter.quality.internal.configureKtlint
 import com.project.starter.quality.tasks.IssueLinksTask.Companion.registerIssueCheckerTask
@@ -21,7 +20,6 @@ class QualityPlugin : Plugin<Project> {
         addProjectCodeStyleTask()
         configureKtlint()
         configureDetekt()
-        configureCheckstyle()
         configureIssueCheckerTask()
         configureFormatOnRecompile()
     }

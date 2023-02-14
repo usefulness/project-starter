@@ -28,7 +28,7 @@ internal fun Project.configureAndroidCoverage(
     }
 
     androidComponents.onVariants { variant ->
-        val capitalizedVariant = variant.name.capitalize()
+        val capitalizedVariant = variant.name.replaceFirstChar(Char::titlecase)
         tasks.register("jacoco${capitalizedVariant}TestReport", JacocoReport::class.java) { report ->
             val testTask = tasks.getByName("test${capitalizedVariant}UnitTest")
             val jacocoTestTaskExtension = testTask.extensions.getByType<JacocoTaskExtension>().apply {
@@ -43,8 +43,7 @@ internal fun Project.configureAndroidCoverage(
                 it.xml.required.set(true)
             }
 
-            val android = project.extensions.getByName("android")
-            val oldVariant = when (android) {
+            val oldVariant = when (val android = project.extensions.getByName("android")) {
                 is AppExtension -> android.applicationVariants.firstOrNull { it.name == variant.name }
                 is LibraryExtension -> android.libraryVariants.firstOrNull { it.name == variant.name }
                 else -> null
