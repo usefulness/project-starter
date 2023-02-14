@@ -27,12 +27,6 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
             resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                 writeText(kotlinClass("ValidKotlinFile1"))
             }
-            resolve("src/main/java/com/example/ValidJava1.java") {
-                writeText(javaClass("ValidJava1"))
-            }
-            resolve("src/debug/java/com/example/DebugJava.java") {
-                writeText(javaClass("DebugJava"))
-            }
             resolve("src/test/kotlin/com/example/ValidKotlinTest1.kt") {
                 writeText(kotlinClass("ValidKotlinTest1"))
             }
@@ -55,47 +49,5 @@ internal class KotlinQualityPluginTest : WithGradleProjectTest() {
 
         assertThat(result.task(":lintKotlinMain")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.task(":lintKotlinTest")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `projectCodeStyle fails if Checkstyle violation found`() {
-        rootDirectory.resolve("build.gradle") {
-            appendText(
-                // language=groovy
-                """
-                projectConfig {
-                    javaFilesAllowed = true
-                }
-                """.trimIndent(),
-            )
-        }
-        rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            // language=java
-            val javaClass =
-                """
-                import java.io.IOException;
-                
-                public class JavaFileWithCheckstyleIssues {
-    
-                    int test() throws IOException {
-                        int variable = System.in.read();
-                        if(variable % 2 == 1){
-                            return 2;
-                        } else {
-                            return 3;
-                        }
-                    }
-                }
-                
-                """.trimIndent()
-            writeText(javaClass)
-        }
-
-        val result = runTask("projectCodeStyle", shouldFail = true)
-
-        assertThat(result.task(":checkstyleTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
-        assertThat(result.output)
-            .contains("WhitespaceAround: 'if' is not followed by whitespace.")
-            .contains("WhitespaceAround: '{' is not preceded with whitespace")
     }
 }

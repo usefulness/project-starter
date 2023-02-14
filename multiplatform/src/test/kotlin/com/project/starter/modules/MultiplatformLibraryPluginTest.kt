@@ -28,7 +28,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             mkdirs()
             resolve("settings.gradle").writeText(
                 // language=groovy
-                """  
+                """
                     include ":module1", ":module2"
                 """.trimIndent(),
             )

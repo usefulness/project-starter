@@ -12,7 +12,9 @@ class PublishingPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("maven-publish")
         pluginManager.apply("com.gradle.plugin-publish")
-        pluginManager.apply("signing")
+        if (findConfig("SIGNING_PASSWORD").isNotEmpty()) {
+            pluginManager.apply("signing")
+        }
 
         extensions.configure<JavaPluginExtension> {
             withSourcesJar()

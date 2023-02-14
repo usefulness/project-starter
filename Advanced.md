@@ -10,7 +10,7 @@ plugins {
 }
  
 commonConfig {
-    javaVersion JavaVersion.VERSION_1_11
+    javaVersion JavaVersion.VERSION_11
     javaFilesAllowed = true
     androidPlugin {
         compileSdkVersion 31
@@ -38,8 +38,6 @@ It is possible to generate baseline for every quality tool available in the proj
   Type `rm **/lint-*.xml ; ./gradlew projectLint -PrefreshBaseline --continue` into console
 - `Detekt`  
   Create baseline using [provided configuration](https://github.com/arturbosch/detekt/blob/master/docs/pages/baseline.md)
-- `Checkstyle`  
-  Execute `./gradlew generateCheckstyleBaseline` task.
 - `ktlint`  
   Unfortunately it is not possible to generate `ktlint` baseline.
   Proper code style may be achieved by using `./gradlew formatKotlin` task.

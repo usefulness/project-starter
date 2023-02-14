@@ -79,7 +79,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             rootDirectory.resolve("build.gradle").writeText(buildscript)
         }
 
-        rootDirectory.resolve("src/main//kotlin/WrongFileName.kt") {
+        rootDirectory.resolve("src/main/kotlin/WrongFileName.kt") {
             writeText(kotlinClass("DifferentClassName"))
         }
 
@@ -91,61 +91,6 @@ internal class QualityPluginTest : WithGradleProjectTest() {
         val formatOnCompileOn = runTask("assemble")
 
         assertThat(formatOnCompileOn.task(":formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `projectCodeStyle fails if Checkstyle violation found`() {
-        // language=groovy
-        val buildscript =
-            """
-            plugins {
-                id('com.starter.config')
-                id('com.starter.quality')
-                id('org.jetbrains.kotlin.jvm')
-            }
-            
-            commonConfig {
-                javaFilesAllowed = true
-            }
-            
-            """.trimIndent()
-        rootDirectory.resolve("build.gradle").writeText(buildscript)
-
-        rootDirectory.resolve("src/test/java/JavaFileWithCheckstyleIssues.java") {
-            // language=java
-            val javaClass =
-                """
-                import java.io.IOException;
-                
-                public class JavaFileWithCheckstyleIssues {
-    
-                    int test() throws IOException {
-                        int variable = System.in.read();
-                        if(variable % 2 == 1){
-                            return 2;
-                        } else {
-                            return 3;
-                        }
-                    }
-                }
-                
-                """.trimIndent()
-            writeText(javaClass)
-        }
-
-        val result = runTask("projectCodeStyle", shouldFail = true)
-
-        assertThat(result.task(":checkstyleTest")?.outcome).isEqualTo(TaskOutcome.FAILED)
-        assertThat(result.output)
-            .contains("WhitespaceAround: 'if' is not followed by whitespace.")
-            .contains("WhitespaceAround: '{' is not preceded with whitespace")
-    }
-
-    @Test
-    fun `checkstyle is not present if java files are not allowed`() {
-        val result = runTask("projectCodeStyle")
-
-        assertThat(result.task(":checkstyle")).isNull()
     }
 
     @Test
