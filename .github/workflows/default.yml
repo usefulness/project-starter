@@ -53,15 +53,15 @@ jobs:
         with:
           arguments: validatePlugins
 
-      - name: Jacoco test report
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: projectCoverage
+#      - name: Jacoco test report
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: projectCoverage
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload test results
         if: ${{ always() }}
