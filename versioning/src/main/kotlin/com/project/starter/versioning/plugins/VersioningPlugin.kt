@@ -26,8 +26,6 @@ class VersioningPlugin : Plugin<Project> {
 
         allprojects { project ->
             project.version = scmConfig.version
-        }
-        allprojects { project ->
             project.setupAndroidVersioning(scmConfig)
         }
     }
