@@ -10,7 +10,7 @@ mavencentral-issuechecker = "0.3.0"
 mavencentral-junit = "5.9.3"
 mavencentral-assertj = "3.24.2"
 mavencentral-jgit = "6.5.0.202303070854-r"
-mavencentral-ktlint-gradle = "0.2.2"
+mavencentral-ktlint-gradle = "0.3.0"
 
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" } # TODO remove
