@@ -13,7 +13,6 @@ dependencies {
     implementation libs.usefulness.issuechecker
     implementation project(":config")
     compileOnly libs.agp.gradle.api
-    compileOnly libs.agp.gradle.implementation
 
     testImplementation project(":testing")
 }
