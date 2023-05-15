@@ -114,18 +114,13 @@ Quality Plugin gets applied automatically when using any of module _Application_
 
 #### Versioning Plugin
 
-Uses tag-based versioning backed by the [allegro/axion-release-plugin](https://github.com/allegro/axion-release-plugin) (view a [full documentation](https://github.com/allegro/axion-release-plugin))
+Uses simple tag-based versioning, in a Configuration Cache compatible way.
 
 To enable it as a standalone plugin, apply plugin to root project `build.gradle`
 ```
  apply plugin: 'com.starter.versioning'
 ```
 Versioning plugin gets applied automatically when using any of module _Application_/_Library_ plugins above and can be disabled using [Global Configuration](Advanced.md#global-configuration)
-
-Regular flow relies on calling
-- `./gradlew cV` or `./gradlew currentVersion`
-- `./gradlew markNextVersion -Prelease.version=1.0.0`
-- `./gradlew release` (which pushes proper tags to remote server)
 
 ### Advanced usage
 See [Advanced usage](Advanced.md)

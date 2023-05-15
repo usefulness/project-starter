@@ -3,7 +3,6 @@ google-agp = "8.0.1"
 gradle-starter = "0.59.0"
 gradle-gradlepublish = "1.2.0"
 gradle-jacocotestkit = "1.0.12"
-gradle-axion = "1.15.0"
 gradle-detekt = "1.22.0"
 mavencentral-kotlin = "1.8.21"
 mavencentral-issuechecker = "0.3.0"
@@ -22,7 +21,6 @@ detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", v
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "mavencentral-junit" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentral-assertj" }
 eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
-axion-gradle = { module = "pl.allegro.tech.build:axion-release-plugin", version.ref = "gradle-axion" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "mavencentral-kotlin" }

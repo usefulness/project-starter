@@ -2,50 +2,130 @@ package com.project.starter.versioning.plugins
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.project.starter.config.getByType
+import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import pl.allegro.tech.build.axion.release.ReleasePlugin
-import pl.allegro.tech.build.axion.release.domain.PredefinedVersionIncrementer
-import pl.allegro.tech.build.axion.release.domain.VersionConfig
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Provider
+import org.gradle.api.provider.ValueSource
+import org.gradle.api.provider.ValueSourceParameters
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.TaskAction
+import org.gradle.process.ExecOperations
+import java.io.ByteArrayOutputStream
+import java.nio.charset.Charset
+import javax.inject.Inject
 
 class VersioningPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         if (this != rootProject) throw GradleException("Versioning plugin can be applied to the root project only")
-        pluginManager.apply(ReleasePlugin::class.java)
 
-        val scmConfig = extensions.getByType<VersionConfig>().apply {
-            versionIncrementer.set(
-                PredefinedVersionIncrementer.versionIncrementerFor(
-                    "incrementMinorIfNotOnRelease",
-                    mapOf("releaseBranchPattern" to "^release/.*\$"),
-                ),
-            )
-        }
+        val gitVersionProvider = providers.of(GitVersionValueSource::class.java) {}
 
         allprojects { project ->
-            project.version = scmConfig.version
-            project.setupAndroidVersioning(scmConfig)
+            val get = gitVersionProvider.get()
+            project.version = get.decorated
+            project.setupAndroidVersioning(gitVersionProvider)
+        }
+
+        tasks.register("currentVersion", CurrentVersionTask::class.java) { task ->
+            task.gitVersion.set(gitVersionProvider)
         }
     }
 
-    private fun Project.setupAndroidVersioning(scmConfig: VersionConfig) {
+    private fun Project.setupAndroidVersioning(gitVersionProvider: Provider<GitVersion>) {
         pluginManager.withPlugin("com.android.application") {
             extensions.getByType<ApplicationExtension>().defaultConfig {
-                val versionParts = scmConfig.undecoratedVersion.split(".")
-                val minor = versionParts[0].toInt()
-                val major = versionParts[1].toInt()
-                val patch = versionParts[2].toInt()
+                val gitVersion = gitVersionProvider.get()
+                val major = gitVersion.major
+                val minor = gitVersion.minor
+                val patch = gitVersion.patch
 
-                versionCode = minor * MINOR_MULTIPLIER + major * MAJOR_MULTIPLIER + patch
-                versionName = "$minor.$major.$patch"
+                versionCode = major * MAJOR_MULTIPLIER + minor * MINOR_MULTIPLIER + patch
+                versionName = gitVersion.undecorated
             }
         }
     }
 
+    abstract class GitVersionValueSource @Inject constructor(
+        private val execOperations: ExecOperations,
+    ) : ValueSource<GitVersion, ValueSourceParameters.None> {
+
+        override fun obtain(): GitVersion {
+            fun defaultVersion() = GitVersion(
+                major = 0,
+                minor = 1,
+                patch = 0,
+                isSnapshot = true,
+            )
+
+            val status = runGit("status", "--porcelain")
+            val headSha = runGit("rev-parse", "HEAD")
+            val lastGitTag = runGit("describe", "--tags", "--abbrev=0")
+            val lastReleaseCommit = runGit("rev-parse", lastGitTag)
+            val lastTags = runGit("tag", "--contains", lastReleaseCommit).split("\n")
+
+            val lastTag = lastTags.maxOrNull() ?: return defaultVersion()
+
+            val isOnTag = lastReleaseCommit == headSha
+            val isDirty = status.isNotBlank()
+
+            val isSnapshot = !isOnTag || isDirty
+
+            val versionRegex = "([0-9]+)\\.([0-9]+)\\.([0-9]+)".toRegex()
+            val result = versionRegex.find(lastTag) ?: return defaultVersion()
+
+            val major = result.groups[1]?.value?.toIntOrNull() ?: return defaultVersion()
+            val minor = result.groups[2]?.value?.toIntOrNull() ?: return defaultVersion()
+            val patch = result.groups[3]?.value?.toIntOrNull() ?: return defaultVersion()
+
+            return GitVersion(
+                major = major,
+                minor = if (isSnapshot) minor + 1 else minor,
+                patch = if (isSnapshot) 0 else patch,
+                isSnapshot = isSnapshot,
+            )
+        }
+
+        private fun runGit(vararg args: String) = ByteArrayOutputStream().use { output ->
+            execOperations.exec {
+                it.executable("git")
+                it.args(args.toList())
+                it.standardOutput = output
+            }
+
+            output.toString(Charset.defaultCharset()).trim()
+        }
+    }
+
+    abstract class CurrentVersionTask @Inject constructor(
+        objectFactory: ObjectFactory,
+    ) : DefaultTask() {
+
+        @Input
+        val gitVersion = objectFactory.property(GitVersion::class.java)
+
+        @TaskAction
+        fun run() {
+            logger.quiet("Current version: ${gitVersion.get().decorated}")
+        }
+    }
+
+    data class GitVersion(
+        val major: Int,
+        val minor: Int,
+        val patch: Int,
+        val isSnapshot: Boolean,
+    ) {
+
+        val undecorated = "$major.$minor.$patch"
+        val decorated = "$major.$minor.$patch${if (isSnapshot) "-SNAPSHOT" else ""}"
+    }
+
     companion object {
-        private const val MINOR_MULTIPLIER = 1_000_000
-        private const val MAJOR_MULTIPLIER = 1_000
+        private const val MAJOR_MULTIPLIER = 1_000_000
+        private const val MINOR_MULTIPLIER = 1_000
     }
 }

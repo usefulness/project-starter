@@ -8,7 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jgit.api.Git
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
 internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
@@ -17,9 +16,6 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
     private lateinit var module2Root: File
     private lateinit var rootBuildScript: File
     private lateinit var git: Git
-
-    @TempDir
-    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -49,7 +45,7 @@ internal class KotlinVersioningPluginTest : WithGradleProjectTest() {
                 }
             }
         }
-        git = setupGit(origin)
+        git = setupGit()
         git.tag("v1.1.0")
     }
 

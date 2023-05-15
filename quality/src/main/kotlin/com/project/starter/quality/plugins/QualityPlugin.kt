@@ -1,6 +1,6 @@
 package com.project.starter.quality.plugins
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.quality.internal.configureDetekt
@@ -9,7 +9,6 @@ import com.project.starter.quality.tasks.IssueLinksTask.Companion.registerIssueC
 import com.project.starter.quality.tasks.ProjectCodeStyleTask.Companion.addProjectCodeStyleTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.file.FileTree
 import org.gradle.api.tasks.SourceSetContainer
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
@@ -25,18 +24,7 @@ class QualityPlugin : Plugin<Project> {
     }
 
     private fun Project.configureIssueCheckerTask() {
-        registerIssueCheckerTask {
-            onAndroid {
-                val emptyFileTree = project.files().asFileTree
-                sourceSets.configureEach { sourceSet ->
-                    source += sourceSet.java.srcDirs
-                        .map { dir -> project.fileTree(dir) }
-                        .fold(emptyFileTree) { merged: FileTree, tree: FileTree -> merged + tree }
-                    source += (sourceSet.kotlin as com.android.build.gradle.api.AndroidSourceDirectorySet).srcDirs
-                        .map { dir -> project.fileTree(dir) }
-                        .fold(emptyFileTree) { merged: FileTree, tree: FileTree -> merged + tree }
-                }
-            }
+        val issueCheckerTask = registerIssueCheckerTask {
             onMultiplatform {
                 sourceSets.configureEach { sourceSet ->
                     source += sourceSet.kotlin.sourceDirectories.asFileTree
@@ -49,6 +37,16 @@ class QualityPlugin : Plugin<Project> {
             }
             report.set(buildDir.resolve("reports/issue_comments.txt"))
             githubToken.set(provider<String?> { properties["GITHUB_TOKEN"]?.toString() })
+        }
+        onAndroid {
+            onVariants { variant ->
+                val variantSources = listOfNotNull(
+                    variant.sources.kotlin,
+                    variant.sources.java,
+                )
+                    .map { it.all }
+                issueCheckerTask.configure { it.source(variantSources) }
+            }
         }
     }
 
@@ -77,8 +75,8 @@ class QualityPlugin : Plugin<Project> {
     }
 }
 
-internal inline fun Project.onAndroid(crossinline function: BaseExtension.() -> Unit) {
-    project.extensions.findByName("android")?.let { (it as? BaseExtension)?.function() }
+internal inline fun Project.onAndroid(crossinline function: AndroidComponentsExtension<*, *, *>.() -> Unit) {
+    project.extensions.findByName("androidComponents")?.let { (it as? AndroidComponentsExtension<*, *, *>)?.function() }
 }
 
 internal inline fun Project.onMultiplatform(crossinline function: KotlinMultiplatformExtension.() -> Unit) {
