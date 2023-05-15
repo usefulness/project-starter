@@ -30,33 +30,19 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/wrapper-validation-action@v1
 
-      - name: Check version
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: currentVersion
+      - uses: gradle/gradle-build-action@v2
 
-      - name: Code style
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: projectCodestyle
+      - run: ./gradlew currentVersion
 
-      - name: Assemble
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assemble
+      - run: ./gradlew projectCodestyle
 
-      - name: Validate Plugins
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: validatePlugins
+      - run: ./gradlew assemble
 
-      - name: Jacoco test report
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: projectCoverage
+      - run: ./gradlew validatePlugins
+
+      - run: ./gradlew projectCoverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
