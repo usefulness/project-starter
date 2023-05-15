@@ -10,7 +10,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
 internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
@@ -18,9 +17,6 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     lateinit var rootBuildScript: File
     lateinit var module1Root: File
     lateinit var module2Root: File
-
-    @TempDir
-    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -30,6 +26,12 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                 // language=groovy
                 """
                     include ":module1", ":module2"
+                    
+                    dependencyResolutionManagement {
+                        repositories {
+                            mavenCentral()
+                        }
+                    }
                 """.trimIndent(),
             )
 
@@ -157,7 +159,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             }
             """.trimIndent(),
         )
-        val git = setupGit(origin)
+        val git = setupGit()
         git.tag("v1.2.2")
         git.commit("random commit")
 

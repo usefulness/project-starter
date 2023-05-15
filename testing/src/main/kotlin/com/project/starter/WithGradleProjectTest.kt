@@ -11,13 +11,25 @@ abstract class WithGradleProjectTest {
     @TempDir
     lateinit var rootDirectory: File
 
-    protected fun runTask(vararg taskName: String, shouldFail: Boolean = false) =
+    protected fun runTask(vararg taskName: String, shouldFail: Boolean = false, configurationCacheEnabled: Boolean = false) =
         GradleRunner.create().apply {
             forwardOutput()
             withPluginClasspath()
-            withArguments(*taskName)
             withProjectDir(rootDirectory)
-            withJaCoCo()
+
+            withArguments(
+                buildList {
+                    addAll(taskName)
+                    if (configurationCacheEnabled) {
+                        add("--configuration-cache")
+                    }
+                },
+            )
+
+            // https://docs.gradle.org/8.1.1/userguide/configuration_cache.html#config_cache:not_yet_implemented:testkit_build_with_java_agent
+            if (!configurationCacheEnabled) {
+                withJaCoCo()
+            }
         }.run {
             if (shouldFail) {
                 buildAndFail()

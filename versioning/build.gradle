@@ -8,7 +8,6 @@ plugins {
 
 dependencies {
     compileOnly libs.agp.gradle.api
-    implementation libs.axion.gradle
     implementation project(":config")
 
     testImplementation project(":testing")

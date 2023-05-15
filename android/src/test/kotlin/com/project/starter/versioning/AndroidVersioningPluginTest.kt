@@ -3,18 +3,15 @@ package com.project.starter.versioning
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.commit
 import com.project.starter.setupGit
+import com.project.starter.tag
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 import java.io.File
 
 internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
     private lateinit var androidAppRoot: File
-
-    @TempDir
-    lateinit var origin: File
 
     @BeforeEach
     fun setUp() {
@@ -61,9 +58,9 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
             }
             """.trimIndent(),
         )
-        val git = setupGit(origin)
-        runTask("markNextVersion", "-Prelease.version=1.2.3")
+        val git = setupGit()
         git.commit("contains 1.2.3 features")
+        git.tag("v1.2.3")
 
         val result = runTask("printVersion")
 
