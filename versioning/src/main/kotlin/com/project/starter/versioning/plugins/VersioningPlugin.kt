@@ -62,14 +62,18 @@ class VersioningPlugin : Plugin<Project> {
             )
 
             val status = runGit("status", "--porcelain")
-            val headSha = runGit("rev-parse", "HEAD")
-            val lastGitTag = runGit("describe", "--tags", "--abbrev=0")
-            val lastReleaseCommit = runGit("rev-parse", lastGitTag)
-            val lastTags = runGit("tag", "--contains", lastReleaseCommit).split("\n")
+            val currentTag = runGit("tag", "--points-at").takeIf(String::isNotBlank)?.split("\n")?.maxOrNull()
 
-            val lastTag = lastTags.maxOrNull() ?: return defaultVersion()
+            val lastTag = if (currentTag == null) {
+                val lastGitTag = runGit("describe", "--tags", "--abbrev=0")
+                val lastReleaseCommit = runGit("rev-parse", lastGitTag)
+                val lastTags = runGit("tag", "--contains", lastReleaseCommit).split("\n")
+                lastTags.maxOrNull()
+            } else {
+                currentTag
+            } ?: return defaultVersion()
 
-            val isOnTag = lastReleaseCommit == headSha
+            val isOnTag = currentTag != null
             val isDirty = status.isNotBlank()
 
             val isSnapshot = !isOnTag || isDirty

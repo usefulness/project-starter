@@ -124,6 +124,9 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
         git.commit("contains 1.3.0 features")
         assertThat(runTask("currentVersion").output).contains("1.3.0-SNAPSHOT")
+
+        git.checkout("v1.2.0")
+        assertThat(runTask("currentVersion").output).contains("1.2.0")
     }
 
     @Test
