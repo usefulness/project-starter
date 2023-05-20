@@ -50,9 +50,8 @@ abstract class WithGradleProjectTest {
         }
     }
 
-    protected fun File.resolve(relative: String, receiver: File.() -> Unit): File =
-        resolve(relative).apply {
-            parentFile.mkdirs()
-            receiver()
-        }
+    protected fun File.resolve(relative: String, receiver: File.() -> Unit): File = resolve(relative).apply {
+        parentFile.mkdirs()
+        receiver()
+    }
 }
