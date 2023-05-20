@@ -1,28 +1,25 @@
 package com.project.starter
 
-fun javaClass(className: String) =
-    // language=java
-    """
+// language=java
+fun javaClass(className: String) = """
     package com.example;
     
     public class $className {
     
     }
         
-    """.trimIndent()
+""".trimIndent()
 
-fun kotlinClass(className: String) =
-    // language=kotlin
-    """
+// language=kotlin
+fun kotlinClass(className: String) = """
     package com.example
 
     object $className
 
-    """.trimIndent()
+""".trimIndent()
 
-fun kotlinTestClass(className: String) =
-    // language=kotlin
-    """
+// language=kotlin
+fun kotlinTestClass(className: String) = """
     package com.example
 
     class $className {
@@ -31,11 +28,10 @@ fun kotlinTestClass(className: String) =
         fun test${className.lowercase()}() = Unit
     }
 
-    """.trimIndent()
+""".trimIndent()
 
-fun kotlinMultiplatformTestClass(className: String) =
-    // language=kotlin
-    """
+// language=kotlin
+fun kotlinMultiplatformTestClass(className: String) = """
     package com.example
 
     class $className {
@@ -44,4 +40,4 @@ fun kotlinMultiplatformTestClass(className: String) =
         fun test${className.lowercase()}() = Unit
     }
 
-    """.trimIndent()
+""".trimIndent()
