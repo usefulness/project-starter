@@ -29,9 +29,9 @@ fun WithGradleProjectTest.setupGit(): Git {
     return git
 }
 
-fun Git.checkout(branchName: String) {
+fun Git.checkout(refName: String) {
     checkout()
-        .apply { setName(branchName) }
+        .apply { setName(refName) }
         .call()
 }
 
