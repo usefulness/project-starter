@@ -1,5 +1,5 @@
 [versions]
-google-agp = "8.0.1"
+google-agp = "8.0.2"
 gradle-starter = "0.60.1"
 gradle-gradlepublish = "1.2.0"
 gradle-jacocotestkit = "1.0.12"
