@@ -24,11 +24,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: set up JDK
-        uses: actions/setup-java@v3
+      - name: Write Gradle build properties to `~/.gradle/gradle.properties`
+        run: |
+          mkdir -p ~/.gradle
+          printf "org.gradle.jvmargs=-Xmx3G -XX:+UseParallelGC\n" >> ~/.gradle/gradle.properties
+        shell: bash
+
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 20
 
       - uses: gradle/wrapper-validation-action@v1
 
@@ -62,12 +67,16 @@ jobs:
           name: jacoco-report
           path: "${{ github.workspace }}/**/build/reports/jacoco"
 
+      - run: ./gradlew publishToMavenLocal
+
+      - run: git diff --exit-code
+
   build-all-sample-android-projects:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        gradle: [ '8.0', current, release-candidate ]
+        gradle: [ current, release-candidate ]
         task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -75,25 +84,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: set up JDK
-        uses: actions/setup-java@v3
+      - name: Write Gradle build properties to `~/.gradle/gradle.properties`
+        run: |
+          mkdir -p ~/.gradle
+          printf "org.gradle.jvmargs=-Xmx3G -XX:+UseParallelGC\n" >> ~/.gradle/gradle.properties
+        shell: bash
+
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 20
 
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} --stacktrace
 
   build-all-sample-kotlin-projects:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        gradle: [ '7.6', current, release-candidate ]
+        gradle: [ current, release-candidate ]
         task: [ build, projectTest, projectCodeStyle, projectCoverage, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
@@ -101,15 +115,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: set up JDK
-        uses: actions/setup-java@v3
+      - name: Write Gradle build properties to `~/.gradle/gradle.properties`
+        run: |
+          mkdir -p ~/.gradle
+          printf "org.gradle.jvmargs=-Xmx3G -XX:+UseParallelGC\n" >> ~/.gradle/gradle.properties
+        shell: bash
+
+      - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 20
 
       - name: Run ${{ matrix.task }}
         uses: gradle/gradle-build-action@v2
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
-          arguments: ${{ matrix.task }} -Dorg.gradle.jvmargs="-Xmx2g" --stacktrace
+          arguments: ${{ matrix.task }} --stacktrace

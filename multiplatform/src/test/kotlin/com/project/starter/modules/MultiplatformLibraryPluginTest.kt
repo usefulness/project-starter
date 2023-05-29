@@ -35,7 +35,16 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                 """.trimIndent(),
             )
 
-            rootBuildScript = resolve("build.gradle")
+            rootBuildScript = resolve("build.gradle") {
+                // language=groovy
+                writeText(
+                    """
+                    plugins {
+                        id("com.starter.config")
+                    }
+                    """.trimIndent(),
+                )
+            }
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -156,6 +165,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             """
             plugins {
                 id 'com.starter.versioning'
+                id("com.starter.config")
             }
             """.trimIndent(),
         )

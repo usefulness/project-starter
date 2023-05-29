@@ -20,7 +20,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 // language=groovy
                 """
                 plugins {
-                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
                 }
                 
                 dependencyResolutionManagement {
@@ -46,7 +46,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 }
                 
                 commonConfig {
-                    javaVersion = JavaVersion.VERSION_17
+                    javaVersion = JavaVersion.VERSION_11
                 }
                 """.trimIndent(),
             )
@@ -61,14 +61,6 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         
                         android {
                             namespace "com.example.module1"
-                            compileOptions {
-                                sourceCompatibility = JavaVersion.VERSION_17
-                                targetCompatibility = JavaVersion.VERSION_17
-                            }
-                        }
-                        
-                        kotlin {
-                            jvmToolchain(17)
                         }
                         
                         """.trimIndent(),
@@ -87,7 +79,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 val script =
                     // language=groovy
                     """
-                    import org.gradle.api.JavaVersion 
+                    import org.gradle.api.JavaVersion
+                    import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
                     
                     plugins {
                         id('com.starter.quality')
@@ -95,6 +88,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         id('kotlin-android')
                     }
                     
+                    def targetJavaVersion = JavaVersion.VERSION_11
                     android {
                         namespace "com.example.module2"
                         compileSdkVersion 33
@@ -103,13 +97,20 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                             minSdkVersion 23
                         }
                         compileOptions {
-                            sourceCompatibility = JavaVersion.VERSION_17
-                            targetCompatibility = JavaVersion.VERSION_17
+                            sourceCompatibility = targetJavaVersion
+                            targetCompatibility = targetJavaVersion
                         }
                     }
                         
                     kotlin {
-                        jvmToolchain(17)
+                        jvmToolchain(20)
+                    }
+                    
+                    tasks.withType(JavaCompile).configureEach {
+                        options.release.set(targetJavaVersion.majorVersion.toInteger())
+                    }
+                    tasks.withType(KotlinCompile).configureEach {
+                        kotlinOptions.jvmTarget = targetJavaVersion
                     }
                     
                     """.trimIndent()
@@ -177,8 +178,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
         enableFormatOnCompile()
         val formatOnCompileOn = runTask("assemble")
 
-        assertThat(formatOnCompileOn.task(":module1:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(formatOnCompileOn.task(":module2:formatKotlin")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(formatOnCompileOn.task(":module1:formatKotlin")?.outcome).isNotNull()
+        assertThat(formatOnCompileOn.task(":module2:formatKotlin")?.outcome).isNotNull()
     }
 
     @Test

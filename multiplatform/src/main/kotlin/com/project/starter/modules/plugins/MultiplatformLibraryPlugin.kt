@@ -1,11 +1,13 @@
 package com.project.starter.modules.plugins
 
+import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.MultiplatfromLibraryConfigExtension
 import com.project.starter.modules.internal.configureMultiplatformCoverage
 import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
 import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class MultiplatformLibraryPlugin : Plugin<Project> {
 
@@ -18,6 +20,9 @@ class MultiplatformLibraryPlugin : Plugin<Project> {
 
         registerProjectTestTask {
             it.dependsOn("allTests")
+        }
+        tasks.withType(KotlinCompile::class.java).configureEach {
+            it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
         }
 
         configureMultiplatformCoverage()
