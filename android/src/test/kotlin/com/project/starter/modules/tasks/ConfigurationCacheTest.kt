@@ -3,7 +3,6 @@ package com.project.starter.modules.tasks
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -67,9 +66,8 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
      * https://youtrack.jetbrains.com/issue/KT-38498
      * https://issuetracker.google.com/issues/156552742
      */
-    @Disabled("Configuration cache is not yet supported")
     @Test
     fun `does not fail with configuration cache`() {
-        runTask("--configuration-cache")
+        runTask("assemble", "-m", configurationCacheEnabled = true)
     }
 }

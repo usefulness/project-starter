@@ -14,14 +14,25 @@ internal class QualityPluginTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             resolve("build.gradle") {
+                // language=groovy
                 writeText(
                     """
-                        plugins {
-                            id('com.starter.quality')
-                            id('org.jetbrains.kotlin.jvm')
-                        }
-                        
-                        repositories.mavenCentral()
+                    import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+                    
+                    plugins {
+                        id('com.starter.quality')
+                        id('org.jetbrains.kotlin.jvm')
+                    }
+            
+                    def targetJavaVersion = JavaVersion.VERSION_11
+                    tasks.withType(JavaCompile).configureEach {
+                        options.release.set(targetJavaVersion.majorVersion.toInteger())
+                    }
+                    tasks.withType(KotlinCompile).configureEach {
+                        kotlinOptions.jvmTarget = targetJavaVersion
+                    }
+                    
+                    repositories.mavenCentral()
                     """.trimIndent(),
                 )
             }
@@ -64,6 +75,9 @@ internal class QualityPluginTest : WithGradleProjectTest() {
             // language=groovy
             val buildscript =
                 """
+                import org.gradle.api.JavaVersion
+                import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+                
                 plugins {
                     id('com.starter.config')
                     id('com.starter.quality')
@@ -74,6 +88,18 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     qualityPlugin {
                         formatOnCompile true
                     }
+                }
+                        
+                kotlin {
+                    jvmToolchain(20)
+                }
+                
+                def targetJavaVersion = JavaVersion.VERSION_11
+                tasks.withType(JavaCompile).configureEach {
+                    options.release.set(targetJavaVersion.majorVersion.toInteger())
+                }
+                tasks.withType(KotlinCompile).configureEach {
+                    kotlinOptions.jvmTarget = targetJavaVersion
                 }
                 """.trimIndent()
             rootDirectory.resolve("build.gradle").writeText(buildscript)

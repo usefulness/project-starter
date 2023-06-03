@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
 plugins {
     id 'java-gradle-plugin'
     alias(libs.plugins.starter.library.kotlin)
+    alias(libs.plugins.osacky.doctor)
 }
 
 dependencies {
@@ -8,7 +11,15 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(20)
+}
+
+def targetJavaVersion = JavaVersion.VERSION_11
+tasks.withType(JavaCompile).configureEach {
+    options.release.set(targetJavaVersion.majorVersion.toInteger())
+}
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions.jvmTarget = targetJavaVersion
 }
 
 gradlePlugin {

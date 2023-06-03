@@ -23,7 +23,7 @@ allprojects {
             }
         }
         kotlin {
-            jvmToolchain(17)
+            jvmToolchain(20)
         }
     }
     tasks.withType(Test).configureEach {
@@ -36,6 +36,14 @@ allprojects {
         if (project.hasProperty("skipJarVersion")) {
             tasks.named("jar") {
                 archiveFile.set(new File(project.buildDir, "libs/${project.name}.jar"))
+            }
+        }
+    }
+    // TODO remove after project uses latest jacoco version
+    pluginManager.withPlugin("jacoco") {
+        afterEvaluate {
+            jacoco {
+                toolVersion = "0.8.10"
             }
         }
     }
