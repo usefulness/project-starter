@@ -36,7 +36,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.8.21"
+                            id 'org.jetbrains.kotlin.jvm' version "1.8.22"
                         }
                         """.trimIndent(),
                     )
@@ -47,7 +47,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.8.21"
+                            id 'org.jetbrains.kotlin.jvm' version "1.8.22"
                         }
                         """.trimIndent(),
                     )
@@ -55,7 +55,11 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
             }
         }
         git = setupGit()
-        git.tag("v1.1.0")
+    }
+
+    @Test
+    fun emptyRepo() {
+        assertThat(runTask("currentVersion").output).contains("0.1.0-SNAPSHOT")
     }
 
     @Test
@@ -74,6 +78,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `sets version to all projects`() {
+        git.tag("v1.1.0")
         git.commit("features in 2.11.1234")
         git.tag("v2.11.1234")
 
@@ -88,6 +93,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `when multiple tags on the same commit`() {
+        git.tag("v1.1.0")
         git.tag("v1.2.1")
         assertThat(runTask("currentVersion").output).contains("1.2.1")
 
@@ -105,6 +111,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `regular release flow`() {
+        git.tag("v1.1.0")
         assertThat(runTask("currentVersion").output).contains("1.1.0")
 
         git.commit("contains 1.2.0 features")
@@ -131,6 +138,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `version on branch`() {
+        git.tag("v1.1.0")
         git.commit("contains 1.2.3 features")
         git.tag("v1.2.3")
 
@@ -154,6 +162,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun configurationCacheCompatibility() {
+        git.tag("v1.1.0")
         git.commit("contains 1.2.0 features")
         git.tag("v1.2.0")
         git.commit("contains 1.3.0 features")

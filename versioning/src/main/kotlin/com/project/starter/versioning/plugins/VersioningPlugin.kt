@@ -65,7 +65,7 @@ class VersioningPlugin : Plugin<Project> {
             val currentTag = runGit("tag", "--points-at").takeIf(String::isNotBlank)?.split("\n")?.maxOrNull()
 
             val lastTag = if (currentTag == null) {
-                val lastGitTag = runGit("describe", "--tags", "--abbrev=0")
+                val lastGitTag = runGit("describe", "--tags", "--abbrev=0", "--always")
                 val lastReleaseCommit = runGit("rev-parse", lastGitTag)
                 val lastTags = runGit("tag", "--contains", lastReleaseCommit).split("\n")
                 lastTags.maxOrNull()
