@@ -1,0 +1,41 @@
+public final class com/project/starter/versioning/plugins/VersioningPlugin : org/gradle/api/Plugin {
+	public static final field Companion Lcom/project/starter/versioning/plugins/VersioningPlugin$Companion;
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class com/project/starter/versioning/plugins/VersioningPlugin$Companion {
+}
+
+public abstract class com/project/starter/versioning/plugins/VersioningPlugin$CurrentVersionTask : org/gradle/api/DefaultTask {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun getGitVersion ()Lorg/gradle/api/provider/Property;
+	public final fun run ()V
+}
+
+public final class com/project/starter/versioning/plugins/VersioningPlugin$GitVersion {
+	public fun <init> (IIIZ)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Z
+	public final fun copy (IIIZ)Lcom/project/starter/versioning/plugins/VersioningPlugin$GitVersion;
+	public static synthetic fun copy$default (Lcom/project/starter/versioning/plugins/VersioningPlugin$GitVersion;IIIZILjava/lang/Object;)Lcom/project/starter/versioning/plugins/VersioningPlugin$GitVersion;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDecorated ()Ljava/lang/String;
+	public final fun getMajor ()I
+	public final fun getMinor ()I
+	public final fun getPatch ()I
+	public final fun getUndecorated ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isSnapshot ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/project/starter/versioning/plugins/VersioningPlugin$GitVersionValueSource : org/gradle/api/provider/ValueSource {
+	public fun <init> (Lorg/gradle/process/ExecOperations;)V
+	public fun obtain ()Lcom/project/starter/versioning/plugins/VersioningPlugin$GitVersion;
+	public synthetic fun obtain ()Ljava/lang/Object;
+}
+

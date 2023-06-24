@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.droidsonroids.jacocotestkit)
     alias(libs.plugins.starter.library.kotlin)
     alias(libs.plugins.kotlin.samwithreceiver)
+    alias(libs.plugins.kotlinx.binarycompatibility)
     id("com.starter.publishing")
 }
 

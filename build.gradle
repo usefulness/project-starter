@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.starter.versioning)
     alias(libs.plugins.kotlin.jvm) apply(false)
     alias(libs.plugins.starter.library.kotlin) apply(false)
+    alias(libs.plugins.kotlinx.binarycompatibility) apply(false)
 }
 
 commonConfig {

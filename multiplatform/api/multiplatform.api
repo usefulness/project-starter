@@ -1,0 +1,10 @@
+public class com/project/starter/modules/extensions/MultiplatfromLibraryConfigExtension {
+	public fun <init> ()V
+}
+
+public final class com/project/starter/modules/plugins/MultiplatformLibraryPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+

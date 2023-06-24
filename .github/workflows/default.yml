@@ -37,13 +37,11 @@ jobs:
 
       - run: ./gradlew currentVersion
 
-      - run: ./gradlew projectCodestyle
+      - run: ./gradlew projectCodestyle --scan
 
-      - run: ./gradlew assemble
+      - run: ./gradlew check --scan
 
-      - run: ./gradlew validatePlugins
-
-      - run: ./gradlew projectCoverage
+      - run: ./gradlew projectCoverage  --scan
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
