@@ -67,8 +67,6 @@ jobs:
             Diffuse output:
 
             ${{ steps.diffuse.outputs.diff-gh-comment }}
-
-            File path: `${{ steps.diffuse.outputs.diff-file }}`
           edit-mode: replace
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
