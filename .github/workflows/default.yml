@@ -63,6 +63,8 @@ jobs:
 
       - run: ./gradlew publishToMavenLocal
 
+      - run: ./gradlew publishPlugins --dry-run
+
       - run: git diff --exit-code
 
   build-all-sample-android-projects:
