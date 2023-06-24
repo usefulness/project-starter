@@ -40,12 +40,4 @@ allprojects {
             }
         }
     }
-    // TODO remove after project uses latest jacoco version
-    pluginManager.withPlugin("jacoco") {
-        afterEvaluate {
-            jacoco {
-                toolVersion = "0.8.10"
-            }
-        }
-    }
 }
