@@ -2,7 +2,7 @@
 ___
 
 [![codecov](https://codecov.io/gh/usefulness/project-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/usefulness/project-starter)
-&nbsp;[![build](https://github.com/usefulness/project-starter/workflows/Build%20project/badge.svg)](https://github.com/usefulness/project-starter/actions)
+&nbsp;[![Build Project](https://github.com/usefulness/project-starter/actions/workflows/default.yml/badge.svg?branch=master)](https://github.com/usefulness/project-starter/actions/workflows/default.yml)
 &nbsp;[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 [![version](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/project/starter/jvm/maven-metadata.xml?label=gradle)](https://plugins.gradle.org/search?term=com.starter) 
