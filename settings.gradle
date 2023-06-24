@@ -12,7 +12,12 @@ plugins {
     id "com.gradle.enterprise" version "3.13.4"
 }
 
-includeBuild("gradle/plugins")
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -23,8 +28,9 @@ dependencyResolutionManagement {
     }
 }
 
-
 rootProject.name = 'com.project.starter'
+
+includeBuild("gradle/plugins")
 include ":jvm",
         ":android",
         ":testing",

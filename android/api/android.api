@@ -1,0 +1,38 @@
+public class com/project/starter/modules/extensions/AndroidApplicationConfigExtension : com/project/starter/modules/extensions/AndroidExtension {
+	public fun <init> ()V
+}
+
+public abstract class com/project/starter/modules/extensions/AndroidExtension : com/project/starter/quality/extensions/JavaSourcesAware {
+	public fun <init> ()V
+	public final fun getCoverageExclusions ()Ljava/util/List;
+	public fun getJavaFilesAllowed ()Ljava/lang/Boolean;
+	public final fun setCoverageExclusions (Ljava/util/List;)V
+	public fun setJavaFilesAllowed (Ljava/lang/Boolean;)V
+}
+
+public class com/project/starter/modules/extensions/AndroidLibraryConfigExtension : com/project/starter/modules/extensions/AndroidExtension {
+	public fun <init> ()V
+}
+
+public final class com/project/starter/modules/internal/AndroidPluginUtilsKt$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final synthetic fun execute (Ljava/lang/Object;)V
+}
+
+public final class com/project/starter/modules/internal/AndroidPluginUtilsKt$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final synthetic fun execute (Ljava/lang/Object;)V
+}
+
+public final class com/project/starter/modules/plugins/AndroidApplicationPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class com/project/starter/modules/plugins/AndroidLibraryPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+

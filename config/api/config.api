@@ -1,0 +1,61 @@
+public final class com/project/starter/config/PluginUtilsKt$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final synthetic fun execute (Ljava/lang/Object;)V
+}
+
+public class com/project/starter/config/extensions/AndroidPluginConfig {
+	public fun <init> ()V
+	public fun <init> (IILjava/lang/Integer;)V
+	public synthetic fun <init> (IILjava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun compileSdkVersion (I)V
+	public final fun getCompileSdkVersion ()I
+	public final fun getMinSdkVersion ()I
+	public final fun getTargetSdkVersion ()Ljava/lang/Integer;
+	public final fun minSdkVersion (I)V
+	public final fun setCompileSdkVersion (I)V
+	public final fun setMinSdkVersion (I)V
+	public final fun setTargetSdkVersion (Ljava/lang/Integer;)V
+	public final fun targetSdkVersion (I)V
+}
+
+public class com/project/starter/config/extensions/QualityPluginConfig {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun formatOnCompile (Z)V
+	public final fun getFormatOnCompile ()Z
+	public final fun setFormatOnCompile (Z)V
+}
+
+public class com/project/starter/config/extensions/RootConfigExtension {
+	public fun <init> ()V
+	public fun <init> (Lorg/gradle/api/JavaVersion;Z)V
+	public synthetic fun <init> (Lorg/gradle/api/JavaVersion;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun androidPlugin (Lorg/gradle/api/Action;)V
+	public final fun getAndroid ()Lcom/project/starter/config/extensions/AndroidPluginConfig;
+	public final fun getJavaFilesAllowed ()Z
+	public final fun getJavaVersion ()Lorg/gradle/api/JavaVersion;
+	public final fun getQuality ()Lcom/project/starter/config/extensions/QualityPluginConfig;
+	public final fun getVersioning ()Lcom/project/starter/config/extensions/VersioningPluginConfig;
+	public final fun javaFilesAllowed (Z)V
+	public final fun javaVersion (Lorg/gradle/api/JavaVersion;)V
+	public final fun qualityPlugin (Lorg/gradle/api/Action;)V
+	public final fun setJavaFilesAllowed (Z)V
+	public final fun setJavaVersion (Lorg/gradle/api/JavaVersion;)V
+	public final fun versioningPlugin (Lorg/gradle/api/Action;)V
+}
+
+public class com/project/starter/config/extensions/VersioningPluginConfig {
+	public fun <init> ()V
+}
+
+public final class com/project/starter/config/plugins/CommonSettingsPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class com/project/starter/config/plugins/CommonSettingsPluginKt {
+	public static final fun getRootConfig (Lorg/gradle/api/Project;)Lcom/project/starter/config/extensions/RootConfigExtension;
+}
+

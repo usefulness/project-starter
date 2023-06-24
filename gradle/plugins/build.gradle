@@ -8,6 +8,7 @@ plugins {
 
 dependencies {
     implementation libs.publishplugin.gradle
+    implementation libs.jetbrains.dokka
 }
 
 kotlin {

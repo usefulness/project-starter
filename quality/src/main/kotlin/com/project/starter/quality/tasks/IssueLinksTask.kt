@@ -9,6 +9,7 @@ import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileTree
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.logging.Logger
+import org.gradle.api.logging.Logging
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
@@ -76,7 +77,9 @@ interface IssueCheckParameters : WorkParameters {
     val githubToken: Property<String>
 }
 
-abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
+internal abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
+
+    private val logger = Logging.getLogger(IssueCheckAction::class.java)
 
     override fun execute() {
         val issueChecker = IssueChecker(config = IssueChecker.Config(githubToken = parameters.githubToken.orNull))
@@ -89,15 +92,14 @@ abstract class IssueCheckAction : WorkAction<IssueCheckParameters> {
                         IssueStatus.Open -> "✅ ${result.issueUrl} (Opened)"
                         IssueStatus.Closed -> "👉 ${result.issueUrl} (Closed)"
                     }
+
                     is CheckResult.Error -> "❗ ${result.issueUrl} -> error: ${result.throwable.message}"
                 }
             }
 
             output.appendText(message.joinToString(separator = "\n"))
-            LoggingContext.logger.info("Found ${message.size} issues in ${file.path}")
-            message.forEach {
-                LoggingContext.logger.quiet(it)
-            }
+            logger.info("Found ${message.size} issues in ${file.path}")
+            message.forEach(logger::quiet)
         }
     }
 }

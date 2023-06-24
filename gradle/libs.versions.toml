@@ -11,6 +11,8 @@ mavencentral-junit = "5.9.3"
 mavencentral-assertj = "3.24.2"
 mavencentral-jgit = "6.6.0.202305301015-r"
 mavencentral-ktlint-gradle = "0.3.1"
+maven-binarycompatiblity = "0.13.2"
+maven-dokka = "1.8.20"
 
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" } # TODO remove
@@ -22,6 +24,7 @@ detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", v
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "mavencentral-junit" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentral-assertj" }
 eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
+jetbrains-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "maven-dokka" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "mavencentral-kotlin" }
@@ -31,3 +34,4 @@ starter-library-kotlin = { id = "com.starter.library.kotlin", version.ref = "gra
 starter-versioning = { id = "com.starter.versioning", version.ref = "gradle-starter" }
 kotlin-samwithreceiver = { id = "org.jetbrains.kotlin.plugin.sam.with.receiver", version.ref = "mavencentral-kotlin" }
 osacky-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
+kotlinx-binarycompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "maven-binarycompatiblity" }
