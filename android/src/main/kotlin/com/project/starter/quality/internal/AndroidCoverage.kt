@@ -53,7 +53,7 @@ internal fun Project.configureAndroidCoverage(
             val executionData = jacocoTestTaskExtension.destinationFile
 
             val coverageExcludes = excludes + projectExclusions()
-            val kotlinClassesDir = "$buildDir/tmp/kotlin-classes/${variant.name}"
+            val kotlinClassesDir = "${layout.buildDirectory.get()}/tmp/kotlin-classes/${variant.name}"
             val kotlinTree = fileTree(mapOf("dir" to kotlinClassesDir, "excludes" to coverageExcludes))
             val javaTree = fileTree(mapOf("dir" to classesDir, "excludes" to coverageExcludes))
 

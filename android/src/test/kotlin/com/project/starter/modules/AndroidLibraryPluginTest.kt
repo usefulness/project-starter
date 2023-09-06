@@ -67,7 +67,6 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                         package com.example
                         
                         class Test1 {
-                        
                             @org.junit.Test
                             fun someTest() = Unit
                         }

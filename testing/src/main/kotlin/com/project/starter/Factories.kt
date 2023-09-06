@@ -7,13 +7,13 @@ fun javaClass(className: String) = """
     public class $className {
     
     }
-        
+    
 """.trimIndent()
 
 // language=kotlin
 fun kotlinClass(className: String) = """
     package com.example
-
+    
     object $className
 
 """.trimIndent()
@@ -21,9 +21,8 @@ fun kotlinClass(className: String) = """
 // language=kotlin
 fun kotlinTestClass(className: String) = """
     package com.example
-
-    class $className {
     
+    class $className {
         @org.junit.Test
         fun test${className.lowercase()}() = Unit
     }
@@ -33,9 +32,8 @@ fun kotlinTestClass(className: String) = """
 // language=kotlin
 fun kotlinMultiplatformTestClass(className: String) = """
     package com.example
-
-    class $className {
     
+    class $className {
         @kotlin.test.Test
         fun test${className.lowercase()}() = Unit
     }

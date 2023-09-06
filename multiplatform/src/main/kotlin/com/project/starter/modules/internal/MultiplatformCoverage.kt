@@ -22,9 +22,9 @@ internal fun Project.configureMultiplatformCoverage() {
     }
     tasks.register("jacocoTestReport", JacocoReport::class.java) {
         it.dependsOn(":$path:jvmTest")
-        it.classDirectories.setFrom(buildDir.resolve("classes/kotlin/jvm/main"))
+        it.classDirectories.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("classes/kotlin/jvm/main") })
         it.sourceDirectories.setFrom(files("src/commonMain/kotlin", "src/jvmMain/kotlin"))
-        it.executionData.setFrom(buildDir.resolve("jacoco/jvmTest.exec"))
+        it.executionData.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("jacoco/jvmTest.exec") })
         it.reports.apply {
             xml.required.set(true)
             html.required.set(true)
