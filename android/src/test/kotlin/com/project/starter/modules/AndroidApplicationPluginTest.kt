@@ -21,7 +21,19 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
 
-            rootBuildScript = resolve("build.gradle")
+            rootBuildScript = resolve("build.gradle") {
+                writeText(
+                    """
+                    plugins {
+                        id('com.starter.config')
+                    }
+                    
+                    commonConfig {
+                        javaVersion = JavaVersion.VERSION_1_8 // workaround for http://issuetracker.google.com/issues/294137077
+                    }
+                    """.trimIndent(),
+                )
+            }
             module1Root = resolve("module1") {
                 val buildScript =
                     // language=groovy
@@ -45,7 +57,7 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
                     }
                     
                     dependencies {
-                        testImplementation 'junit:junit:4.13'
+                        testImplementation 'junit:junit:4.13.2'
                     }
                     
                     """.trimIndent()
@@ -83,7 +95,7 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
                         }
 
                         dependencies {
-                            testImplementation 'junit:junit:4.13'
+                            testImplementation 'junit:junit:4.13.2'
                         }
 
                         """.trimIndent(),

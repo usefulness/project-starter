@@ -24,7 +24,7 @@ allprojects {
             }
         }
         kotlin {
-            jvmToolchain(20)
+            jvmToolchain(21)
         }
     }
     tasks.withType(Test).configureEach {
@@ -35,8 +35,9 @@ allprojects {
 
     pluginManager.withPlugin("java") {
         if (project.hasProperty("skipJarVersion")) {
+            def projectName = project.name
             tasks.named("jar") {
-                archiveFile.set(new File(project.buildDir, "libs/${project.name}.jar"))
+                archiveFile.set(layout.buildDirectory.map {it.file("libs/${projectName}.jar")})
             }
         }
     }

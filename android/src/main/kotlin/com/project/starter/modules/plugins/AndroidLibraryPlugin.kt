@@ -24,7 +24,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
         extensions.getByType<LibraryExtension>().apply {
             configureAndroidPlugin(rootConfig)
-            defaultConfig.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
 
             buildFeatures.buildConfig = false
 
