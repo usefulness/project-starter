@@ -16,7 +16,19 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
         rootDirectory.apply {
             resolve("settings.gradle").writeText("""include ':module1', ':module2' """)
 
-            resolve("build.gradle").writeText("")
+            resolve("build.gradle") {
+                writeText(
+                    """
+                    plugins {
+                        id('com.starter.config')
+                    }
+                    
+                    commonConfig {
+                        javaVersion = JavaVersion.VERSION_1_8 // workaround for http://issuetracker.google.com/issues/294137077
+                    }
+                    """.trimIndent(),
+                )
+            }
             androidModuleRoot = resolve("module1") {
                 // language=groovy
                 val script =

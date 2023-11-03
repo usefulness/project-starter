@@ -35,7 +35,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                         dependencies {
-                            testImplementation 'junit:junit:4.13'
+                            testImplementation 'junit:junit:4.13.2'
                         }
                         
                         """.trimIndent(),
@@ -57,7 +57,7 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
                         }
                         
                         dependencies {
-                            testImplementation 'junit:junit:4.13'
+                            testImplementation 'junit:junit:4.13.2'
                         }
                         
                         """.trimIndent(),
