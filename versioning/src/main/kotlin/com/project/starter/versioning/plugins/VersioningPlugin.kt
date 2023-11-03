@@ -49,9 +49,8 @@ class VersioningPlugin : Plugin<Project> {
         }
     }
 
-    abstract class GitVersionValueSource @Inject constructor(
-        private val execOperations: ExecOperations,
-    ) : ValueSource<GitVersion, ValueSourceParameters.None> {
+    abstract class GitVersionValueSource @Inject constructor(private val execOperations: ExecOperations) :
+        ValueSource<GitVersion, ValueSourceParameters.None> {
 
         override fun obtain(): GitVersion {
             fun defaultVersion() = GitVersion(
@@ -104,9 +103,7 @@ class VersioningPlugin : Plugin<Project> {
         }
     }
 
-    abstract class CurrentVersionTask @Inject constructor(
-        objectFactory: ObjectFactory,
-    ) : DefaultTask() {
+    abstract class CurrentVersionTask @Inject constructor(objectFactory: ObjectFactory) : DefaultTask() {
 
         @Input
         val gitVersion = objectFactory.property(GitVersion::class.java)

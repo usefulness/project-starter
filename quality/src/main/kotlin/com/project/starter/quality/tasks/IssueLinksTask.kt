@@ -27,9 +27,7 @@ import org.gradle.workers.WorkerExecutor
 import javax.inject.Inject
 
 @CacheableTask
-abstract class IssueLinksTask @Inject constructor(
-    private val workerExecutor: WorkerExecutor,
-) : SourceTask() {
+abstract class IssueLinksTask @Inject constructor(private val workerExecutor: WorkerExecutor) : SourceTask() {
 
     @OutputFile
     val report: RegularFileProperty = project.objects.fileProperty()
