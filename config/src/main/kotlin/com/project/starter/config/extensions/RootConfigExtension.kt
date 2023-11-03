@@ -27,9 +27,7 @@ open class RootConfigExtension(
     }
 }
 
-open class QualityPluginConfig(
-    var formatOnCompile: Boolean = false,
-) {
+open class QualityPluginConfig(var formatOnCompile: Boolean = false) {
     fun formatOnCompile(value: Boolean) {
         formatOnCompile = value
     }
