@@ -8,7 +8,8 @@ plugins {
 }
 
 dependencies {
-    api 'org.jetbrains.kotlin:kotlin-gradle-plugin'
+    runtimeOnly(libs.jetbrains.kotlin.jvm.implementation)
+    api(libs.jetbrains.kotlin.jvm.api)
     implementation project(":versioning")
     implementation project(":quality")
     implementation project(":config")

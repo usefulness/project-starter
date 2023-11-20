@@ -16,7 +16,8 @@ import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 internal fun CommonExtension<*, *, *, *, *>.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
@@ -39,8 +40,8 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
     val projectLint = registerProjectLintTask()
     val projectTest = registerProjectTestTask()
     val projectCoverage = registerProjectCoverageTask()
-    tasks.withType(KotlinCompile::class.java).configureEach {
-        it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
+    tasks.withType(KotlinJvmCompile::class.java).configureEach {
+        it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
     }
 
     withExtension<TStarter> { projectConfig ->

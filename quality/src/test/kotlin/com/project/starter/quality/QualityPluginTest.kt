@@ -18,6 +18,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 writeText(
                     """
                     import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+                    import org.jetbrains.kotlin.gradle.dsl.JvmTarget
                     
                     plugins {
                         id('com.starter.quality')
@@ -29,7 +30,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                         options.release.set(targetJavaVersion.majorVersion.toInteger())
                     }
                     tasks.withType(KotlinCompile).configureEach {
-                        kotlinOptions.jvmTarget = targetJavaVersion
+                        compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
                     }
                     
                     repositories.mavenCentral()
@@ -77,6 +78,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 """
                 import org.gradle.api.JavaVersion
                 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+                import org.jetbrains.kotlin.gradle.dsl.JvmTarget
                 
                 plugins {
                     id('com.starter.config')
@@ -99,7 +101,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                     options.release.set(targetJavaVersion.majorVersion.toInteger())
                 }
                 tasks.withType(KotlinCompile).configureEach {
-                    kotlinOptions.jvmTarget = targetJavaVersion
+                    compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
                 }
                 """.trimIndent()
             rootDirectory.resolve("build.gradle").writeText(buildscript)

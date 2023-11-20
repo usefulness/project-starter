@@ -81,6 +81,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     """
                     import org.gradle.api.JavaVersion
                     import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+                    import org.jetbrains.kotlin.gradle.dsl.JvmTarget
                     
                     plugins {
                         id('com.starter.quality')
@@ -110,7 +111,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         options.release.set(targetJavaVersion.majorVersion.toInteger())
                     }
                     tasks.withType(KotlinCompile).configureEach {
-                        kotlinOptions.jvmTarget = targetJavaVersion
+                        compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
                     }
                     
                     """.trimIndent()
