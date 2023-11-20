@@ -14,7 +14,7 @@ commonConfig {
 }
 
 allprojects {
-    pluginManager.withPlugin("kotlin") { plugin ->
+    pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { plugin ->
         def kotlinVersion = KotlinPluginWrapperKt.getKotlinPluginVersion(project)
         configurations.matching { it.name != "detekt" }.configureEach {
             resolutionStrategy.eachDependency {
@@ -24,8 +24,25 @@ allprojects {
             }
         }
         kotlin {
-            jvmToolchain(21)
+            jvmToolchain(libs.versions.java.compilation.get().toInteger())
         }
+    }
+    pluginManager.withPlugin("java-gradle-plugin") {
+        configurations {
+            register("testRuntimeDependencies") {
+                attributes {
+                    // KGP publishes multiple variants https://kotlinlang.org/docs/whatsnew17.html#support-for-gradle-plugin-variants
+                    attribute(Usage.USAGE_ATTRIBUTE, project.objects.named(Usage.class, Usage.JAVA_RUNTIME))
+                    attribute(Category.CATEGORY_ATTRIBUTE, project.objects.named(Category.class, Category.LIBRARY))
+                }
+            }
+        }
+
+        // Required to put the Kotlin plugin on the classpath for the functional test suite
+        tasks.withType(PluginUnderTestMetadata).configureEach {
+            pluginClasspath.from(configurations.testRuntimeDependencies)
+        }
+
     }
     tasks.withType(Test).configureEach {
         doLast {

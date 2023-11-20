@@ -15,7 +15,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.application")
-        pluginManager.apply("kotlin-android")
+        pluginManager.apply("org.jetbrains.kotlin.android")
         pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 

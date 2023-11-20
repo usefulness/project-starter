@@ -12,19 +12,20 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.compile.JavaCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 class KotlinLibraryPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("kotlin")
+        pluginManager.apply("org.jetbrains.kotlin.jvm")
         pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
         extensions.create("projectConfig", KotlinLibraryConfigExtension::class.java)
 
-        tasks.withType(KotlinCompile::class.java).configureEach {
-            it.kotlinOptions.jvmTarget = rootConfig.javaVersion.toString()
+        tasks.withType(KotlinJvmCompile::class.java).configureEach {
+            it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
         }
         tasks.withType(JavaCompile::class.java).configureEach {
             it.options.release.set(rootConfig.javaVersion.majorVersion.toInt())

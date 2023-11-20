@@ -1,5 +1,6 @@
 [versions]
-google-agp = "8.1.1"
+java-compilation = "21"
+google-agp = "8.1.4"
 gradle-starter = "0.66.0"
 gradle-gradlepublish = "1.2.1"
 gradle-jacocotestkit = "1.0.12"
@@ -17,6 +18,8 @@ maven-dokka = "1.9.10"
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" } # TODO remove
 agp-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "google-agp" }
+jetbrains-kotlin-jvm-implementation = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "mavencentral-kotlin" }
+jetbrains-kotlin-jvm-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "mavencentral-kotlin" }
 publishplugin-gradle = { module = "com.gradle.publish:plugin-publish-plugin", version.ref = "gradle-gradlepublish" }
 usefulness-issuechecker = { module = "com.github.usefulness:issuechecker", version.ref = "mavencentral-issuechecker" }
 usefulness-ktlint = { module = "io.github.usefulness:ktlint-gradle-plugin", version.ref = "mavencentral-ktlint-gradle" }

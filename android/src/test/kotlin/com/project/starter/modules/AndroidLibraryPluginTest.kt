@@ -69,7 +69,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                 resolve("src/main/kotlin/com/example/ValidKotlinFile1.kt") {
                     writeText(kotlinClass("ValidKotlinFile1"))
                 }
-                resolve("src/release/kotlin/ReleaseModel.kt") {
+                resolve("src/release/kotlin/com/example/ReleaseModel.kt") {
                     writeText(kotlinClass("ReleaseModel"))
                 }
                 resolve("src/test/kotlin/com/example/Test1.kt") {
