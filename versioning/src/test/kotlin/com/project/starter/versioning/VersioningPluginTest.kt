@@ -36,7 +36,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.8.22"
+                            id 'org.jetbrains.kotlin.jvm' version "1.9.21"
                         }
                         """.trimIndent(),
                     )
@@ -47,7 +47,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.8.22"
+                            id 'org.jetbrains.kotlin.jvm' version "1.9.21"
                         }
                         """.trimIndent(),
                     )
@@ -170,7 +170,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         val result = runTask("currentVersion", configurationCacheEnabled = true)
         assertThat(result.task(":currentVersion")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.output)
-            .contains("Calculating task graph as no configuration cache is available for tasks")
+            .contains("Calculating task graph as no cached configuration is available for tasks")
             .contains("1.3.0-SNAPSHOT")
 
         val result2 = runTask("currentVersion", configurationCacheEnabled = true)
