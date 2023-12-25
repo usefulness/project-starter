@@ -30,6 +30,11 @@ internal fun Project.configureAndroidCoverage(
     androidComponents.onVariants { variant ->
         val capitalizedVariant = variant.name.replaceFirstChar(Char::titlecase)
         tasks.register("jacoco${capitalizedVariant}TestReport", JacocoReport::class.java) { report ->
+            extensions.configure(JacocoPluginExtension::class.java) {
+                // workaround for https://issuetracker.google.com/issues/317649543
+                it.toolVersion = "0.8.11"
+            }
+
             val testTask = tasks.getByName("test${capitalizedVariant}UnitTest")
             val jacocoTestTaskExtension = testTask.extensions.getByType<JacocoTaskExtension>().apply {
                 isIncludeNoLocationClasses = true
