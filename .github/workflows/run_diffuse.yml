@@ -36,7 +36,7 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Download base
         with:
           path: diffuse-base-file
