@@ -45,7 +45,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: Dependency diff (JVM)
 
-      - uses: peter-evans/create-or-update-comment@v3
+      - uses: peter-evans/create-or-update-comment@v4
         if: ${{ steps.dependency-diff-jvm.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
         with:
           body: |
@@ -95,7 +95,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: Dependency diff (Android)
 
-      - uses: peter-evans/create-or-update-comment@v3
+      - uses: peter-evans/create-or-update-comment@v4
         if: ${{ steps.dependency-diff-android.outputs.text-diff != null || steps.find_comment.outputs.comment-id != null }}
         with:
           body: |
