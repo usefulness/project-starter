@@ -33,7 +33,7 @@ jobs:
 
       - uses: gradle/wrapper-validation-action@v1
 
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3
 
       - run: ./gradlew currentVersion
 
@@ -92,7 +92,7 @@ jobs:
           java-version: 21
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           build-root-directory: sample/android
           gradle-version: ${{ matrix.gradle }}
@@ -123,7 +123,7 @@ jobs:
           java-version: 21
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           build-root-directory: sample/kotlin
           gradle-version: ${{ matrix.gradle }}
