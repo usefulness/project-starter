@@ -34,7 +34,7 @@ jobs:
 
       - id: dependency-diff-jvm
         name: Generate dependency diff
-        uses: usefulness/dependency-tree-diff-action@v1
+        uses: usefulness/dependency-tree-diff-action@v2
         with:
           configuration: 'runtimeClasspath'
           project: 'jvm'
@@ -84,7 +84,7 @@ jobs:
 
       - id: dependency-diff-android
         name: Generate dependency diff
-        uses: usefulness/dependency-tree-diff-action@v1
+        uses: usefulness/dependency-tree-diff-action@v2
         with:
           configuration: 'runtimeClasspath'
           project: 'android'
