@@ -32,7 +32,7 @@ jobs:
           java-version: 21
 
       - name: Build app with Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
 
       - run: ./gradlew currentVersion
 
@@ -65,7 +65,7 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3
 
       - run: ./gradlew assemble -PskipJarVersion
 

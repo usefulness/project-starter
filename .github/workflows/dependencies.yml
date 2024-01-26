@@ -28,7 +28,7 @@ jobs:
           java-version: 21
 
       - name: Cache
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assemble -m
 
@@ -78,7 +78,7 @@ jobs:
           java-version: 21
 
       - name: Cache
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assemble -m
 
