@@ -23,7 +23,7 @@ class MultiplatformLibraryPlugin : Plugin<Project> {
             it.dependsOn("allTests")
         }
         tasks.withType(KotlinJvmCompile::class.java).configureEach {
-            it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
+            compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
         }
 
         configureMultiplatformCoverage()

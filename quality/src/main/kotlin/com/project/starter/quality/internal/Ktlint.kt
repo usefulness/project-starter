@@ -9,9 +9,9 @@ internal fun Project.configureKtlint() {
     pluginManager.apply(KtlintGradlePlugin::class.java)
 
     extensions.configure(KtlintGradleExtension::class.java) {
-        it.experimentalRules.set(true)
-        it.disabledRules.set(
-            it.disabledRules.get() + listOf(
+        experimentalRules.set(true)
+        disabledRules.set(
+            disabledRules.get() + listOf(
                 "import-ordering",
                 "filename",
                 "experimental:function-signature",
@@ -21,6 +21,6 @@ internal fun Project.configureKtlint() {
     }
 
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {
-        it.dependsOn("$path:lintKotlin")
+        dependsOn("lintKotlin")
     }
 }

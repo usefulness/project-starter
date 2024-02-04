@@ -5,14 +5,15 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
 open class ForbidJavaFilesTask : SourceTask() {
 
     @TaskAction
     fun run() {
-        source.visit { file ->
-            if (file.name.endsWith(".java")) {
+        source.visit {
+            if (name.endsWith(".java")) {
                 logger.error("Error at $file")
                 throw GradleException("Java files are not allowed within ${project.path}")
             }
@@ -23,7 +24,7 @@ open class ForbidJavaFilesTask : SourceTask() {
 
         const val TASK_NAME = "forbidJavaFiles"
 
-        fun Project.registerForbidJavaFilesTask(action: (ForbidJavaFilesTask) -> Unit = {}) =
+        fun Project.registerForbidJavaFilesTask(action: (ForbidJavaFilesTask) -> Unit = {}): TaskProvider<ForbidJavaFilesTask> =
             tasks.register(TASK_NAME, ForbidJavaFilesTask::class.java, action)
     }
 }

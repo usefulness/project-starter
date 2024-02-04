@@ -11,24 +11,24 @@ import org.gradle.api.Project
 internal fun Project.configureDetekt() {
     pluginManager.apply(DetektPlugin::class.java)
 
-    extensions.configure(DetektExtension::class.java) { detekt ->
+    extensions.configure(DetektExtension::class.java) {
         onMultiplatform {
             sourceSets.configureEach {
-                detekt.source.from(it.kotlin.srcDirs)
+                source.from(kotlin.srcDirs)
             }
         }
 
-        detekt.config.setFrom(loadFromResources("detekt-config.yml"))
+        config.setFrom(loadFromResources("detekt-config.yml"))
     }
     tasks.named("detekt", Detekt::class.java) {
-        it.exclude(".*/resources/.*", ".*/build/.*")
+        exclude(".*/resources/.*", ".*/build/.*")
     }
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {
-        it.dependsOn("$path:detekt")
+        dependsOn("detekt")
     }
     tasks.withType(Detekt::class.java).configureEach {
-        it.jvmTarget = rootConfig.javaVersion.toString()
-        it.reports.apply {
+        jvmTarget = rootConfig.javaVersion.toString()
+        reports {
             html.required.set(false)
             xml.required.set(false)
             txt.required.set(false)

@@ -7,6 +7,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.provider.ValueSource
 import org.gradle.api.provider.ValueSourceParameters
@@ -24,14 +25,14 @@ class VersioningPlugin : Plugin<Project> {
 
         val gitVersionProvider = providers.of(GitVersionValueSource::class.java) {}
 
-        allprojects { project ->
+        allprojects {
             val get = gitVersionProvider.get()
-            project.version = get.decorated
-            project.setupAndroidVersioning(gitVersionProvider)
+            version = get.decorated
+            setupAndroidVersioning(gitVersionProvider)
         }
 
-        tasks.register("currentVersion", CurrentVersionTask::class.java) { task ->
-            task.gitVersion.set(gitVersionProvider)
+        tasks.register("currentVersion", CurrentVersionTask::class.java) {
+            gitVersion.set(gitVersionProvider)
         }
     }
 
@@ -94,9 +95,9 @@ class VersioningPlugin : Plugin<Project> {
 
         private fun runGit(vararg args: String) = ByteArrayOutputStream().use { output ->
             execOperations.exec {
-                it.executable("git")
-                it.args(args.toList())
-                it.standardOutput = output
+                executable("git")
+                args(args.toList())
+                standardOutput = output
             }
 
             output.toString(Charset.defaultCharset()).trim()
@@ -106,7 +107,7 @@ class VersioningPlugin : Plugin<Project> {
     abstract class CurrentVersionTask @Inject constructor(objectFactory: ObjectFactory) : DefaultTask() {
 
         @Input
-        val gitVersion = objectFactory.property(GitVersion::class.java)
+        val gitVersion: Property<GitVersion> = objectFactory.property(GitVersion::class.java)
 
         @TaskAction
         fun run() {

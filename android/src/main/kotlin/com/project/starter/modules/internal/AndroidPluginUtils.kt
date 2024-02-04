@@ -41,7 +41,7 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
     val projectTest = registerProjectTestTask()
     val projectCoverage = registerProjectCoverageTask()
     tasks.withType(KotlinJvmCompile::class.java).configureEach {
-        it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
+        compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
     }
 
     withExtension<TStarter> { projectConfig ->
@@ -49,13 +49,13 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
         if (!javaFilesAllowed) {
             val forbidJavaFiles = registerForbidJavaFilesTask { task ->
                 val extension = project.extensions.getByType<TestedExtension>()
-                extension.sourceSets.configureEach { sourceSet ->
-                    task.source += sourceSet.java.getSourceFiles()
+                extension.sourceSets.configureEach {
+                    task.source += java.getSourceFiles()
                 }
             }
 
             tasks.named("preBuild") {
-                it.dependsOn(forbidJavaFiles)
+                dependsOn(forbidJavaFiles)
             }
         }
     }
@@ -69,5 +69,5 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
 }
 
 private fun <T : Task> TaskProvider<out T>.dependsOn(name: String) {
-    configure { it.dependsOn(name) }
+    configure { dependsOn(name) }
 }

@@ -18,29 +18,30 @@ internal fun Project.configureAndroidCoverage(
     pluginManager.apply("jacoco")
 
     extensions.configure(JacocoPluginExtension::class.java) {
-        it.toolVersion = "0.8.11"
+        toolVersion = "0.8.11"
     }
     tasks.withType(Test::class.java).configureEach {
-        it.extensions.getByType(JacocoTaskExtension::class.java).apply {
+        extensions.getByType(JacocoTaskExtension::class.java).apply {
             isIncludeNoLocationClasses = true
             excludes = listOf("jdk.internal.*")
         }
     }
 
+    @Suppress("NoNameShadowing")
     androidComponents.onVariants { variant ->
         val capitalizedVariant = variant.name.replaceFirstChar(Char::titlecase)
-        tasks.register("jacoco${capitalizedVariant}TestReport", JacocoReport::class.java) { report ->
+        tasks.register("jacoco${capitalizedVariant}TestReport", JacocoReport::class.java) {
             val testTask = tasks.getByName("test${capitalizedVariant}UnitTest")
             val jacocoTestTaskExtension = testTask.extensions.getByType<JacocoTaskExtension>().apply {
                 isIncludeNoLocationClasses = true
             }
-            report.dependsOn(testTask)
-            report.group = "verification"
-            report.description = "Generates Jacoco coverage reports for the ${variant.name} variant."
+            dependsOn(testTask)
+            group = "verification"
+            description = "Generates Jacoco coverage reports for the ${variant.name} variant."
 
-            report.reports {
-                it.html.required.set(true)
-                it.xml.required.set(true)
+            reports {
+                html.required.set(true)
+                xml.required.set(true)
             }
 
             val oldVariant = when (val android = project.extensions.getByName("android")) {
@@ -50,16 +51,16 @@ internal fun Project.configureAndroidCoverage(
             } ?: return@register logger.warn("Couldn't find variant ${variant.name}")
             val sourceDirs = oldVariant.sourceSets.flatMap { it.javaDirectories + it.kotlinDirectories }
             val classesDir = oldVariant.javaCompileProvider.get().destinationDirectory.get().asFile
-            val executionData = jacocoTestTaskExtension.destinationFile
+            val jacocoExecutionData = jacocoTestTaskExtension.destinationFile
 
             val coverageExcludes = excludes + projectExclusions()
             val kotlinClassesDir = "${layout.buildDirectory.get()}/tmp/kotlin-classes/${variant.name}"
             val kotlinTree = fileTree(mapOf("dir" to kotlinClassesDir, "excludes" to coverageExcludes))
             val javaTree = fileTree(mapOf("dir" to classesDir, "excludes" to coverageExcludes))
 
-            report.classDirectories.setFrom(javaTree + kotlinTree)
-            report.executionData.setFrom(files(executionData))
-            report.sourceDirectories.setFrom(files(sourceDirs))
+            classDirectories.setFrom(javaTree + kotlinTree)
+            executionData.setFrom(files(jacocoExecutionData))
+            sourceDirectories.setFrom(files(sourceDirs))
         }
     }
 }

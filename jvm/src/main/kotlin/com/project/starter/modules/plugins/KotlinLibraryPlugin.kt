@@ -25,10 +25,10 @@ class KotlinLibraryPlugin : Plugin<Project> {
         extensions.create("projectConfig", KotlinLibraryConfigExtension::class.java)
 
         tasks.withType(KotlinJvmCompile::class.java).configureEach {
-            it.compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
+            compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
         }
         tasks.withType(JavaCompile::class.java).configureEach {
-            it.options.release.set(rootConfig.javaVersion.majorVersion.toInt())
+            options.release.set(rootConfig.javaVersion.majorVersion.toInt())
         }
         registerProjectTestTask {
             it.dependsOn("test")
@@ -42,14 +42,14 @@ class KotlinLibraryPlugin : Plugin<Project> {
             val javaFilesAllowed = config.javaFilesAllowed ?: rootConfig.javaFilesAllowed
             if (!javaFilesAllowed) {
                 val forbidJavaFiles = registerForbidJavaFilesTask { task ->
-                    project.extensions.findByType<SourceSetContainer>()?.configureEach { sourceSet ->
-                        if (sourceSet.name == "main" || sourceSet.name == "test") {
-                            task.source += sourceSet.java
+                    project.extensions.findByType<SourceSetContainer>()?.configureEach {
+                        if (name == "main" || name == "test") {
+                            task.source += java
                         }
                     }
                 }
                 tasks.named("compileKotlin") {
-                    it.dependsOn(forbidJavaFiles)
+                    dependsOn(forbidJavaFiles)
                 }
             }
         }

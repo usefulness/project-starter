@@ -5,8 +5,8 @@ import org.gradle.api.Project
 internal fun Project.configureRepositories(): Unit = with(repositories) {
     runCatching {
         mavenCentral()
-        google { repository ->
-            repository.mavenContent { content ->
+        google {
+            mavenContent {
                 val googleLibraries = listOf(
                     "com\\.android.*",
                     "androidx.*",
@@ -22,7 +22,7 @@ internal fun Project.configureRepositories(): Unit = with(repositories) {
                     "com\\.google\\.oboe.*",
                     "com\\.google\\.prefab.*",
                 )
-                googleLibraries.forEach(content::includeGroupByRegex)
+                googleLibraries.forEach(::includeGroupByRegex)
             }
         }
     }

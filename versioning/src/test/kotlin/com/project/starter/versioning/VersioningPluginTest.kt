@@ -73,7 +73,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
 
         val result = runTask("help", shouldFail = true)
 
-        assertThat(result?.output).contains("Versioning plugin can be applied to the root project only")
+        assertThat(result.output).contains("Versioning plugin can be applied to the root project only")
     }
 
     @Test
@@ -87,7 +87,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         modules.forEach {
             val moduleResult = runTask("$it:properties")
 
-            assertThat(moduleResult?.output).contains("version: 2.11.1234")
+            assertThat(moduleResult.output).contains("version: 2.11.1234")
         }
     }
 
