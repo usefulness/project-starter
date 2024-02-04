@@ -20,6 +20,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.work.NormalizeLineEndings
 import org.gradle.workers.WorkAction
 import org.gradle.workers.WorkParameters
@@ -51,9 +52,9 @@ abstract class IssueLinksTask @Inject constructor(private val workerExecutor: Wo
         LoggingContext.logger = logger
         source.forEach { chunk ->
             workerExecutor.noIsolation().submit(IssueCheckAction::class.java) {
-                it.files.from(chunk)
-                it.reportFile.set(report.get())
-                it.githubToken.set(githubToken.orNull)
+                files.from(chunk)
+                reportFile.set(report.get())
+                githubToken.set(githubToken.orNull)
             }
         }
 
@@ -64,7 +65,7 @@ abstract class IssueLinksTask @Inject constructor(private val workerExecutor: Wo
 
         private const val TASK_NAME = "issueLinksReport"
 
-        fun Project.registerIssueCheckerTask(action: IssueLinksTask.() -> Unit = {}) =
+        fun Project.registerIssueCheckerTask(action: IssueLinksTask.() -> Unit = {}): TaskProvider<IssueLinksTask> =
             tasks.register(TASK_NAME, IssueLinksTask::class.java, action)
     }
 }

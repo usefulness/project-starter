@@ -11,17 +11,17 @@ internal fun Project.configureKotlinCoverage() {
     pluginManager.apply("jacoco")
 
     tasks.withType(Test::class.java).configureEach {
-        it.extensions.getByType<JacocoTaskExtension>().apply {
+        extensions.getByType<JacocoTaskExtension>().apply {
             isIncludeNoLocationClasses = true
             excludes = daggerCoverageExclusions + "jdk.internal.*"
         }
     }
     extensions.configure(JacocoPluginExtension::class.java) {
-        it.toolVersion = "0.8.11"
+        toolVersion = "0.8.11"
     }
     tasks.named("jacocoTestReport", JacocoReport::class.java) {
-        it.dependsOn(":$path:test")
-        it.reports.apply {
+        dependsOn("test")
+        reports {
             xml.required.set(true)
             html.required.set(true)
         }

@@ -2,6 +2,7 @@ package com.project.starter.modules.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskProvider
 
 open class ProjectCoverageTask : DefaultTask() {
 
@@ -14,7 +15,7 @@ open class ProjectCoverageTask : DefaultTask() {
 
         const val TASK_NAME = "projectCoverage"
 
-        fun Project.registerProjectCoverageTask(action: (ProjectCoverageTask) -> Unit = {}) =
+        fun Project.registerProjectCoverageTask(action: (ProjectCoverageTask) -> Unit = {}): TaskProvider<ProjectCoverageTask> =
             tasks.register(TASK_NAME, ProjectCoverageTask::class.java, action)
     }
 }

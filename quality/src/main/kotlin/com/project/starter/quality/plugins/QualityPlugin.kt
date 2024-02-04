@@ -26,13 +26,13 @@ class QualityPlugin : Plugin<Project> {
     private fun Project.configureIssueCheckerTask() {
         val issueCheckerTask = registerIssueCheckerTask {
             onMultiplatform {
-                sourceSets.configureEach { sourceSet ->
-                    source += sourceSet.kotlin.sourceDirectories.asFileTree
+                sourceSets.configureEach {
+                    source += kotlin.sourceDirectories.asFileTree
                 }
             }
             onJvm {
-                this.configureEach { sourceSet ->
-                    source += sourceSet.allSource
+                this.configureEach {
+                    source += allSource
                 }
             }
             report.set(layout.buildDirectory.map { it.file("reports/issue_comments.txt") })
@@ -45,7 +45,7 @@ class QualityPlugin : Plugin<Project> {
                     variant.sources.java,
                 )
                     .map { it.all }
-                issueCheckerTask.configure { it.source(variantSources) }
+                issueCheckerTask.configure { source(variantSources) }
             }
         }
     }
@@ -54,21 +54,21 @@ class QualityPlugin : Plugin<Project> {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             tasks.named("compileKotlin") {
                 if (rootConfig.quality.formatOnCompile) {
-                    it.dependsOn("$path:formatKotlin")
+                    dependsOn("formatKotlin")
                 }
             }
         }
         pluginManager.withPlugin("com.android.library") {
             tasks.named("preBuild") {
                 if (rootConfig.quality.formatOnCompile) {
-                    it.dependsOn("$path:formatKotlin")
+                    dependsOn("formatKotlin")
                 }
             }
         }
         pluginManager.withPlugin("com.android.application") {
             tasks.named("preBuild") {
                 if (rootConfig.quality.formatOnCompile) {
-                    it.dependsOn("$path:formatKotlin")
+                    dependsOn("formatKotlin")
                 }
             }
         }

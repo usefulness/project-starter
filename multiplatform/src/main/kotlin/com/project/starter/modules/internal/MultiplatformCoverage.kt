@@ -11,21 +11,21 @@ internal fun Project.configureMultiplatformCoverage() {
     pluginManager.apply("jacoco")
 
     tasks.withType(Test::class.java).configureEach {
-        it.extensions.getByType<JacocoTaskExtension>().apply {
+        extensions.getByType<JacocoTaskExtension>().apply {
             isIncludeNoLocationClasses = true
             excludes = listOf("jdk.internal.*")
         }
     }
 
     extensions.configure(JacocoPluginExtension::class.java) {
-        it.toolVersion = "0.8.11"
+        toolVersion = "0.8.11"
     }
     tasks.register("jacocoTestReport", JacocoReport::class.java) {
-        it.dependsOn(":$path:jvmTest")
-        it.classDirectories.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("classes/kotlin/jvm/main") })
-        it.sourceDirectories.setFrom(files("src/commonMain/kotlin", "src/jvmMain/kotlin"))
-        it.executionData.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("jacoco/jvmTest.exec") })
-        it.reports.apply {
+        dependsOn("jvmTest")
+        classDirectories.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("classes/kotlin/jvm/main") })
+        sourceDirectories.setFrom(files("src/commonMain/kotlin", "src/jvmMain/kotlin"))
+        executionData.setFrom(layout.buildDirectory.map { buildDir -> buildDir.file("jacoco/jvmTest.exec") })
+        reports {
             xml.required.set(true)
             html.required.set(true)
         }

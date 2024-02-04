@@ -2,6 +2,7 @@ package com.project.starter.modules.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskProvider
 
 open class ProjectLintTask : DefaultTask() {
 
@@ -14,7 +15,7 @@ open class ProjectLintTask : DefaultTask() {
 
         const val TASK_NAME = "projectLint"
 
-        fun Project.registerProjectLintTask(action: (ProjectLintTask) -> Unit = {}) =
+        fun Project.registerProjectLintTask(action: (ProjectLintTask) -> Unit = {}): TaskProvider<ProjectLintTask> =
             tasks.register(TASK_NAME, ProjectLintTask::class.java, action)
     }
 }

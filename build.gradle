@@ -58,4 +58,10 @@ allprojects {
             }
         }
     }
+
+    pluginManager.withPlugin(libs.plugins.kotlin.samwithreceiver.get().pluginId) {
+        samWithReceiver {
+            annotation("org.gradle.api.HasImplicitReceiver")
+        }
+    }
 }

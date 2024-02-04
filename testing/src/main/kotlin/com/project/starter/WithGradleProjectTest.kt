@@ -1,5 +1,6 @@
 package com.project.starter
 
+import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
@@ -11,7 +12,7 @@ abstract class WithGradleProjectTest {
     @TempDir
     lateinit var rootDirectory: File
 
-    protected fun runTask(vararg taskName: String, shouldFail: Boolean = false, configurationCacheEnabled: Boolean = false) =
+    protected fun runTask(vararg taskName: String, shouldFail: Boolean = false, configurationCacheEnabled: Boolean = false): BuildResult =
         GradleRunner.create().apply {
             forwardOutput()
             withPluginClasspath()
