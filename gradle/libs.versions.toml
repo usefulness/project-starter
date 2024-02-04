@@ -1,7 +1,7 @@
 [versions]
 java-compilation = "21"
 google-agp = "8.2.2"
-gradle-starter = "0.69.0"
+gradle-starter = "0.70.0"
 gradle-gradlepublish = "1.2.1"
 gradle-jacocotestkit = "1.0.12"
 gradle-detekt = "1.23.5"
