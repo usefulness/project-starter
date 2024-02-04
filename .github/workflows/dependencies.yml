@@ -27,10 +27,9 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - name: Cache
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: assemble -m
+      - uses: gradle/actions/setup-gradle@v3
+
+      - run: ./gradlew assemble -m
 
       - id: dependency-diff-jvm
         name: Generate dependency diff
@@ -77,10 +76,9 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - name: Cache
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: assemble -m
+      - uses: gradle/actions/setup-gradle@v3
+
+      - run: ./gradlew assemble -m
 
       - id: dependency-diff-android
         name: Generate dependency diff

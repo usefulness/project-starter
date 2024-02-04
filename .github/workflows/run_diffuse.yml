@@ -43,10 +43,9 @@ jobs:
           key: diffuse-${{ github.event.pull_request.base.sha }}-always-cache-miss
           restore-keys: diffuse-${{ github.event.pull_request.base.sha }}
 
-      - name: Assemble
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: assemble -PskipJarVersion
+      - uses: gradle/actions/setup-gradle@v3
+
+      - run: ./gradlew assemble -PskipJarVersion
 
       - id: diffuse
         uses: usefulness/diffuse-action@master

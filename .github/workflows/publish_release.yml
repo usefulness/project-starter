@@ -34,7 +34,7 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
 
       - name: Unwrap GPG key
         env:
@@ -44,10 +44,6 @@ jobs:
 
       - run: ./gradlew currentVersion
 
-      - name: Publish to Gradle Plugin Portal
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+      - run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
 
-      - name: Publish to Github Package Registry
-        run: ./gradlew publishAllPublicationsToGithubRepository
+      - run: ./gradlew publishAllPublicationsToGithubRepository
