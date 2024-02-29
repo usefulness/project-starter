@@ -1,6 +1,6 @@
 [versions]
 java-compilation = "21"
-google-agp = "8.2.2"
+google-agp = "8.3.0"
 gradle-starter = "0.70.1"
 gradle-gradlepublish = "1.2.1"
 gradle-jacocotestkit = "1.0.12"
