@@ -19,7 +19,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-internal fun CommonExtension<*, *, *, *, *>.configureAndroidPlugin(rootConfig: RootConfigExtension) {
+internal fun CommonExtension<*, *, *, *, *, *>.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
         compileSdk = rootConfig.android.compileSdkVersion
         minSdk = rootConfig.android.minSdkVersion
