@@ -5,6 +5,7 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.jvm.tasks.Jar
+import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
 import org.gradle.plugins.signing.SigningExtension
 import org.jetbrains.dokka.gradle.DokkaTask
@@ -31,6 +32,9 @@ class PublishingPlugin : Plugin<Project> {
             }
             tasks.named("javadocJar", Jar::class.java) { javadocJar ->
                 javadocJar.from(tasks.named("dokkaJavadoc"))
+            }
+            tasks.named("processResources", ProcessResources::class.java) { processResources ->
+                processResources.from(rootProject.file("LICENSE"))
             }
         }
 
