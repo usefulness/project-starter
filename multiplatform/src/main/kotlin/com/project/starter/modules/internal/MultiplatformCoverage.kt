@@ -18,7 +18,7 @@ internal fun Project.configureMultiplatformCoverage() {
     }
 
     extensions.configure(JacocoPluginExtension::class.java) {
-        toolVersion = "0.8.11"
+        toolVersion = "0.8.12"
     }
     tasks.register("jacocoTestReport", JacocoReport::class.java) {
         dependsOn("jvmTest")

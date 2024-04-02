@@ -17,7 +17,7 @@ internal fun Project.configureKotlinCoverage() {
         }
     }
     extensions.configure(JacocoPluginExtension::class.java) {
-        toolVersion = "0.8.11"
+        toolVersion = "0.8.12"
     }
     tasks.named("jacocoTestReport", JacocoReport::class.java) {
         dependsOn("test")
