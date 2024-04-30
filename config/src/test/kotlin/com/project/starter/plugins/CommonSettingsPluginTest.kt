@@ -50,9 +50,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 javaVersion = JavaVersion.VERSION_11
                 javaFilesAllowed = false
                 androidPlugin {
-                    compileSdkVersion = 30
-                    minSdkVersion = 23
-                    targetSdkVersion = 30
+                    compileSdkVersion = 34
+                    minSdkVersion = 31
+                    targetSdkVersion = 34
                 }
                 qualityPlugin {
                     formatOnCompile = true
@@ -79,9 +79,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 javaVersion JavaVersion.VERSION_11
                 javaFilesAllowed false
                 androidPlugin {
-                    compileSdkVersion 30
-                    minSdkVersion 23
-                    targetSdkVersion 30
+                    compileSdkVersion 34
+                    minSdkVersion 31
+                    targetSdkVersion 34
                 }
                 qualityPlugin {
                     formatOnCompile true
