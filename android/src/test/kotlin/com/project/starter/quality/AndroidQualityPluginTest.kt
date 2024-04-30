@@ -20,7 +20,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 // language=groovy
                 """
                 plugins {
-                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
                 }
                 
                 dependencyResolutionManagement {
@@ -92,10 +92,10 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     def targetJavaVersion = JavaVersion.VERSION_11
                     android {
                         namespace "com.example.module2"
-                        compileSdkVersion 33
+                        compileSdkVersion 34
                         
                         defaultConfig {
-                            minSdkVersion 23
+                            minSdkVersion 31
                         }
                         compileOptions {
                             sourceCompatibility = targetJavaVersion
@@ -106,10 +106,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     kotlin {
                         jvmToolchain(21)
                     }
-                    
-                    tasks.withType(JavaCompile).configureEach {
-                        options.release.set(targetJavaVersion.majorVersion.toInteger())
-                    }
+
                     tasks.withType(KotlinCompile).configureEach {
                         compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
                     }
