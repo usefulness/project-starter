@@ -2,6 +2,7 @@
 .gradle
 .idea
 .instant-execution-state
+.kotlin
 
 # Ignore Gradle build output directory
 build
