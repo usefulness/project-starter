@@ -1,6 +1,5 @@
 package com.project.starter.versioning.plugins
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.project.starter.config.getByType
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -38,7 +37,7 @@ class VersioningPlugin : Plugin<Project> {
 
     private fun Project.setupAndroidVersioning(gitVersionProvider: Provider<GitVersion>) {
         pluginManager.withPlugin("com.android.application") {
-            extensions.getByType<ApplicationExtension>().defaultConfig {
+            extensions.getByType<com.android.build.api.dsl.ApplicationExtension>().defaultConfig {
                 val gitVersion = gitVersionProvider.get()
                 val major = gitVersion.major
                 val minor = gitVersion.minor

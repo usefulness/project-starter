@@ -36,18 +36,18 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.9.21"
+                            id 'org.jetbrains.kotlin.jvm'
                         }
                         """.trimIndent(),
                     )
                 }
             }
-            module2Root = resolve("module1") {
+            module2Root = resolve("module2") {
                 resolve("build.gradle") {
                     writeText(
                         """
                         plugins {
-                            id 'org.jetbrains.kotlin.jvm' version "1.9.21"
+                            id 'org.jetbrains.kotlin.jvm'
                         }
                         """.trimIndent(),
                     )
