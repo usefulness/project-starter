@@ -26,6 +26,12 @@ allprojects {
         kotlin {
             jvmToolchain(libs.versions.java.compilation.get().toInteger())
         }
+
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask).configureEach {
+            compilerOptions {
+                freeCompilerArgs.add("-Xlambdas=class")
+            }
+        }
     }
     pluginManager.withPlugin("java-gradle-plugin") {
         configurations {

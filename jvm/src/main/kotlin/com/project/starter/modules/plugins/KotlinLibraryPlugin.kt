@@ -53,5 +53,13 @@ class KotlinLibraryPlugin : Plugin<Project> {
                 }
             }
         }
+
+        pluginManager.withPlugin("java-gradle-plugin") {
+            tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java).configureEach {
+                compilerOptions {
+                    freeCompilerArgs.add("-Xlambdas=class")
+                }
+            }
+        }
     }
 }
