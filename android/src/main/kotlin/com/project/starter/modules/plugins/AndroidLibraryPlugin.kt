@@ -28,6 +28,8 @@ class AndroidLibraryPlugin : Plugin<Project> {
             buildFeatures.buildConfig = false
 
             configureAndroidLint(lint)
+
+            testOptions.targetSdk = rootConfig.android.targetSdkVersion ?: rootConfig.android.compileSdkVersion
         }
         extensions.getByType<LibraryAndroidComponentsExtension>().beforeVariants { variantBuilder ->
             if (variantBuilder.productFlavors.isEmpty()) {
