@@ -43,7 +43,7 @@ jobs:
           key: diffuse-${{ github.event.pull_request.base.sha }}-always-cache-miss
           restore-keys: diffuse-${{ github.event.pull_request.base.sha }}
 
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
 
       - run: ./gradlew assemble -PskipJarVersion
 
