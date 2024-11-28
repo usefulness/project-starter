@@ -65,6 +65,12 @@ allprojects {
         }
     }
 
+    pluginManager.withPlugin("io.github.usefulness.ktlint-gradle-plugin") {
+        ktlint {
+            ktlintVersion = libs.versions.maven.ktlint.get()
+        }
+    }
+
     pluginManager.withPlugin(libs.plugins.kotlin.samwithreceiver.get().pluginId) {
         samWithReceiver {
             annotation("org.gradle.api.HasImplicitReceiver")
