@@ -87,7 +87,9 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                             
                             kotlin {
                                 jvm()
-                                ios()
+                                iosX64()
+                                iosArm64()
+                                iosSimulatorArm64()
                                 
                                 sourceSets {
                                     commonTest {
