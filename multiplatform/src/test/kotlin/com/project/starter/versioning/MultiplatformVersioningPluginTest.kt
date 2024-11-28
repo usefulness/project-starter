@@ -31,7 +31,9 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
                         }
                         
                         kotlin {
-                            ios()
+                            iosX64()
+                            iosArm64()
+                            iosSimulatorArm64()
                         }
                         """.trimIndent(),
                     )
