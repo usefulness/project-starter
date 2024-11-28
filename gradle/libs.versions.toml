@@ -14,6 +14,7 @@ mavencentral-jgit = "7.0.0.202409031743-r"
 mavencentral-ktlint-gradle = "0.10.0"
 maven-binarycompatiblity = "0.16.3"
 maven-dokka = "1.9.20"
+maven-ktlint = "1.4.1"
 
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" } # TODO remove
@@ -28,6 +29,7 @@ junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "mav
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentral-assertj" }
 eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
 jetbrains-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "maven-dokka" }
+ktlint-cli = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "maven-ktlint" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "mavencentral-kotlin" }
