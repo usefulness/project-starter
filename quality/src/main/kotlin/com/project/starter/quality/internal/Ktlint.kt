@@ -9,8 +9,8 @@ internal fun Project.configureKtlint() {
     pluginManager.apply(KtlintGradlePlugin::class.java)
 
     extensions.configure(KtlintGradleExtension::class.java) {
-        experimentalRules.set(true)
-        disabledRules.set(
+        experimentalRules.convention(true)
+        disabledRules.convention(
             disabledRules.get() + listOf(
                 "import-ordering",
                 "filename",
@@ -18,6 +18,7 @@ internal fun Project.configureKtlint() {
                 "experimental:property-naming",
             ),
         )
+        ktlintVersion.convention(versionProperties.ktlintVersion())
     }
 
     tasks.named(ProjectCodeStyleTask.TASK_NAME) {

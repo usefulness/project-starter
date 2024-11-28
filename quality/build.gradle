@@ -25,6 +25,21 @@ tasks.named("test") {
     useJUnitPlatform()
 }
 
+tasks.register("generateVersionProperties", WriteProperties) { writeProps ->
+    def propertiesFile = new File(sourceSets.main.output.resourcesDir, "starter-quality-gradle-plugin.properties")
+    if (GradleVersion.current() >= GradleVersion.version("8.1")) {
+        writeProps.destinationFile = propertiesFile
+    } else {
+        //noinspection GrDeprecatedAPIUsage
+        writeProps.outputFile = propertiesFile
+    }
+    writeProps.property("ktlint_version", libs.versions.maven.ktlint)
+}
+
+tasks.named("processResources") {
+    dependsOn("generateVersionProperties")
+}
+
 gradlePlugin {
     plugins {
         quality {

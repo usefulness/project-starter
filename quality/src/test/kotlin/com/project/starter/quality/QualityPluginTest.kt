@@ -30,7 +30,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                         options.release.set(targetJavaVersion.majorVersion.toInteger())
                     }
                     tasks.withType(KotlinCompile).configureEach {
-                        compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
+                        compilerOptions.jvmTarget = JvmTarget.fromTarget(targetJavaVersion.toString())
                     }
                     
                     repositories.mavenCentral()
