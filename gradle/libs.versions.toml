@@ -30,6 +30,7 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentra
 eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
 jetbrains-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "maven-dokka" }
 ktlint-cli = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "maven-ktlint" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "mavencentral-kotlin" }

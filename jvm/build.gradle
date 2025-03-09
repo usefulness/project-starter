@@ -14,6 +14,7 @@ dependencies {
     implementation project(":quality")
     implementation project(":config")
 
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation project(":testing")
 }
 
