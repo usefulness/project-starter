@@ -104,7 +104,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     }
                         
                     kotlin {
-                        jvmToolchain(21)
+                        jvmToolchain(23)
                     }
 
                     tasks.withType(KotlinCompile).configureEach {

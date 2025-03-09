@@ -8,6 +8,7 @@ plugins {
 }
 
 dependencies {
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation project(":testing")
 }
 

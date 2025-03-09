@@ -13,6 +13,7 @@ dependencies {
 
     testImplementation project(":testing")
 
+    testRuntimeOnly(libs.junit.platform.launcher)
     testRuntimeDependencies(libs.jetbrains.kotlin.jvm.implementation)
 }
 
