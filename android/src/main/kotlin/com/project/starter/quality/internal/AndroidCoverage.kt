@@ -18,7 +18,7 @@ internal fun Project.configureAndroidCoverage(
     pluginManager.apply("jacoco")
 
     extensions.configure(JacocoPluginExtension::class.java) {
-        toolVersion = "0.8.12"
+        toolVersion = "0.8.13"
     }
     tasks.withType(Test::class.java).configureEach {
         extensions.getByType(JacocoTaskExtension::class.java).apply {
