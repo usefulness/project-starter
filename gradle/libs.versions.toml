@@ -14,7 +14,7 @@ mavencentral-jgit = "7.2.1.202505142326-r"
 mavencentral-ktlint-gradle = "0.10.0"
 maven-binarycompatiblity = "0.17.0"
 maven-dokka = "2.0.0"
-maven-ktlint = "1.5.0"
+maven-ktlint = "1.6.0"
 
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" } # TODO remove
