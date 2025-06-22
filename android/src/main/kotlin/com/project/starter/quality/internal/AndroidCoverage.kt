@@ -27,7 +27,6 @@ internal fun Project.configureAndroidCoverage(
         }
     }
 
-    @Suppress("NoNameShadowing")
     androidComponents.onVariants { variant ->
         val capitalizedVariant = variant.name.replaceFirstChar(Char::titlecase)
         tasks.register("jacoco${capitalizedVariant}TestReport", JacocoReport::class.java) {
@@ -59,7 +58,7 @@ internal fun Project.configureAndroidCoverage(
             val javaTree = fileTree(mapOf("dir" to classesDir, "excludes" to coverageExcludes))
 
             classDirectories.setFrom(javaTree + kotlinTree)
-            executionData.setFrom(files(jacocoExecutionData))
+            jacocoExecutionData?.let { executionData.setFrom(files(it)) }
             sourceDirectories.setFrom(files(sourceDirs))
         }
     }

@@ -27,7 +27,7 @@ public final class com/project/starter/modules/plugins/KotlinLibraryPlugin$inlin
 	public final synthetic fun execute (Ljava/lang/Object;)V
 }
 
-public class com/project/starter/modules/tasks/ForbidJavaFilesTask : org/gradle/api/tasks/SourceTask {
+public abstract class com/project/starter/modules/tasks/ForbidJavaFilesTask : org/gradle/api/tasks/SourceTask {
 	public static final field Companion Lcom/project/starter/modules/tasks/ForbidJavaFilesTask$Companion;
 	public static final field TASK_NAME Ljava/lang/String;
 	public fun <init> ()V

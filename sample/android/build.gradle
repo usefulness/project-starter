@@ -6,3 +6,9 @@ plugins {
 commonConfig {
     javaFilesAllowed = false
 }
+
+if (gradle.gradleVersion.startsWith("9")) {
+    allprojects {
+        it.tasks.withType(Test).configureEach { it.failOnNoDiscoveredTests = false }
+    }
+}

@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 
 @CacheableTask
-open class ForbidJavaFilesTask : SourceTask() {
+abstract class ForbidJavaFilesTask : SourceTask() {
 
     @TaskAction
     fun run() {
