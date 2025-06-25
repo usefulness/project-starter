@@ -22,11 +22,6 @@ public final class com/project/starter/modules/plugins/KotlinLibraryPlugin : org
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public final class com/project/starter/modules/plugins/KotlinLibraryPlugin$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun execute (Ljava/lang/Object;)V
-}
-
 public abstract class com/project/starter/modules/tasks/ForbidJavaFilesTask : org/gradle/api/tasks/SourceTask {
 	public static final field Companion Lcom/project/starter/modules/tasks/ForbidJavaFilesTask$Companion;
 	public static final field TASK_NAME Ljava/lang/String;

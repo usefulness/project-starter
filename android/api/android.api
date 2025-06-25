@@ -14,16 +14,6 @@ public class com/project/starter/modules/extensions/AndroidLibraryConfigExtensio
 	public fun <init> ()V
 }
 
-public final class com/project/starter/modules/internal/AndroidPluginUtilsKt$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun execute (Ljava/lang/Object;)V
-}
-
-public final class com/project/starter/modules/internal/AndroidPluginUtilsKt$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun execute (Ljava/lang/Object;)V
-}
-
 public final class com/project/starter/modules/plugins/AndroidApplicationPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
