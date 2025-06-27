@@ -3,7 +3,6 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.jvm.tasks.Jar
 import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
@@ -74,7 +73,7 @@ class PublishingPlugin : Plugin<Project> {
         }
     }
 
-    private inline fun <reified T> ExtensionContainer.configure(crossinline receiver: T.() -> Unit) {
+    private inline fun <reified T: Any> ExtensionContainer.configure(crossinline receiver: T.() -> Unit) {
         configure(T::class.java) { receiver(it) }
     }
 }

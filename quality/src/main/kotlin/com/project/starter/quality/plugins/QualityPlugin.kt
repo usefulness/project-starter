@@ -36,7 +36,7 @@ class QualityPlugin : Plugin<Project> {
                 }
             }
             report.set(layout.buildDirectory.map { it.file("reports/issue_comments.txt") })
-            githubToken.set(provider<String?> { properties["GITHUB_TOKEN"]?.toString() })
+            githubToken.set(provider { properties["GITHUB_TOKEN"]?.toString() })
         }
         onAndroid {
             onVariants { variant ->
