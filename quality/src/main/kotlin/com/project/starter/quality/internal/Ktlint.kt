@@ -11,12 +11,13 @@ internal fun Project.configureKtlint() {
     extensions.configure(KtlintGradleExtension::class.java) {
         experimentalRules.convention(true)
         disabledRules.convention(
-            disabledRules.get() + listOf(
-                "import-ordering",
-                "filename",
-                "experimental:function-signature",
-                "experimental:property-naming",
-            ),
+            disabledRules.get() +
+                listOf(
+                    "import-ordering",
+                    "filename",
+                    "experimental:function-signature",
+                    "experimental:property-naming",
+                ),
         )
         ktlintVersion.convention(versionProperties.ktlintVersion())
     }
