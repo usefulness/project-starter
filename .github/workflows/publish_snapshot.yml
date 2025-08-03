@@ -43,7 +43,7 @@ jobs:
         run: sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
 
       - name: Publish to Github Package Registry
-        run: ./gradlew publishAllPublicationsToGithubRepository
+        run: ./gradlew publishAllPublicationsToGithubRepository --no-configuration-cache
 
   diffuse:
     runs-on: ubuntu-latest
