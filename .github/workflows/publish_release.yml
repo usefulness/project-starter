@@ -46,4 +46,4 @@ jobs:
 
       - run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
 
-      - run: ./gradlew publishAllPublicationsToGithubRepository
+      - run: ./gradlew publishAllPublicationsToGithubRepository --no-configuration-cache
