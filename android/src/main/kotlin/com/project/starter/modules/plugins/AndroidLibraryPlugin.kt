@@ -5,6 +5,7 @@ import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.AndroidLibraryConfigExtension
+import com.project.starter.modules.internal.canAgpCompileKotlin
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
@@ -15,7 +16,11 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply("com.android.library")
-        pluginManager.apply("org.jetbrains.kotlin.android")
+
+        if (!canAgpCompileKotlin) {
+            pluginManager.apply("org.jetbrains.kotlin.android")
+        }
+
         pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 

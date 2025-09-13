@@ -5,6 +5,7 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.AndroidApplicationConfigExtension
+import com.project.starter.modules.internal.canAgpCompileKotlin
 import com.project.starter.modules.internal.configureAndroidLint
 import com.project.starter.modules.internal.configureAndroidPlugin
 import com.project.starter.modules.internal.configureAndroidProject
@@ -15,7 +16,9 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.application")
-        pluginManager.apply("org.jetbrains.kotlin.android")
+        if (!canAgpCompileKotlin) {
+            pluginManager.apply("org.jetbrains.kotlin.android")
+        }
         pluginManager.apply("com.starter.quality")
         pluginManager.apply(ConfigurationPlugin::class.java)
 
