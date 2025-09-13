@@ -147,22 +147,6 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCoverage runs coverage for all modules`() {
-        val result = runTask("projectCoverage")
-
-        assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:testDebugUnitTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:testReleaseUnitTest")).isNull()
-        println(module1Root.resolve("build/reports/").list()?.toList().toString())
-        assertThat(module1Root.resolve("build/reports/jacoco/jacocoDemoDebugTestReport")).isDirectoryContaining {
-            it.name.startsWith("jacoco") && it.name.endsWith(".xml")
-        }
-        assertThat(module2Root.resolve("build/reports/jacoco/jacocoDebugTestReport")).isDirectoryContaining {
-            it.name.startsWith("jacoco") && it.name.endsWith(".xml")
-        }
-    }
-
-    @Test
     fun `does not contain BuildConfig file if generation disabled`() {
         val result = runTask("assembleDebug")
 
@@ -178,61 +162,12 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures projectXXX tasks when default variants provided`() {
-        val result = runTask("module1:projectTest", "module1:projectLint", "module1:projectCoverage")
+        val result = runTask("module1:projectTest", "module1:projectLint")
 
         assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
         assertThat(result.task(":module1:testFullReleaseUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
         assertThat(result.task(":module1:lintDemoDebug")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
         assertThat(result.task(":module1:lintFullRelease")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:jacocoDemoDebugTestReport")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:jacocoFullReleaseTestReport")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-    }
-
-    @Test
-    fun `configures android library extension`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                javaFilesAllowed = false
-                coverageExclusions = ["**/view/**"]
-            }
-            
-            """.trimIndent()
-        module1Root.resolve("build.gradle").appendText(config)
-
-        runTask("help")
-    }
-
-    @Test
-    fun `does not fail on java files if settings enabled at project level`() {
-        val config =
-            // language=groovy
-            """
-            projectConfig {
-                javaFilesAllowed = true
-            }
-            
-            """.trimIndent()
-        module2Root.resolve("build.gradle").appendText(config)
-        module2Root.resolve("src/main/java/JavaAllowed.java") {
-            writeText(javaClass(className = "JavaAllowed"))
-        }
-
-        val result = runTask(":module2:assembleDebug")
-
-        assertThat(result.task(":module2:assembleDebug")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `fails on java files by default`() {
-        module2Root.resolve("src/main/java/JavaFile.java") {
-            writeText(javaClass(className = "JavaFile"))
-        }
-
-        val result = runTask(":module2:assembleDebug", shouldFail = true)
-
-        assertThat(result.task(":module2:forbidJavaFiles")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 
     @Test

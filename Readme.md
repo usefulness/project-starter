@@ -24,8 +24,7 @@ Each module consists of configuration code most commonly used in Android project
 
 ### Module plugins
 #### Kotlin Library Plugin
-Plugin configures [code style tasks](#quality-plugin), hooks for [common tasks](#day-to-day-use), 
-sets coverage reports generation and manages [versioning](#versioning-plugin) of the artifact
+Plugin configures [code style tasks](#quality-plugin), hooks for [common tasks](#day-to-day-use) and manages [versioning](#versioning-plugin) of the artifact
     
 Apply plugin to **project** level `build.gradle`
 
@@ -33,14 +32,7 @@ Apply plugin to **project** level `build.gradle`
 plugins {
     id("com.starter.library.kotlin") version("x.y.z")
 }
-
-// optional config with default values
-projectConfig {
-    javaFilesAllowed false
-}
 ```
-
-- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise
 
 #### Multiplatform Library Plugin
 For kotlin multiplatform libraries apply plugin to **project** level `build.gradle`
@@ -64,12 +56,6 @@ plugins {
     // or id("com.starter.application.android") version("x.y.z") 
 }
 
-// optional config with default values
-projectConfig {
-    javaFilesAllowed false
-    coverageExclusions [""]
-}
-
 // overridden settings for single project
 android {
     defaultConfig {
@@ -78,9 +64,6 @@ android {
 }
 ```
 
-- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise.  
-(Useful in large projects where you want to enforce new code written in new modules to be written in Java.)
-- `coverageExclusions` - defines jacoco coverage exclusions for specific module
 
 ##### Day-to-day use
 After applying _Library_/_Application_ plugin following tasks become available:
@@ -90,10 +73,8 @@ After applying _Library_/_Application_ plugin following tasks become available:
   Runs Android lint checks against all modules (if custom lint checks are applied then for Kotlin modules too)
 - `./gradlew projectCodeStyle`  
   Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint), [`Detekt`](https://github.com/arturbosch/detekt) with predefined config.
-- `./gradlew projectCoverage`  
-  Automatically generates test coverage reports for all modules using [`Jacoco`](https://github.com/jacoco/jacoco)
 
-Those tasks allows you to run tests efficiently for all modules by typing just a single task.
+Those tasks allow you to run tests efficiently for all modules by typing just a single task.
 
 ### Standalone plugins
 #### Quality Plugin

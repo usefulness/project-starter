@@ -48,7 +48,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
             
             commonConfig {
                 javaVersion = JavaVersion.VERSION_11
-                javaFilesAllowed = false
                 androidPlugin {
                     compileSdkVersion = 34
                     minSdkVersion = 31
@@ -77,7 +76,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
             
             commonConfig {
                 javaVersion JavaVersion.VERSION_11
-                javaFilesAllowed false
                 androidPlugin {
                     compileSdkVersion 34
                     minSdkVersion 31

@@ -1,13 +1,5 @@
-public class com/project/starter/modules/extensions/KotlinLibraryConfigExtension : com/project/starter/quality/extensions/JavaSourcesAware {
+public class com/project/starter/modules/extensions/KotlinLibraryConfigExtension {
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/Boolean;)V
-	public synthetic fun <init> (Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getJavaFilesAllowed ()Ljava/lang/Boolean;
-	public fun setJavaFilesAllowed (Ljava/lang/Boolean;)V
-}
-
-public final class com/project/starter/modules/internal/KotlinCoverageKt {
-	public static final fun getDaggerCoverageExclusions ()Ljava/util/List;
 }
 
 public final class com/project/starter/modules/plugins/ConfigurationPlugin : org/gradle/api/Plugin {
@@ -20,29 +12,6 @@ public final class com/project/starter/modules/plugins/KotlinLibraryPlugin : org
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
 	public fun apply (Lorg/gradle/api/Project;)V
-}
-
-public abstract class com/project/starter/modules/tasks/ForbidJavaFilesTask : org/gradle/api/tasks/SourceTask {
-	public static final field Companion Lcom/project/starter/modules/tasks/ForbidJavaFilesTask$Companion;
-	public static final field TASK_NAME Ljava/lang/String;
-	public fun <init> ()V
-	public final fun run ()V
-}
-
-public final class com/project/starter/modules/tasks/ForbidJavaFilesTask$Companion {
-	public final fun registerForbidJavaFilesTask (Lorg/gradle/api/Project;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/tasks/TaskProvider;
-	public static synthetic fun registerForbidJavaFilesTask$default (Lcom/project/starter/modules/tasks/ForbidJavaFilesTask$Companion;Lorg/gradle/api/Project;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/tasks/TaskProvider;
-}
-
-public class com/project/starter/modules/tasks/ProjectCoverageTask : org/gradle/api/DefaultTask {
-	public static final field Companion Lcom/project/starter/modules/tasks/ProjectCoverageTask$Companion;
-	public static final field TASK_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
-public final class com/project/starter/modules/tasks/ProjectCoverageTask$Companion {
-	public final fun registerProjectCoverageTask (Lorg/gradle/api/Project;Lkotlin/jvm/functions/Function1;)Lorg/gradle/api/tasks/TaskProvider;
-	public static synthetic fun registerProjectCoverageTask$default (Lcom/project/starter/modules/tasks/ProjectCoverageTask$Companion;Lorg/gradle/api/Project;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/gradle/api/tasks/TaskProvider;
 }
 
 public class com/project/starter/modules/tasks/ProjectLintTask : org/gradle/api/DefaultTask {

@@ -41,8 +41,6 @@ jobs:
 
       - run: ./gradlew check --scan
 
-      - run: ./gradlew projectCoverage  --scan
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
@@ -54,12 +52,6 @@ jobs:
         with:
           name: test-results
           path: "${{ github.workspace }}/**/build/reports/tests"
-
-      - name: Upload jacoco report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: "${{ github.workspace }}/**/build/reports/jacoco"
 
       - run: ./gradlew publishToMavenLocal
 
@@ -73,7 +65,7 @@ jobs:
       fail-fast: false
       matrix:
         gradle: [ current, release-candidate ]
-        task: [ build, projectTest, projectLint, projectCodeStyle, projectCoverage, issueLinksReport ]
+        task: [ build, projectTest, projectLint, projectCodeStyle, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
       - uses: actions/checkout@v5
@@ -106,7 +98,7 @@ jobs:
       fail-fast: false
       matrix:
         gradle: [ current, release-candidate ]
-        task: [ build, projectTest, projectCodeStyle, projectCoverage, issueLinksReport ]
+        task: [ build, projectTest, projectCodeStyle, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
       - uses: actions/checkout@v5

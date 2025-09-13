@@ -20,8 +20,6 @@ fun WithGradleProjectTest.setupGit(): Git {
         .gradle/
         **/build/
         
-        # Due jacoco-testkit integration
-        gradle.properties
         """.trimIndent(),
     )
     git.commit("init")

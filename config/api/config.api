@@ -24,18 +24,15 @@ public class com/project/starter/config/extensions/QualityPluginConfig {
 
 public class com/project/starter/config/extensions/RootConfigExtension {
 	public fun <init> ()V
-	public fun <init> (Lorg/gradle/api/JavaVersion;Z)V
-	public synthetic fun <init> (Lorg/gradle/api/JavaVersion;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lorg/gradle/api/JavaVersion;)V
+	public synthetic fun <init> (Lorg/gradle/api/JavaVersion;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun androidPlugin (Lorg/gradle/api/Action;)V
 	public final fun getAndroid ()Lcom/project/starter/config/extensions/AndroidPluginConfig;
-	public final fun getJavaFilesAllowed ()Z
 	public final fun getJavaVersion ()Lorg/gradle/api/JavaVersion;
 	public final fun getQuality ()Lcom/project/starter/config/extensions/QualityPluginConfig;
 	public final fun getVersioning ()Lcom/project/starter/config/extensions/VersioningPluginConfig;
-	public final fun javaFilesAllowed (Z)V
 	public final fun javaVersion (Lorg/gradle/api/JavaVersion;)V
 	public final fun qualityPlugin (Lorg/gradle/api/Action;)V
-	public final fun setJavaFilesAllowed (Z)V
 	public final fun setJavaVersion (Lorg/gradle/api/JavaVersion;)V
 	public final fun versioningPlugin (Lorg/gradle/api/Action;)V
 }

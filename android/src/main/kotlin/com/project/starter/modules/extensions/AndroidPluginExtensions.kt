@@ -1,11 +1,6 @@
 package com.project.starter.modules.extensions
 
-import com.project.starter.quality.extensions.JavaSourcesAware
-
-abstract class AndroidExtension : JavaSourcesAware {
-    override var javaFilesAllowed: Boolean? = null
-    var coverageExclusions: List<String> = emptyList()
-}
+abstract class AndroidExtension
 
 open class AndroidLibraryConfigExtension : AndroidExtension()
 

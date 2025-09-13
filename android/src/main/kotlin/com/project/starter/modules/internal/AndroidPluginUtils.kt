@@ -2,17 +2,12 @@ package com.project.starter.modules.internal
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import com.android.build.gradle.TestedExtension
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.config.withExtension
 import com.project.starter.modules.extensions.AndroidExtension
-import com.project.starter.modules.tasks.ForbidJavaFilesTask.Companion.registerForbidJavaFilesTask
-import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
 import com.project.starter.modules.tasks.ProjectLintTask.Companion.registerProjectLintTask
 import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
-import com.project.starter.quality.internal.configureAndroidCoverage
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
@@ -36,35 +31,16 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
     where TStarter : AndroidExtension, TAgp : AndroidComponentsExtension<*, *, *> {
     val androidComponents = extensions.getByType(TAgp::class.java)
 
-    configureAndroidCoverage(androidComponents) { extensions.getByType(TStarter::class.java).coverageExclusions }
     val projectLint = registerProjectLintTask()
     val projectTest = registerProjectTestTask()
-    val projectCoverage = registerProjectCoverageTask()
     tasks.withType(KotlinJvmCompile::class.java).configureEach {
         compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
-    }
-
-    withExtension<TStarter> { projectConfig ->
-        val javaFilesAllowed = projectConfig.javaFilesAllowed ?: rootConfig.javaFilesAllowed
-        if (!javaFilesAllowed) {
-            val forbidJavaFiles = registerForbidJavaFilesTask { task ->
-                val extension = project.extensions.getByType<TestedExtension>()
-                extension.sourceSets.configureEach {
-                    task.source += java.getSourceFiles()
-                }
-            }
-
-            tasks.named("preBuild") {
-                dependsOn(forbidJavaFiles)
-            }
-        }
     }
 
     androidComponents.onVariants { variant ->
         val capitalizedName = variant.name.replaceFirstChar(Char::titlecase)
         projectLint.dependsOn("$path:lint$capitalizedName")
         projectTest.dependsOn("$path:test${capitalizedName}UnitTest")
-        projectCoverage.dependsOn("$path:jacoco${capitalizedName}TestReport")
     }
 }
 

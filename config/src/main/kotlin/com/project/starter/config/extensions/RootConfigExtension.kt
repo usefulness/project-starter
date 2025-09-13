@@ -3,10 +3,7 @@ package com.project.starter.config.extensions
 import org.gradle.api.Action
 import org.gradle.api.JavaVersion
 
-open class RootConfigExtension(
-    var javaVersion: JavaVersion = JavaVersion.VERSION_11,
-    var javaFilesAllowed: Boolean = false,
-) {
+open class RootConfigExtension(var javaVersion: JavaVersion = JavaVersion.VERSION_11) {
 
     val quality = QualityPluginConfig()
     val android = AndroidPluginConfig()
@@ -20,10 +17,6 @@ open class RootConfigExtension(
 
     fun javaVersion(value: JavaVersion) {
         javaVersion = value
-    }
-
-    fun javaFilesAllowed(value: Boolean) {
-        javaFilesAllowed = value
     }
 }
 
