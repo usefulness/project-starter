@@ -2,12 +2,8 @@ public class com/project/starter/modules/extensions/AndroidApplicationConfigExte
 	public fun <init> ()V
 }
 
-public abstract class com/project/starter/modules/extensions/AndroidExtension : com/project/starter/quality/extensions/JavaSourcesAware {
+public abstract class com/project/starter/modules/extensions/AndroidExtension {
 	public fun <init> ()V
-	public final fun getCoverageExclusions ()Ljava/util/List;
-	public fun getJavaFilesAllowed ()Ljava/lang/Boolean;
-	public final fun setCoverageExclusions (Ljava/util/List;)V
-	public fun setJavaFilesAllowed (Ljava/lang/Boolean;)V
 }
 
 public class com/project/starter/modules/extensions/AndroidLibraryConfigExtension : com/project/starter/modules/extensions/AndroidExtension {

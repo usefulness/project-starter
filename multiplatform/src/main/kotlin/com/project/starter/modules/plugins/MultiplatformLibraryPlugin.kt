@@ -2,8 +2,6 @@ package com.project.starter.modules.plugins
 
 import com.project.starter.config.plugins.rootConfig
 import com.project.starter.modules.extensions.MultiplatfromLibraryConfigExtension
-import com.project.starter.modules.internal.configureMultiplatformCoverage
-import com.project.starter.modules.tasks.ProjectCoverageTask.Companion.registerProjectCoverageTask
 import com.project.starter.modules.tasks.ProjectTestTask.Companion.registerProjectTestTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,11 +23,5 @@ class MultiplatformLibraryPlugin : Plugin<Project> {
         tasks.withType(KotlinJvmCompile::class.java).configureEach {
             compilerOptions.jvmTarget.set(JvmTarget.fromTarget(rootConfig.javaVersion.toString()))
         }
-
-        configureMultiplatformCoverage()
-        registerProjectCoverageTask { projectCoverage ->
-            projectCoverage.dependsOn("jacocoTestReport")
-        }
-        Unit
     }
 }

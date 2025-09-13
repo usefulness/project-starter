@@ -93,46 +93,6 @@ internal class KotlinLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCoverage runs coverage for all modules`() {
-        val result = runTask("projectCoverage")
-
-        assertThat(result.task(":module1:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:test")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(module1Root.resolve("build/reports/jacoco/test")).isDirectoryContaining {
-            it.name == "jacocoTestReport.xml"
-        }
-    }
-
-    @Test
-    fun `does not fail on java files if failing disabled`() {
-        module2Root.resolve("build.gradle").appendText(
-            """
-            projectConfig {
-                javaFilesAllowed = true
-            }
-            """.trimIndent(),
-        )
-        module2Root.resolve("src/main/java/JavaClass.java") {
-            writeText(javaClass("JavaClass"))
-        }
-
-        val result = runTask(":module2:assemble")
-
-        assertThat(result.task(":module2:assemble")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `fails on java files by default`() {
-        module2Root.resolve("src/main/java/JavaClass.java") {
-            writeText(javaClass("JavaClass"))
-        }
-
-        val result = runTask(":module2:assemble", shouldFail = true)
-
-        assertThat(result.task(":module2:forbidJavaFiles")!!.outcome).isEqualTo(TaskOutcome.FAILED)
-    }
-
-    @Test
     fun `configures quality plugin by default`() {
         val qualityEnabled = runTask("projectCodeStyle")
 

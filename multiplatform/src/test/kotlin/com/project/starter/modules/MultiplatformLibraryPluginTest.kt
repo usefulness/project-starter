@@ -142,17 +142,6 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCoverage runs coverage for all modules`() {
-        val result = runTask("projectCoverage")
-
-        assertThat(result.task(":module1:jvmTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:jvmTest")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(module1Root.resolve("build/reports/jacoco/jacocoTestReport")).isDirectoryContaining {
-            it.name == "jacocoTestReport.xml"
-        }
-    }
-
-    @Test
     fun `configures quality plugin by default`() {
         val qualityEnabled = runTask("projectCodeStyle")
 

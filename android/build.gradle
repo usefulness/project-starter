@@ -1,6 +1,5 @@
 plugins {
     id("java-gradle-plugin")
-    alias(libs.plugins.droidsonroids.jacocotestkit)
     alias(libs.plugins.starter.library.kotlin)
     alias(libs.plugins.kotlin.samwithreceiver)
     alias(libs.plugins.kotlinx.binarycompatibility)
@@ -8,7 +7,8 @@ plugins {
 }
 
 dependencies {
-    api libs.agp.gradle.implementation
+    api libs.agp.gradle.api
+    runtimeOnly libs.agp.gradle.implementation
     implementation project(":jvm")
     implementation project(":config")
     implementation project(":versioning")

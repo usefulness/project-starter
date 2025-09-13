@@ -1,6 +1,5 @@
 plugins {
     id("java-gradle-plugin")
-    alias(libs.plugins.droidsonroids.jacocotestkit)
     alias(libs.plugins.starter.library.kotlin)
     alias(libs.plugins.kotlin.samwithreceiver)
     alias(libs.plugins.kotlinx.binarycompatibility)

@@ -11,7 +11,6 @@ plugins {
  
 commonConfig {
     javaVersion JavaVersion.VERSION_11
-    javaFilesAllowed = true
     androidPlugin {
         compileSdkVersion 31
         minSdkVersion 26
@@ -24,7 +23,6 @@ commonConfig {
 ```
 
 - `javaVersion` - defines which java version source code is compatible with
-- `javaFilesAllowed` - defines if the project can contain java files, fails the build otherwise.
 - `androidPlugin`:
   - contains values passed to _Android Gradle Plugin_
 - `qualityPlugin`:
