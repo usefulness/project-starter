@@ -3,7 +3,6 @@ package com.project.starter.modules.internal
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.TestedExtension
-import com.android.builder.model.Version.ANDROID_GRADLE_PLUGIN_VERSION
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
