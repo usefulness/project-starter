@@ -30,7 +30,7 @@ class PublishingPlugin : Plugin<Project> {
                 dokkaTask.notCompatibleWithConfigurationCache("https://github.com/Kotlin/dokka/issues/1217")
             }
             tasks.named("javadocJar", Jar::class.java) { javadocJar ->
-                javadocJar.from(tasks.named("dokkaJavadoc"))
+                javadocJar.from(tasks.named("dokkaGeneratePublicationHtml"))
             }
             tasks.named("processResources", ProcessResources::class.java) { processResources ->
                 processResources.from(rootProject.file("LICENSE"))

@@ -71,3 +71,6 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
 private fun <T : Task> TaskProvider<out T>.dependsOn(name: String) {
     configure { dependsOn(name) }
 }
+
+internal val Project.canAgpCompileKotlin: Boolean
+    get() = project.extensions.getByType<AndroidComponentsExtension<*, *, *>>().pluginVersion.major >= 9
