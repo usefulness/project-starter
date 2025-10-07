@@ -31,9 +31,9 @@ jobs:
           distribution: 'temurin'
           java-version-file: .java-version
 
-      - uses: gradle/actions/wrapper-validation@v4
+      - uses: gradle/actions/wrapper-validation@v5
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
 
       - run: ./gradlew currentVersion
 
@@ -84,7 +84,7 @@ jobs:
           java-version-file: .java-version
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         with:
           gradle-version: ${{ matrix.gradle }}
 
@@ -117,7 +117,7 @@ jobs:
           java-version-file: .java-version
 
       - name: Run ${{ matrix.task }}
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         with:
           gradle-version: ${{ matrix.gradle }}
 
