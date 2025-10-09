@@ -34,7 +34,7 @@ jobs:
           distribution: 'temurin'
           java-version-file: .java-version
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
 
       - name: Unwrap GPG key
         env:
