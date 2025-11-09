@@ -3,7 +3,7 @@ package com.project.starter.config.extensions
 import org.gradle.api.Action
 import org.gradle.api.JavaVersion
 
-open class RootConfigExtension(var javaVersion: JavaVersion = JavaVersion.VERSION_11) {
+open class RootConfigExtension(var javaVersion: JavaVersion = JavaVersion.VERSION_17) {
 
     val quality = QualityPluginConfig()
     val android = AndroidPluginConfig()
@@ -28,7 +28,7 @@ open class QualityPluginConfig(var formatOnCompile: Boolean = false) {
 
 open class AndroidPluginConfig(
     var compileSdkVersion: Int = 36,
-    var minSdkVersion: Int = 26,
+    var minSdkVersion: Int = 29,
     var targetSdkVersion: Int? = null,
 ) {
 
