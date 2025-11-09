@@ -10,11 +10,11 @@ plugins {
 }
  
 commonConfig {
-    javaVersion JavaVersion.VERSION_11
+    javaVersion JavaVersion.VERSION_17
     androidPlugin {
-        compileSdkVersion 31
-        minSdkVersion 26
-        targetSdkVersion 31
+        compileSdkVersion 36
+        minSdkVersion 29
+        targetSdkVersion 36
     }
     qualityPlugin {
         formatOnCompile = false
