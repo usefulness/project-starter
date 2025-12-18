@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -68,7 +68,7 @@ jobs:
         task: [ build, projectTest, projectLint, projectCodeStyle, issueLinksReport ]
     name: (Android) Gradle version ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -101,7 +101,7 @@ jobs:
         task: [ build, projectTest, projectCodeStyle, issueLinksReport ]
     name: (Kotlin) Gradle ${{ matrix.gradle }}, task ${{ matrix.task }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
