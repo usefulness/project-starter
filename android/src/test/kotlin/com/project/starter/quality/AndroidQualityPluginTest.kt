@@ -125,14 +125,6 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCodeStyle runs Detekt`() {
-        val result = runTask("projectCodeStyle")
-
-        assertThat(result.task(":module1:detekt")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.task(":module2:detekt")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
     fun `projectCodeStyle runs ktlint`() {
         val result = runTask("projectCodeStyle")
 
@@ -178,24 +170,5 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
 
         assertThat(formatOnCompileOn.task(":module1:formatKotlin")?.outcome).isNotNull()
         assertThat(formatOnCompileOn.task(":module2:formatKotlin")?.outcome).isNotNull()
-    }
-
-    @Test
-    fun `detekt fails on invalid class name`() {
-        module2Root.resolve("src/main/kotlin/com/example/MagicNumber.kt") {
-            val kotlinClass =
-                // language=kotlin
-                """
-                class invalidClassName {
-                    var value: Int = 16
-                }
-                
-                """.trimIndent()
-            writeText(kotlinClass)
-        }
-
-        val result = runTask("projectCodeStyle", shouldFail = true)
-
-        assertThat(result.task(":module2:detekt")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 }

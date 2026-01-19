@@ -7,7 +7,6 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
 import org.gradle.plugins.signing.SigningExtension
-import org.jetbrains.dokka.gradle.DokkaTask
 
 class PublishingPlugin : Plugin<Project> {
 
@@ -26,9 +25,6 @@ class PublishingPlugin : Plugin<Project> {
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             pluginManager.apply("org.jetbrains.dokka")
 
-            tasks.withType(DokkaTask::class.java).configureEach { dokkaTask ->
-                dokkaTask.notCompatibleWithConfigurationCache("https://github.com/Kotlin/dokka/issues/1217")
-            }
             tasks.named("javadocJar", Jar::class.java) { javadocJar ->
                 javadocJar.from(tasks.named("dokkaGeneratePublicationHtml"))
             }

@@ -72,7 +72,7 @@ After applying _Library_/_Application_ plugin following tasks become available:
 - `./gradlew projectLint`  
   Runs Android lint checks against all modules (if custom lint checks are applied then for Kotlin modules too)
 - `./gradlew projectCodeStyle`  
-  Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint), [`Detekt`](https://github.com/arturbosch/detekt) with predefined config.
+  Verifies if code style matches modern standards using tools such as [`ktlint`](https://github.com/pinterest/ktlint) with predefined config.
 
 Those tasks allow you to run tests efficiently for all modules by typing just a single task.
 
@@ -114,4 +114,3 @@ The library is available under [MIT License](/LICENSE) and highly benefits from 
 - `axion-relese-plugin` - [License](https://github.com/allegro/axion-release-plugin/blob/master/LICENSE)
 - `Kotlin Gradle Plugin` - [License](https://github.com/JetBrains/kotlin#license)
 - `Android Gradle Plugin` - [License](https://developer.android.com/license)
-- `Detekt` - [License](https://github.com/arturbosch/detekt/blob/master/LICENSE)

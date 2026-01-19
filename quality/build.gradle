@@ -10,7 +10,6 @@ dependencies {
     compileOnly(libs.jetbrains.kotlin.jvm.api)
     compileOnly(libs.agp.gradle.api)
     api libs.usefulness.ktlint
-    api libs.detekt.gradle
     implementation libs.usefulness.issuechecker
     implementation project(":config")
 

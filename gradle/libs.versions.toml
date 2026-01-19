@@ -3,7 +3,6 @@ java-compilation = "24"
 google-agp = "8.13.2"
 gradle-starter = "0.92.0"
 gradle-gradlepublish = "2.0.0"
-gradle-detekt = "1.23.8"
 gradle-doctor = "0.12.1"
 mavencentral-kotlin = "2.3.0"
 mavencentral-issuechecker = "0.5.0"
@@ -23,7 +22,6 @@ jetbrains-kotlin-jvm-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin
 publishplugin-gradle = { module = "com.gradle.publish:plugin-publish-plugin", version.ref = "gradle-gradlepublish" }
 usefulness-issuechecker = { module = "com.github.usefulness:issuechecker", version.ref = "mavencentral-issuechecker" }
 usefulness-ktlint = { module = "io.github.usefulness:ktlint-gradle-plugin", version.ref = "mavencentral-ktlint-gradle" }
-detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "gradle-detekt" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "mavencentral-junit" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "mavencentral-assertj" }
 eclipse-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "mavencentral-jgit" }
