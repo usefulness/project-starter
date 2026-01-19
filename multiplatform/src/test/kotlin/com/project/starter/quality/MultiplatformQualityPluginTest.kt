@@ -51,13 +51,6 @@ internal class MultiplatformQualityPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `projectCodeStyle runs Detekt`() {
-        val result = runTask("projectCodeStyle")
-
-        assertThat(result.task(":detekt")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-    }
-
-    @Test
     fun `projectCodeStyle runs ktlint`() {
         val result = runTask("projectCodeStyle")
 

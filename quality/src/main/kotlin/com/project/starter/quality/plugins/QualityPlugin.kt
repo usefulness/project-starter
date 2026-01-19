@@ -3,7 +3,6 @@ package com.project.starter.quality.plugins
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.project.starter.config.findByType
 import com.project.starter.config.plugins.rootConfig
-import com.project.starter.quality.internal.configureDetekt
 import com.project.starter.quality.internal.configureKtlint
 import com.project.starter.quality.tasks.IssueLinksTask.Companion.registerIssueCheckerTask
 import com.project.starter.quality.tasks.ProjectCodeStyleTask.Companion.addProjectCodeStyleTask
@@ -18,7 +17,6 @@ class QualityPlugin : Plugin<Project> {
         runCatching { repositories.mavenCentral() }
         addProjectCodeStyleTask()
         configureKtlint()
-        configureDetekt()
         configureIssueCheckerTask()
         configureFormatOnRecompile()
     }
