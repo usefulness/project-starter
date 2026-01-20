@@ -15,7 +15,7 @@ commonConfig {
 allprojects {
     pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { plugin ->
         def kotlinVersion = KotlinPluginWrapperKt.getKotlinPluginVersion(project)
-        configurations.matching { it.name != "detekt" }.configureEach {
+        configurations.configureEach {
             resolutionStrategy.eachDependency {
                 if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
                     useVersion kotlinVersion
@@ -59,7 +59,7 @@ allprojects {
         if (project.hasProperty("skipJarVersion")) {
             def projectName = project.name
             tasks.named("jar") {
-                archiveFile.set(layout.buildDirectory.map {it.file("libs/${projectName}.jar")})
+                archiveFile.set(layout.buildDirectory.map { it.file("libs/${projectName}.jar") })
             }
         }
     }

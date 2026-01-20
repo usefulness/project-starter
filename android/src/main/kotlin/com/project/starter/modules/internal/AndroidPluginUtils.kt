@@ -2,6 +2,7 @@ package com.project.starter.modules.internal
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
+import com.android.build.api.variant.HasUnitTest
 import com.project.starter.config.extensions.RootConfigExtension
 import com.project.starter.config.getByType
 import com.project.starter.config.plugins.rootConfig
@@ -14,7 +15,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-internal fun CommonExtension<*, *, *, *, *, *>.configureAndroidPlugin(rootConfig: RootConfigExtension) {
+internal fun CommonExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
         compileSdk = rootConfig.android.compileSdkVersion
         minSdk = rootConfig.android.minSdkVersion
@@ -40,7 +41,9 @@ internal inline fun <reified TStarter, reified TAgp> Project.configureAndroidPro
     androidComponents.onVariants { variant ->
         val capitalizedName = variant.name.replaceFirstChar(Char::titlecase)
         projectLint.dependsOn("$path:lint$capitalizedName")
-        projectTest.dependsOn("$path:test${capitalizedName}UnitTest")
+        (variant as? HasUnitTest)?.unitTest?.let {
+            projectTest.dependsOn("$path:test${it.name.replaceFirstChar(Char::titlecase)}")
+        }
     }
 }
 

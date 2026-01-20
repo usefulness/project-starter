@@ -80,13 +80,12 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     // language=groovy
                     """
                     import org.gradle.api.JavaVersion
-                    import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
                     import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+                    import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
                     
                     plugins {
                         id('com.starter.quality')
                         id('com.android.library')
-                        id('kotlin-android')
                     }
                     
                     def targetJavaVersion = JavaVersion.VERSION_11
@@ -107,8 +106,8 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         jvmToolchain(24)
                     }
 
-                    tasks.withType(KotlinCompile).configureEach {
-                        compilerOptions.jvmTarget = JvmTarget.@Companion.fromTarget(targetJavaVersion.toString())
+                    tasks.withType(KotlinCompilationTask).configureEach {
+                        compilerOptions.jvmTarget = JvmTarget.fromTarget(targetJavaVersion.toString())
                     }
                     
                     """.trimIndent()

@@ -29,7 +29,7 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
                     }
                     
                     commonConfig {
-                        javaVersion = JavaVersion.VERSION_1_8 // workaround for http://issuetracker.google.com/issues/294137077
+                        javaVersion = JavaVersion.VERSION_11
                     }
                     """.trimIndent(),
                 )
