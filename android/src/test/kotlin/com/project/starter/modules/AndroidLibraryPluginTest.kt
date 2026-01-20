@@ -165,7 +165,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
         val result = runTask("module1:projectTest", "module1:projectLint")
 
         assertThat(result.task(":module1:testDemoDebugUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
-        assertThat(result.task(":module1:testFullReleaseUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
+        assertThat(result.task(":module1:testFullDebugUnitTest")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
         assertThat(result.task(":module1:lintDemoDebug")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
         assertThat(result.task(":module1:lintFullRelease")!!.outcome).isNotEqualTo(TaskOutcome.FAILED)
     }
