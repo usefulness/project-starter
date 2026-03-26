@@ -11,7 +11,7 @@ mavencentral-assertj = "3.27.7"
 mavencentral-jgit = "7.6.0.202603022253-r"
 mavencentral-ktlint-gradle = "0.13.0"
 maven-binarycompatiblity = "0.18.1"
-maven-dokka = "2.1.0"
+maven-dokka = "2.2.0"
 maven-ktlint = "1.8.0"
 
 [libraries]
