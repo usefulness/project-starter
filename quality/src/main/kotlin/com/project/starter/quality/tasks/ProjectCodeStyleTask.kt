@@ -2,7 +2,9 @@ package com.project.starter.quality.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault(because = "This is a lifecycle task, it does not define any inputs or outputs.")
 open class ProjectCodeStyleTask : DefaultTask() {
 
     init {

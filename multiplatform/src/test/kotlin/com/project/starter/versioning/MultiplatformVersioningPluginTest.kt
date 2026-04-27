@@ -77,7 +77,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
         modules.forEach {
             val moduleResult = runTask("$it:properties")
 
-            assertThat(moduleResult?.output).contains("version: 1.2.0")
+            assertThat(moduleResult.output).contains("version: 1.2.0")
         }
     }
 }
