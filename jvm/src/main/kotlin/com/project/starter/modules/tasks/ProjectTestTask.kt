@@ -3,7 +3,9 @@ package com.project.starter.modules.tasks
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault(because = "This is a lifecycle task, it does not define any inputs or outputs.")
 open class ProjectTestTask : DefaultTask() {
 
     init {

@@ -13,6 +13,7 @@ import org.gradle.api.provider.ValueSourceParameters
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.process.ExecOperations
+import org.gradle.work.DisableCachingByDefault
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import javax.inject.Inject
@@ -103,6 +104,7 @@ class VersioningPlugin : Plugin<Project> {
         }
     }
 
+    @DisableCachingByDefault(because = "Task relies on external state that Gradle cannot track")
     abstract class CurrentVersionTask @Inject constructor(objectFactory: ObjectFactory) : DefaultTask() {
 
         @Input

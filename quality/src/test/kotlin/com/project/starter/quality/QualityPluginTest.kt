@@ -86,7 +86,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 }
                         
                 kotlin {
-                    jvmToolchain(24)
+                    jvmToolchain(25)
                 }
                 
                 def targetJavaVersion = JavaVersion.VERSION_11
