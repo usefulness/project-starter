@@ -10,7 +10,7 @@ mavencentral-junit = "6.1.3"
 mavencentral-assertj = "3.27.7"
 mavencentral-jgit = "7.7.1.202607240634-r"
 mavencentral-ktlint-gradle = "0.14.0"
-maven-binarycompatiblity = "0.18.1"
+maven-binarycompatiblity = "0.18.2"
 maven-dokka = "2.2.0"
 maven-ktlint = "1.8.0"
 
