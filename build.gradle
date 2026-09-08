@@ -16,6 +16,10 @@ allprojects {
     pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { plugin ->
         def kotlinVersion = KotlinPluginWrapperKt.getKotlinPluginVersion(project)
         configurations.configureEach {
+            // TODO: drop once ktlint runs on a Kotlin version matching KGP. ktlint 1.8.0 bundles
+            //  kotlin-compiler-embeddable 2.2.21 and fails to initialize when forced to 2.4.20.
+            //  Tracked by https://github.com/usefulness/project-starter/pull/883
+            if (name.startsWith("ktlint")) return
             resolutionStrategy.eachDependency {
                 if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
                     useVersion kotlinVersion
