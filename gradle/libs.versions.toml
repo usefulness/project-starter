@@ -12,7 +12,7 @@ mavencentral-jgit = "7.8.0.202609011348-r"
 mavencentral-ktlint-gradle = "0.14.0"
 maven-binarycompatiblity = "0.18.2"
 maven-dokka = "2.2.0"
-maven-ktlint = "1.8.0"
+maven-ktlint = "2.0.0-ALPHA-4"
 
 [libraries]
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" }
