@@ -72,6 +72,14 @@ allprojects {
         ktlint {
             ktlintVersion = libs.versions.maven.ktlint.get()
         }
+        // ktlint 2.x moved from `com.pinterest.ktlint` to `io.github.ktlint.core`,
+        // the Gradle plugin still hardcodes the old coordinates.
+        configurations.named("ktlint").configure {
+            resolutionStrategy.dependencySubstitution {
+                substitute module("com.pinterest.ktlint:ktlint-cli") using \
+                    module("io.github.ktlint.core:ktlint-cli:${libs.versions.maven.ktlint.get()}")
+            }
+        }
     }
 
     pluginManager.withPlugin(libs.plugins.kotlin.samwithreceiver.get().pluginId) {
