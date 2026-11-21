@@ -22,10 +22,6 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
                     plugins {
                         id('com.starter.config')
                     }
-                    
-                    commonConfig {
-                        javaVersion = JavaVersion.VERSION_1_8 // workaround for http://issuetracker.google.com/issues/294137077
-                    }
                     """.trimIndent(),
                 )
             }
