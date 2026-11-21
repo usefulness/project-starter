@@ -24,7 +24,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                     writeText(
                         """
                         plugins {
-                            id('org.jetbrains.kotlin.jvm') version "1.9.21"
+                            id('org.jetbrains.kotlin.jvm') version "2.4.21"
                         }
                       
                         """.trimIndent(),
@@ -49,9 +49,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
             commonConfig {
                 javaVersion = JavaVersion.VERSION_11
                 androidPlugin {
-                    compileSdkVersion = 34
+                    compileSdkVersion = 37
                     minSdkVersion = 31
-                    targetSdkVersion = 34
+                    targetSdkVersion = 37
                 }
                 qualityPlugin {
                     formatOnCompile = true
@@ -77,9 +77,9 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
             commonConfig {
                 javaVersion JavaVersion.VERSION_11
                 androidPlugin {
-                    compileSdkVersion 34
+                    compileSdkVersion 37
                     minSdkVersion 31
-                    targetSdkVersion 34
+                    targetSdkVersion 37
                 }
                 qualityPlugin {
                     formatOnCompile true

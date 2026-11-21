@@ -2,15 +2,11 @@ plugins {
     id("java-gradle-plugin")
     alias(libs.plugins.starter.library.kotlin)
     alias(libs.plugins.kotlin.samwithreceiver)
-    alias(libs.plugins.kotlinx.binarycompatibility)
     id("com.starter.publishing")
 }
 
 dependencies {
-    compileOnly(libs.jetbrains.kotlin.jvm.api)
-    compileOnly(libs.agp.gradle.api)
     api libs.usefulness.ktlint
-    implementation libs.usefulness.issuechecker
     implementation project(":config")
 
     testImplementation project(":testing")

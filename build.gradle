@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.starter.versioning)
     alias(libs.plugins.kotlin.jvm) apply(false)
     alias(libs.plugins.starter.library.kotlin) apply(false)
-    alias(libs.plugins.kotlinx.binarycompatibility) apply(false)
 }
 
 commonConfig {
@@ -64,6 +63,14 @@ allprojects {
             def projectName = project.name
             tasks.named("jar") {
                 archiveFile.set(layout.buildDirectory.map { it.file("libs/${projectName}.jar") })
+            }
+        }
+    }
+
+    pluginManager.withPlugin("com.starter.publishing") {
+        kotlin {
+            abiValidation {
+                enabled = true
             }
         }
     }

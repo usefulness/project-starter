@@ -59,7 +59,7 @@ plugins {
 // overridden settings for single project
 android {
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 31
     }
 }
 ```
@@ -88,7 +88,6 @@ which applies and configures code style tasks for the project automatically.
 
 Tasks available:
 - `./gradlew projectCodeStyle` - checks codestyle using all tools 
-- `./gradlew issueLinksReport` - finds and check state of all issuetracker links linked in code comments  
 
 Quality Plugin gets applied automatically when using any of module _Application_/_Library_ plugins above.
 

@@ -28,10 +28,6 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
                     plugins {
                         id('com.starter.config')
                     }
-                    
-                    commonConfig {
-                        javaVersion = JavaVersion.VERSION_1_8 // workaround for http://issuetracker.google.com/issues/294137077
-                    }
                     """.trimIndent(),
                 )
             }
@@ -176,5 +172,41 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
         assertThat(qualityEnabled.task(":module1:projectCodeStyle")?.outcome).isNotNull()
         assertThat(qualityEnabled.task(":module2:projectCodeStyle")?.outcome).isNotNull()
+    }
+
+    @Test
+    fun `configures compileSdk minor version`() {
+        module2Root.resolve("build.gradle").appendText(
+            // language=groovy
+            """
+
+            tasks.register("printCompileSdk") {
+                def compileSdk = android.compileSdk
+                def compileSdkMinor = android.compileSdkMinor
+                doLast { println("compileSdk=${'$'}compileSdk, compileSdkMinor=${'$'}compileSdkMinor") }
+            }
+            """.trimIndent(),
+        )
+
+        val default = runTask(":module2:printCompileSdk")
+
+        assertThat(default.output).contains("compileSdk=37, compileSdkMinor=1")
+
+        rootBuildScript.appendText(
+            // language=groovy
+            """
+
+            commonConfig {
+                androidPlugin {
+                    compileSdkVersion 36
+                    compileSdkMinorVersion = null
+                }
+            }
+            """.trimIndent(),
+        )
+
+        val overridden = runTask(":module2:printCompileSdk")
+
+        assertThat(overridden.output).contains("compileSdk=36, compileSdkMinor=null")
     }
 }
