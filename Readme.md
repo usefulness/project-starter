@@ -59,7 +59,7 @@ plugins {
 // overridden settings for single project
 android {
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 31
     }
 }
 ```
