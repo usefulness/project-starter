@@ -37,7 +37,7 @@ jobs:
       - run: ./gradlew assemble
 
       - name: Publish to Github Package Registry
-        run: ./gradlew publishAllPublicationsToGithubRepository --no-configuration-cache
+        run: ./gradlew publishAllPublicationsToGithubRepository
 
   diffuse:
     runs-on: ubuntu-latest
