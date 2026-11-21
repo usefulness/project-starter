@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Keep the JDK that runs and compiles the build on the latest GA release. Bytecode targets are not touched.",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Build JDK: .java-version (read by actions/setup-java via java-version-file)",
+      "managerFilePatterns": ["/(^|/)\\.java-version$/"],
+      "matchStrings": ["^(?<currentValue>\\d+)\\s*$"],
+      "depNameTemplate": "java-build-jdk",
+      "packageNameTemplate": "java-jdk",
+      "datasourceTemplate": "java-version",
+      "extractVersionTemplate": "^(?<version>\\d+)"
+    },
+    {
+      "customType": "regex",
+      "description": "Build JDK: Gradle toolchain version (java-compilation) in the version catalog",
+      "managerFilePatterns": ["/(^|/)gradle/libs\\.versions\\.toml$/"],
+      "matchStrings": ["(?m)^java-compilation\\s*=\\s*\"(?<currentValue>\\d+)\""],
+      "depNameTemplate": "java-build-jdk",
+      "packageNameTemplate": "java-jdk",
+      "datasourceTemplate": "java-version",
+      "extractVersionTemplate": "^(?<version>\\d+)"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Build JDK: follow every GA release (overrides workarounds:javaLTSVersions), bump all pins in one PR, never automerge",
+      "matchDepNames": ["java-build-jdk"],
+      "allowedVersions": "/^\\d+$/",
+      "groupName": "build JDK",
+      "automerge": false
+    }
+  ]
+}

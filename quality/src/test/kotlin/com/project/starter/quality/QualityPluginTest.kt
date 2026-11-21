@@ -2,6 +2,7 @@ package com.project.starter.quality
 
 import com.project.starter.WithGradleProjectTest
 import com.project.starter.javaClass
+import com.project.starter.javaCompilationVersion
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -79,7 +80,7 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 }
                 
                 kotlin {
-                    jvmToolchain(25)
+                    jvmToolchain($javaCompilationVersion)
                 }
                 
                 def targetJavaVersion = JavaVersion.VERSION_11

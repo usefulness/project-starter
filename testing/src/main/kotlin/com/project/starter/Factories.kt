@@ -39,3 +39,9 @@ fun kotlinMultiplatformTestClass(className: String) = """
     }
 
 """.trimIndent()
+
+/**
+ * JDK version used to compile this project (`java-compilation` in the version catalog), passed by the build.
+ */
+val javaCompilationVersion: Int
+    get() = requireNotNull(System.getProperty("javaCompilationVersion")) { "javaCompilationVersion system property not set" }.toInt()
