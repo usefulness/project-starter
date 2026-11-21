@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 plugins {
     id 'java-gradle-plugin'
     alias(libs.plugins.starter.library.kotlin)
-    alias(libs.plugins.osacky.doctor)
 }
 
 dependencies {

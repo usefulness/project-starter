@@ -95,11 +95,13 @@ Quality Plugin gets applied automatically when using any of module _Application_
 
 Uses simple tag-based versioning, in a Configuration Cache compatible way.
 
-To enable it as a standalone plugin, apply plugin to root project `build.gradle`
+It is a **settings plugin**: apply it in `settings.gradle`, it sets `version` of every project (and `versionCode`/`versionName` of Android applications) and registers `currentVersion` task in the root project.
 ```
- apply plugin: 'com.starter.versioning'
+// settings.gradle
+plugins {
+    id 'com.starter.versioning' version 'x.y.z'
+}
 ```
-Versioning plugin gets applied automatically when using any of module _Application_/_Library_ plugins above and can be disabled using [Global Configuration](Advanced.md#global-configuration)
 
 ### Advanced usage
 See [Advanced usage](Advanced.md)

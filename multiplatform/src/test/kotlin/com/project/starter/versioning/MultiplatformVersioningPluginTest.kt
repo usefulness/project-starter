@@ -61,14 +61,7 @@ internal class MultiplatformVersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `sets version to all projects`() {
-        rootBuildScript.writeText(
-            // language=groovy
-            """
-            plugins {
-                id 'com.starter.versioning'
-            }
-            """.trimIndent(),
-        )
+        applySettingsPlugins("com.starter.versioning")
         git.commit("features in 1.2.0")
         git.tag("v1.2.0")
 

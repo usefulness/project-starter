@@ -14,17 +14,15 @@ internal class ConfigurationCacheTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ':module1', ':module2' """)
-
-            resolve("build.gradle") {
-                writeText(
-                    """
-                    plugins {
-                        id('com.starter.config')
-                    }
-                    """.trimIndent(),
-                )
-            }
+            resolve("settings.gradle").writeText(
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                include ':module1', ':module2'
+                """.trimIndent(),
+            )
             androidModuleRoot = resolve("module1") {
                 // language=groovy
                 val script =

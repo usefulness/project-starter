@@ -28,3 +28,9 @@ include ":moduleRoot:moduleKotlinLibrary"
 include ":moduleRootAndroid"
 include ":moduleRootAndroid:moduleAndroidLibrary"
 include ":moduleRootAndroid:moduleKotlinLibrary"
+
+if (gradle.gradleVersion.startsWith("9")) {
+    gradle.lifecycle.beforeProject {
+        tasks.withType(Test).configureEach { it.failOnNoDiscoveredTests = false }
+    }
+}

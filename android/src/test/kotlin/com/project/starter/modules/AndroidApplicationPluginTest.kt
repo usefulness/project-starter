@@ -19,21 +19,21 @@ internal class AndroidApplicationPluginTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            resolve("settings.gradle").writeText(
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                commonConfig {
+                    javaVersion = JavaVersion.VERSION_11
+                }
+                
+                include ":module1", ":module2"
+                """.trimIndent(),
+            )
 
-            rootBuildScript = resolve("build.gradle") {
-                writeText(
-                    """
-                    plugins {
-                        id('com.starter.config')
-                    }
-                    
-                    commonConfig {
-                        javaVersion = JavaVersion.VERSION_11
-                    }
-                    """.trimIndent(),
-                )
-            }
+            rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 val buildScript =
                     // language=groovy

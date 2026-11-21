@@ -20,17 +20,17 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
     fun setUp() {
         rootDirectory.apply {
             mkdirs()
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
+            resolve("settings.gradle").writeText(
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                include ":module1", ":module2"
+                """.trimIndent(),
+            )
 
-            rootBuildScript = resolve("build.gradle") {
-                writeText(
-                    """
-                    plugins {
-                        id('com.starter.config')
-                    }
-                    """.trimIndent(),
-                )
-            }
+            rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 val buildScript =
                     // language=groovy
@@ -192,7 +192,7 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
         assertThat(default.output).contains("compileSdk=37, compileSdkMinor=1")
 
-        rootBuildScript.appendText(
+        rootDirectory.resolve("settings.gradle").appendText(
             // language=groovy
             """
 

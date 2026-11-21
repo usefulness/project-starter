@@ -23,3 +23,9 @@ rootProject.name = "com.project.starter.sample"
 
 include ":moduleKotlinLibrary"
 include ":moduleRoot:moduleKotlinLibrary"
+
+if (gradle.gradleVersion.startsWith("9")) {
+    gradle.lifecycle.beforeProject {
+        tasks.withType(Test).configureEach { it.failOnNoDiscoveredTests = false }
+    }
+}

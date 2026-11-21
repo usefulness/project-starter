@@ -21,16 +21,16 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
-
-            resolve("build.gradle").writeText(
+            resolve("settings.gradle").writeText(
                 """
                 plugins {
                     id 'com.starter.versioning'
                 }
                 
+                include ":module1", ":module2"
                 """.trimIndent(),
             )
+
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -60,20 +60,6 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @Test
     fun emptyRepo() {
         assertThat(runTask("currentVersion").output).contains("0.1.0-SNAPSHOT")
-    }
-
-    @Test
-    fun `fails if not applied to root project`() {
-        module1Root.resolve("build.gradle").writeText(
-            """
-            apply plugin: "com.starter.versioning"
-            
-            """.trimIndent(),
-        )
-
-        val result = runTask("help", shouldFail = true)
-
-        assertThat(result.output).contains("Versioning plugin can be applied to the root project only")
     }
 
     @Test

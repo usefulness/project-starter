@@ -10,21 +10,28 @@ import java.io.File
 
 internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
-    lateinit var rootBuildScript: File
+    lateinit var settingsFile: File
     lateinit var module1Root: File
 
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1" """)
-
-            rootBuildScript = resolve("build.gradle")
+            settingsFile = resolve("settings.gradle")
+            settingsFile.writeText(
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                include ":module1"
+                """.trimIndent(),
+            )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
                         """
                         plugins {
-                            id('org.jetbrains.kotlin.jvm') version "2.4.21"
+                            id('org.jetbrains.kotlin.jvm')
                         }
                       
                         """.trimIndent(),
@@ -42,10 +49,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
         // language=groovy
         val buildscript =
             """
-            plugins {
-                id('com.starter.config')
-            }
-            
             commonConfig {
                 javaVersion = JavaVersion.VERSION_11
                 androidPlugin {
@@ -58,7 +61,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(buildscript)
+        settingsFile.appendText("\n" + buildscript)
 
         val result = runTask("help")
 
@@ -70,10 +73,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
         // language=groovy
         val buildscript =
             """
-            plugins {
-                id('com.starter.config')
-            }
-            
             commonConfig {
                 javaVersion JavaVersion.VERSION_11
                 androidPlugin {
@@ -86,26 +85,10 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(buildscript)
+        settingsFile.appendText("\n" + buildscript)
 
         val result = runTask("help")
 
         assertThat(result.tasks).noneMatch { it.outcome == TaskOutcome.FAILED }
-    }
-
-    @Test
-    fun `throws exception if not applied to the root project`() {
-        // language=groovy
-        val buildscript =
-            """
-            plugins {
-                id('com.starter.config')
-            }
-            """.trimIndent()
-        module1Root.resolve("build.gradle").appendText(buildscript)
-
-        val result = runTask("build", shouldFail = true)
-
-        assertThat(result.output).contains("Failed to apply plugin 'com.starter.config'")
     }
 }
