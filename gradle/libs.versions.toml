@@ -16,6 +16,7 @@ maven-ktlint = "1.8.0"
 agp-gradle-implementation = { module = "com.android.tools.build:gradle", version.ref = "google-agp" }
 agp-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "google-agp" }
 jetbrains-kotlin-jvm-implementation = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "mavencentral-kotlin" }
+jetbrains-kotlin-samwithreceiver = { module = "org.jetbrains.kotlin:kotlin-sam-with-receiver", version.ref = "mavencentral-kotlin" }
 jetbrains-kotlin-jvm-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "mavencentral-kotlin" }
 publishplugin-gradle = { module = "com.gradle.publish:plugin-publish-plugin", version.ref = "gradle-gradlepublish" }
 usefulness-ktlint = { module = "io.github.usefulness:ktlint-gradle-plugin", version.ref = "mavencentral-ktlint-gradle" }

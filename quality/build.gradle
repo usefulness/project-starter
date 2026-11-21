@@ -1,6 +1,7 @@
 plugins {
     id("java-gradle-plugin")
     alias(libs.plugins.starter.library.kotlin)
+    id("com.starter.conventions")
     alias(libs.plugins.kotlin.samwithreceiver)
     id("com.starter.publishing")
 }
