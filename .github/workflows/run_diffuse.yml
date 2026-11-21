@@ -9,13 +9,17 @@ on:
       - develop
       - maine
       - mane
+  merge_group:
+    types: [checks_requested]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   run-diffuse:
+    # Only comments on PRs; skipped (= passing) for merge queue runs so the required check still reports
+    if: ${{ github.event_name == 'pull_request' }}
     env:
       github_token: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
