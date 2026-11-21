@@ -1,15 +1,15 @@
 public class com/project/starter/config/extensions/AndroidPluginConfig {
 	public fun <init> ()V
-	public fun <init> (ILjava/lang/Integer;ILjava/lang/Integer;)V
-	public synthetic fun <init> (ILjava/lang/Integer;ILjava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (IIILjava/lang/Integer;)V
+	public synthetic fun <init> (IIILjava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun compileSdkMinorVersion (I)V
 	public final fun compileSdkVersion (I)V
-	public final fun getCompileSdkMinorVersion ()Ljava/lang/Integer;
+	public final fun getCompileSdkMinorVersion ()I
 	public final fun getCompileSdkVersion ()I
 	public final fun getMinSdkVersion ()I
 	public final fun getTargetSdkVersion ()Ljava/lang/Integer;
 	public final fun minSdkVersion (I)V
-	public final fun setCompileSdkMinorVersion (Ljava/lang/Integer;)V
+	public final fun setCompileSdkMinorVersion (I)V
 	public final fun setCompileSdkVersion (I)V
 	public final fun setMinSdkVersion (I)V
 	public final fun setTargetSdkVersion (Ljava/lang/Integer;)V

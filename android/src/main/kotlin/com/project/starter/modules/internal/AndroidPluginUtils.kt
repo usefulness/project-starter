@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 internal fun CommonExtension.configureAndroidPlugin(rootConfig: RootConfigExtension) {
     defaultConfig.apply {
         compileSdk = rootConfig.android.compileSdkVersion
-        rootConfig.android.compileSdkMinorVersion?.let { compileSdkMinor = it }
+        compileSdkMinor = rootConfig.android.compileSdkMinorVersion
         minSdk = rootConfig.android.minSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -20,7 +20,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 // language=groovy
                 """
                 plugins {
-                    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+                    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
                 }
                 
                 dependencyResolutionManagement {
@@ -91,7 +91,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     def targetJavaVersion = JavaVersion.VERSION_11
                     android {
                         namespace "com.example.module2"
-                        compileSdkVersion 34
+                        compileSdkVersion 37
                         
                         defaultConfig {
                             minSdkVersion 31

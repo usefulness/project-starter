@@ -180,18 +180,6 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures compileSdk minor version`() {
-        rootBuildScript.appendText(
-            // language=groovy
-            """
-
-            commonConfig {
-                androidPlugin {
-                    compileSdkVersion 37
-                    compileSdkMinorVersion 1
-                }
-            }
-            """.trimIndent(),
-        )
         module2Root.resolve("build.gradle").appendText(
             // language=groovy
             """
@@ -204,8 +192,25 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
             """.trimIndent(),
         )
 
-        val result = runTask(":module2:printCompileSdk")
+        val default = runTask(":module2:printCompileSdk")
 
-        assertThat(result.output).contains("compileSdk=37.1")
+        assertThat(default.output).contains("compileSdk=37.1")
+
+        rootBuildScript.appendText(
+            // language=groovy
+            """
+
+            commonConfig {
+                androidPlugin {
+                    compileSdkVersion 36
+                    compileSdkMinorVersion 0
+                }
+            }
+            """.trimIndent(),
+        )
+
+        val overridden = runTask(":module2:printCompileSdk")
+
+        assertThat(overridden.output).contains("compileSdk=36.0")
     }
 }
