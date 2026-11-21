@@ -10,6 +10,9 @@ plugins {
 dependencies {
     implementation libs.publishplugin.gradle
     implementation libs.jetbrains.dokka
+    compileOnly libs.jetbrains.kotlin.jvm.implementation
+    compileOnly libs.jetbrains.kotlin.samwithreceiver
+    compileOnly libs.usefulness.ktlint
 }
 
 kotlin {
@@ -21,6 +24,10 @@ gradlePlugin {
         publishingPlugin {
             id = 'com.starter.publishing'
             implementationClass = 'PublishingPlugin'
+        }
+        conventionsPlugin {
+            id = 'com.starter.conventions'
+            implementationClass = 'ConventionsPlugin'
         }
     }
 }

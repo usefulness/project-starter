@@ -29,7 +29,7 @@ class PublishingPlugin : Plugin<Project> {
                 javadocJar.from(tasks.named("dokkaGeneratePublicationHtml"))
             }
             tasks.named("processResources", ProcessResources::class.java) { processResources ->
-                processResources.from(rootProject.file("LICENSE"))
+                processResources.from(isolated.rootProject.projectDirectory.file("LICENSE"))
             }
         }
 
