@@ -68,7 +68,7 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         git.commit("features in 2.11.1234")
         git.tag("v2.11.1234")
 
-        val modules = listOf(":module1", ":module1", "")
+        val modules = listOf(":module1", ":module2", "")
 
         modules.forEach {
             val moduleResult = runTask("$it:properties")
@@ -164,5 +164,15 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         assertThat(result2.output)
             .contains("Reusing configuration cache")
             .contains("1.3.0-SNAPSHOT")
+
+        git.tag("v1.3.0")
+
+        val result3 = runTask("currentVersion", configurationCacheEnabled = true)
+        assertThat(result3.task(":currentVersion")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result3.output)
+            .doesNotContain("Reusing configuration cache")
+            .contains("Current version: 1.3.0")
+            .doesNotContain("1.3.0-SNAPSHOT")
+        assertThat(runTask(":module2:properties").output).contains("version: 1.3.0\n")
     }
 }

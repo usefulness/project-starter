@@ -1,6 +1,6 @@
 package com.project.starter.versioning.plugins
 
-import com.project.starter.config.getByType
+import org.codehaus.groovy.runtime.InvokerHelper
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -36,15 +36,15 @@ class VersioningPlugin : Plugin<Settings> {
 
     private fun Project.setupAndroidVersioning(gitVersionProvider: Provider<GitVersion>) {
         pluginManager.withPlugin("com.android.application") {
-            extensions.getByType<com.android.build.api.dsl.ApplicationExtension>().defaultConfig {
-                val gitVersion = gitVersionProvider.get()
-                val major = gitVersion.major
-                val minor = gitVersion.minor
-                val patch = gitVersion.patch
+            val gitVersion = gitVersionProvider.get()
+            val defaultConfig = InvokerHelper.getProperty(extensions.getByName("android"), "defaultConfig")
 
-                versionCode = major * MAJOR_MULTIPLIER + minor * MINOR_MULTIPLIER + patch
-                versionName = gitVersion.undecorated
-            }
+            InvokerHelper.setProperty(
+                defaultConfig,
+                "versionCode",
+                gitVersion.major * MAJOR_MULTIPLIER + gitVersion.minor * MINOR_MULTIPLIER + gitVersion.patch,
+            )
+            InvokerHelper.setProperty(defaultConfig, "versionName", gitVersion.undecorated)
         }
     }
 

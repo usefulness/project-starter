@@ -91,4 +91,44 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
         assertThat(result.tasks).noneMatch { it.outcome == TaskOutcome.FAILED }
     }
+
+    @Test
+    fun `hands configuration over to every project`() {
+        // language=groovy
+        val config =
+            """
+            commonConfig {
+                javaVersion = JavaVersion.VERSION_11
+                androidPlugin {
+                    minSdkVersion = 31
+                }
+                qualityPlugin {
+                    formatOnCompile = true
+                }
+            }
+            """.trimIndent()
+        settingsFile.appendText("\n" + config)
+        // language=groovy
+        val printConfig =
+            """
+
+            tasks.register("printConfig") {
+                def config = starterCommonConfig
+                def summary = "${'$'}path: java=${'$'}{config.javaVersion}, minSdk=${'$'}{config.android.minSdkVersion}, formatOnCompile=${'$'}{config.quality.formatOnCompile}"
+                doLast { println(summary) }
+            }
+            """.trimIndent()
+        rootDirectory.resolve("build.gradle").writeText(printConfig)
+        module1Root.resolve("build.gradle").appendText("\n" + printConfig)
+
+        val firstRun = runTask("printConfig")
+        val secondRun = runTask("printConfig")
+
+        listOf(firstRun, secondRun).forEach { result ->
+            assertThat(result.output)
+                .contains(":printConfig: java=11, minSdk=31, formatOnCompile=true")
+                .contains(":module1:printConfig: java=11, minSdk=31, formatOnCompile=true")
+        }
+        assertThat(secondRun.output).contains("Reusing configuration cache")
+    }
 }
