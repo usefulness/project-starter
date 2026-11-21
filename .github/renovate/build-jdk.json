@@ -30,6 +30,12 @@
       "allowedVersions": "/^\\d+$/",
       "groupName": "build JDK",
       "automerge": false
+    },
+    {
+      "description": "Other JDKs installed by actions/setup-java (compatibility matrices, toolchain pre-installs) mirror versions declared in the build and are changed by hand together with it",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["java-jdk"],
+      "enabled": false
     }
   ]
 }
