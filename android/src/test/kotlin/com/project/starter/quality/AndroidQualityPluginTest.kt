@@ -1,6 +1,7 @@
 package com.project.starter.quality
 
 import com.project.starter.WithGradleProjectTest
+import com.project.starter.javaCompilationVersion
 import com.project.starter.kotlinClass
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
@@ -94,7 +95,7 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                     }
                         
                     kotlin {
-                        jvmToolchain(25)
+                        jvmToolchain($javaCompilationVersion)
                     }
 
                     tasks.withType(KotlinCompilationTask).configureEach {

@@ -55,7 +55,10 @@ class ConventionsPlugin : Plugin<Project> {
             }
         }
 
+        val javaCompilationVersion = libs.findVersion("java-compilation").get().requiredVersion
         tasks.withType(Test::class.java).configureEach { test ->
+            // Single source of truth for the build JDK in TestKit fixtures (bumped by Renovate)
+            test.systemProperty("javaCompilationVersion", javaCompilationVersion)
             test.doLast {
                 Thread.sleep(2000) // https://github.com/gradle/gradle/issues/16603
             }
