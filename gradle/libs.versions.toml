@@ -10,7 +10,6 @@ mavencentral-junit = "6.1.3"
 mavencentral-assertj = "3.27.7"
 mavencentral-jgit = "7.8.1.202611041320-r"
 mavencentral-ktlint-gradle = "0.14.0"
-maven-binarycompatiblity = "0.18.2"
 maven-dokka = "2.3.0"
 maven-ktlint = "1.8.0"
 
@@ -36,4 +35,3 @@ starter-library-kotlin = { id = "com.starter.library.kotlin", version.ref = "gra
 starter-versioning = { id = "com.starter.versioning", version.ref = "gradle-starter" }
 kotlin-samwithreceiver = { id = "org.jetbrains.kotlin.plugin.sam.with.receiver", version.ref = "mavencentral-kotlin" }
 osacky-doctor = { id = "com.osacky.doctor", version.ref = "gradle-doctor" }
-kotlinx-binarycompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "maven-binarycompatiblity" }
