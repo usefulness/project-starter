@@ -177,4 +177,35 @@ internal class AndroidLibraryPluginTest : WithGradleProjectTest() {
         assertThat(qualityEnabled.task(":module1:projectCodeStyle")?.outcome).isNotNull()
         assertThat(qualityEnabled.task(":module2:projectCodeStyle")?.outcome).isNotNull()
     }
+
+    @Test
+    fun `configures compileSdk minor version`() {
+        rootBuildScript.appendText(
+            // language=groovy
+            """
+
+            commonConfig {
+                androidPlugin {
+                    compileSdkVersion 37
+                    compileSdkMinorVersion 1
+                }
+            }
+            """.trimIndent(),
+        )
+        module2Root.resolve("build.gradle").appendText(
+            // language=groovy
+            """
+
+            tasks.register("printCompileSdk") {
+                def compileSdk = android.compileSdk
+                def compileSdkMinor = android.compileSdkMinor
+                doLast { println("compileSdk=${'$'}compileSdk.${'$'}compileSdkMinor") }
+            }
+            """.trimIndent(),
+        )
+
+        val result = runTask(":module2:printCompileSdk")
+
+        assertThat(result.output).contains("compileSdk=37.1")
+    }
 }

@@ -13,6 +13,7 @@ commonConfig {
     javaVersion JavaVersion.VERSION_17
     androidPlugin {
         compileSdkVersion 36
+        compileSdkMinorVersion 1
         minSdkVersion 29
         targetSdkVersion 36
     }
