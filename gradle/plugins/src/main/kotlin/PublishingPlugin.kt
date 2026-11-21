@@ -13,7 +13,8 @@ class PublishingPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("maven-publish")
         pluginManager.apply("com.gradle.plugin-publish")
-        if (findConfig("SIGNING_PASSWORD").isNotEmpty()) {
+        val signingKey = findConfig("signingInMemoryKey")
+        if (signingKey.isNotEmpty()) {
             pluginManager.apply("signing")
         }
 
@@ -46,16 +47,13 @@ class PublishingPlugin : Plugin<Project> {
             }
         }
         pluginManager.withPlugin("signing") {
-            with(extensions.extraProperties) {
-                set("signing.keyId", findConfig("SIGNING_KEY_ID"))
-                set("signing.password", findConfig("SIGNING_PASSWORD"))
-                set("signing.secretKeyRingFile", findConfig("SIGNING_SECRET_KEY_RING_FILE"))
-            }
-
             extensions.configure<SigningExtension>("signing") { signing ->
-                if (findConfig("SIGNING_PASSWORD").isNotEmpty()) {
-                    signing.sign(extensions.getByType(PublishingExtension::class.java).publications)
-                }
+                signing.useInMemoryPgpKeys(
+                    findConfig("signingInMemoryKeyId").ifEmpty { null },
+                    signingKey,
+                    findConfig("signingInMemoryKeyPassword"),
+                )
+                signing.sign(extensions.getByType(PublishingExtension::class.java).publications)
             }
         }
 
