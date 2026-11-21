@@ -7,13 +7,10 @@ open class RootConfigExtension(var javaVersion: JavaVersion = JavaVersion.VERSIO
 
     val quality = QualityPluginConfig()
     val android = AndroidPluginConfig()
-    val versioning = VersioningPluginConfig()
 
     fun qualityPlugin(action: Action<QualityPluginConfig>) = action.execute(quality)
 
     fun androidPlugin(action: Action<AndroidPluginConfig>) = action.execute(android)
-
-    fun versioningPlugin(action: Action<VersioningPluginConfig>) = action.execute(versioning)
 
     fun javaVersion(value: JavaVersion) {
         javaVersion = value
@@ -49,5 +46,3 @@ open class AndroidPluginConfig(
         targetSdkVersion = value
     }
 }
-
-open class VersioningPluginConfig

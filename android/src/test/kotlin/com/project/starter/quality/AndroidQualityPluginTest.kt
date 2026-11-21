@@ -21,6 +21,11 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 """
                 plugins {
                     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+                    id('com.starter.config')
+                }
+                
+                commonConfig {
+                    javaVersion = JavaVersion.VERSION_11
                 }
                 
                 dependencyResolutionManagement {
@@ -36,20 +41,6 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 """.trimIndent(),
             )
 
-            rootDirectory.resolve("build.gradle").writeText(
-                // language=groovy
-                """
-                import org.gradle.api.JavaVersion 
-                
-                plugins {
-                    id('com.starter.config')
-                }
-                
-                commonConfig {
-                    javaVersion = JavaVersion.VERSION_11
-                }
-                """.trimIndent(),
-            )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -142,7 +133,16 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                 import org.gradle.api.JavaVersion 
                 
                 plugins {
+                    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
                     id('com.starter.config')
+                }
+                
+                dependencyResolutionManagement {
+                    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                    repositories {
+                        google()
+                        mavenCentral()
+                    }
                 }
                 
                 commonConfig {
@@ -151,8 +151,10 @@ internal class AndroidQualityPluginTest : WithGradleProjectTest() {
                         formatOnCompile = true
                     }
                 }
+                
+                include ":module1", ":module2"
                 """.trimIndent()
-            rootDirectory.resolve("build.gradle").writeText(buildscript)
+            rootDirectory.resolve("settings.gradle").writeText(buildscript)
         }
 
         module1Root.resolve("src/main/kotlin/WrongFileName.kt") {

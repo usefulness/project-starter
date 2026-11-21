@@ -10,21 +10,28 @@ import java.io.File
 
 internal class CommonSettingsPluginTest : WithGradleProjectTest() {
 
-    lateinit var rootBuildScript: File
+    lateinit var settingsFile: File
     lateinit var module1Root: File
 
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1" """)
-
-            rootBuildScript = resolve("build.gradle")
+            settingsFile = resolve("settings.gradle")
+            settingsFile.writeText(
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                include ":module1"
+                """.trimIndent(),
+            )
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
                         """
                         plugins {
-                            id('org.jetbrains.kotlin.jvm') version "2.4.21"
+                            id('org.jetbrains.kotlin.jvm')
                         }
                       
                         """.trimIndent(),
@@ -42,10 +49,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
         // language=groovy
         val buildscript =
             """
-            plugins {
-                id('com.starter.config')
-            }
-            
             commonConfig {
                 javaVersion = JavaVersion.VERSION_11
                 androidPlugin {
@@ -58,7 +61,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(buildscript)
+        settingsFile.appendText("\n" + buildscript)
 
         val result = runTask("help")
 
@@ -70,10 +73,6 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
         // language=groovy
         val buildscript =
             """
-            plugins {
-                id('com.starter.config')
-            }
-            
             commonConfig {
                 javaVersion JavaVersion.VERSION_11
                 androidPlugin {
@@ -86,7 +85,7 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
                 }
             }
             """.trimIndent()
-        rootBuildScript.appendText(buildscript)
+        settingsFile.appendText("\n" + buildscript)
 
         val result = runTask("help")
 
@@ -94,18 +93,42 @@ internal class CommonSettingsPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `throws exception if not applied to the root project`() {
+    fun `hands configuration over to every project`() {
         // language=groovy
-        val buildscript =
+        val config =
             """
-            plugins {
-                id('com.starter.config')
+            commonConfig {
+                javaVersion = JavaVersion.VERSION_11
+                androidPlugin {
+                    minSdkVersion = 31
+                }
+                qualityPlugin {
+                    formatOnCompile = true
+                }
             }
             """.trimIndent()
-        module1Root.resolve("build.gradle").appendText(buildscript)
+        settingsFile.appendText("\n" + config)
+        // language=groovy
+        val printConfig =
+            """
 
-        val result = runTask("build", shouldFail = true)
+            tasks.register("printConfig") {
+                def config = starterCommonConfig
+                def summary = "${'$'}path: java=${'$'}{config.javaVersion}, minSdk=${'$'}{config.android.minSdkVersion}, formatOnCompile=${'$'}{config.quality.formatOnCompile}"
+                doLast { println(summary) }
+            }
+            """.trimIndent()
+        rootDirectory.resolve("build.gradle").writeText(printConfig)
+        module1Root.resolve("build.gradle").appendText("\n" + printConfig)
 
-        assertThat(result.output).contains("Failed to apply plugin 'com.starter.config'")
+        val firstRun = runTask("printConfig")
+        val secondRun = runTask("printConfig")
+
+        listOf(firstRun, secondRun).forEach { result ->
+            assertThat(result.output)
+                .contains(":printConfig: java=11, minSdk=31, formatOnCompile=true")
+                .contains(":module1:printConfig: java=11, minSdk=31, formatOnCompile=true")
+        }
+        assertThat(secondRun.output).contains("Reusing configuration cache")
     }
 }

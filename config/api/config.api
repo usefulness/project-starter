@@ -33,21 +33,15 @@ public class com/project/starter/config/extensions/RootConfigExtension {
 	public final fun getAndroid ()Lcom/project/starter/config/extensions/AndroidPluginConfig;
 	public final fun getJavaVersion ()Lorg/gradle/api/JavaVersion;
 	public final fun getQuality ()Lcom/project/starter/config/extensions/QualityPluginConfig;
-	public final fun getVersioning ()Lcom/project/starter/config/extensions/VersioningPluginConfig;
 	public final fun javaVersion (Lorg/gradle/api/JavaVersion;)V
 	public final fun qualityPlugin (Lorg/gradle/api/Action;)V
 	public final fun setJavaVersion (Lorg/gradle/api/JavaVersion;)V
-	public final fun versioningPlugin (Lorg/gradle/api/Action;)V
-}
-
-public class com/project/starter/config/extensions/VersioningPluginConfig {
-	public fun <init> ()V
 }
 
 public final class com/project/starter/config/plugins/CommonSettingsPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
-	public fun apply (Lorg/gradle/api/Project;)V
+	public fun apply (Lorg/gradle/api/initialization/Settings;)V
 }
 
 public final class com/project/starter/config/plugins/CommonSettingsPluginKt {

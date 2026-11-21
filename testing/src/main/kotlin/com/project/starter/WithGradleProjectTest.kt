@@ -21,6 +21,7 @@ abstract class WithGradleProjectTest {
             withArguments(
                 buildList {
                     addAll(taskName)
+                    add("-Dorg.gradle.unsafe.isolated-projects=true")
                     if (configurationCacheEnabled) {
                         add("--configuration-cache")
                     }
@@ -33,6 +34,12 @@ abstract class WithGradleProjectTest {
                 build()
             }
         }
+
+    protected fun applySettingsPlugins(vararg pluginIds: String) {
+        val settingsFile = rootDirectory.resolve("settings.gradle")
+        val block = pluginIds.joinToString(separator = "\n", prefix = "plugins {\n", postfix = "\n}\n\n") { "    id '$it'" }
+        settingsFile.writeText(block + settingsFile.takeIf(File::exists)?.readText().orEmpty())
+    }
 
     protected fun File.resolve(relative: String, receiver: File.() -> Unit): File = resolve(relative).apply {
         parentFile.mkdirs()

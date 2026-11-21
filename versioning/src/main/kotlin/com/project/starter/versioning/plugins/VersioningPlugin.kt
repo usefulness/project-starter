@@ -1,10 +1,10 @@
 package com.project.starter.versioning.plugins
 
-import com.project.starter.config.getByType
+import org.codehaus.groovy.runtime.InvokerHelper
 import org.gradle.api.DefaultTask
-import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
@@ -18,35 +18,33 @@ import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-class VersioningPlugin : Plugin<Project> {
+class VersioningPlugin : Plugin<Settings> {
 
-    override fun apply(target: Project): Unit = with(target) {
-        if (this != rootProject) throw GradleException("Versioning plugin can be applied to the root project only")
-
-        val gitVersionProvider = providers.of(GitVersionValueSource::class.java) {}
-
-        allprojects {
-            val get = gitVersionProvider.get()
-            version = get.decorated
+    override fun apply(target: Settings) {
+        target.gradle.lifecycle.beforeProject {
+            val gitVersionProvider = providers.of(GitVersionValueSource::class.java) {}
+            version = gitVersionProvider.get().decorated
             setupAndroidVersioning(gitVersionProvider)
-        }
 
-        tasks.register("currentVersion", CurrentVersionTask::class.java) {
-            gitVersion.set(gitVersionProvider)
+            if (path == ":") {
+                tasks.register("currentVersion", CurrentVersionTask::class.java) {
+                    gitVersion.set(gitVersionProvider)
+                }
+            }
         }
     }
 
     private fun Project.setupAndroidVersioning(gitVersionProvider: Provider<GitVersion>) {
         pluginManager.withPlugin("com.android.application") {
-            extensions.getByType<com.android.build.api.dsl.ApplicationExtension>().defaultConfig {
-                val gitVersion = gitVersionProvider.get()
-                val major = gitVersion.major
-                val minor = gitVersion.minor
-                val patch = gitVersion.patch
+            val gitVersion = gitVersionProvider.get()
+            val defaultConfig = InvokerHelper.getProperty(extensions.getByName("android"), "defaultConfig")
 
-                versionCode = major * MAJOR_MULTIPLIER + minor * MINOR_MULTIPLIER + patch
-                versionName = gitVersion.undecorated
-            }
+            InvokerHelper.setProperty(
+                defaultConfig,
+                "versionCode",
+                gitVersion.major * MAJOR_MULTIPLIER + gitVersion.minor * MINOR_MULTIPLIER + gitVersion.patch,
+            )
+            InvokerHelper.setProperty(defaultConfig, "versionName", gitVersion.undecorated)
         }
     }
 

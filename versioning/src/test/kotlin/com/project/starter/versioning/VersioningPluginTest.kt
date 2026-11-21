@@ -21,16 +21,16 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     @BeforeEach
     fun setUp() {
         rootDirectory.apply {
-            resolve("settings.gradle").writeText("""include ":module1", ":module2" """)
-
-            resolve("build.gradle").writeText(
+            resolve("settings.gradle").writeText(
                 """
                 plugins {
                     id 'com.starter.versioning'
                 }
                 
+                include ":module1", ":module2"
                 """.trimIndent(),
             )
+
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -63,26 +63,12 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
     }
 
     @Test
-    fun `fails if not applied to root project`() {
-        module1Root.resolve("build.gradle").writeText(
-            """
-            apply plugin: "com.starter.versioning"
-            
-            """.trimIndent(),
-        )
-
-        val result = runTask("help", shouldFail = true)
-
-        assertThat(result.output).contains("Versioning plugin can be applied to the root project only")
-    }
-
-    @Test
     fun `sets version to all projects`() {
         git.tag("v1.1.0")
         git.commit("features in 2.11.1234")
         git.tag("v2.11.1234")
 
-        val modules = listOf(":module1", ":module1", "")
+        val modules = listOf(":module1", ":module2", "")
 
         modules.forEach {
             val moduleResult = runTask("$it:properties")
@@ -178,5 +164,15 @@ internal class VersioningPluginTest : WithGradleProjectTest() {
         assertThat(result2.output)
             .contains("Reusing configuration cache")
             .contains("1.3.0-SNAPSHOT")
+
+        git.tag("v1.3.0")
+
+        val result3 = runTask("currentVersion", configurationCacheEnabled = true)
+        assertThat(result3.task(":currentVersion")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result3.output)
+            .doesNotContain("Reusing configuration cache")
+            .contains("Current version: 1.3.0")
+            .doesNotContain("1.3.0-SNAPSHOT")
+        assertThat(runTask(":module2:properties").output).contains("version: 1.3.0\n")
     }
 }

@@ -74,17 +74,10 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
                 
                 plugins {
-                    id('com.starter.config')
                     id('com.starter.quality')
                     id('org.jetbrains.kotlin.jvm')
                 }
                 
-                commonConfig {
-                    qualityPlugin {
-                        formatOnCompile true
-                    }
-                }
-                        
                 kotlin {
                     jvmToolchain(25)
                 }
@@ -98,6 +91,20 @@ internal class QualityPluginTest : WithGradleProjectTest() {
                 }
                 """.trimIndent()
             rootDirectory.resolve("build.gradle").writeText(buildscript)
+            rootDirectory.resolve("settings.gradle").writeText(
+                // language=groovy
+                """
+                plugins {
+                    id('com.starter.config')
+                }
+                
+                commonConfig {
+                    qualityPlugin {
+                        formatOnCompile true
+                    }
+                }
+                """.trimIndent(),
+            )
         }
 
         rootDirectory.resolve("src/main/kotlin/WrongFileName.kt") {

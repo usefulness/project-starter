@@ -25,6 +25,10 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
             resolve("settings.gradle").writeText(
                 // language=groovy
                 """
+                    plugins {
+                        id 'com.starter.config'
+                    }
+
                     include ":module1", ":module2"
                     
                     dependencyResolutionManagement {
@@ -35,16 +39,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
                 """.trimIndent(),
             )
 
-            rootBuildScript = resolve("build.gradle") {
-                // language=groovy
-                writeText(
-                    """
-                    plugins {
-                        id("com.starter.config")
-                    }
-                    """.trimIndent(),
-                )
-            }
+            rootBuildScript = resolve("build.gradle")
             module1Root = resolve("module1") {
                 resolve("build.gradle") {
                     writeText(
@@ -151,15 +146,7 @@ internal class MultiplatformLibraryPluginTest : WithGradleProjectTest() {
 
     @Test
     fun `configures versioning plugin when applied`() {
-        rootBuildScript.writeText(
-            // language=groovy
-            """
-            plugins {
-                id 'com.starter.versioning'
-                id("com.starter.config")
-            }
-            """.trimIndent(),
-        )
+        applySettingsPlugins("com.starter.versioning")
         val git = setupGit()
         git.tag("v1.2.2")
         git.commit("random commit")

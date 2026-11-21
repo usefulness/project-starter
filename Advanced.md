@@ -1,10 +1,12 @@
 ## Advanced usage
 
 ### Global configuration
-Additional default configuration can be applied by adding to the **root project**'s `build.gradle`.
-All submodules will use this config as default
+Additional default configuration can be applied in `settings.gradle`.
+`com.starter.config` is a **settings plugin**, so that no project needs to read another project's state (compatible with [Isolated Projects](https://docs.gradle.org/current/userguide/isolated_projects.html)).
+All projects will use this config as default
 
 ``` groovy
+// settings.gradle
 plugins {
   id("com.starter.config") version("x.y.z")
 }
@@ -28,8 +30,6 @@ commonConfig {
   - contains values passed to _Android Gradle Plugin_
 - `qualityPlugin`:
   - `formatOnCompile` - defines if ktlint should format source code on every compilation
-- `versioningPlugin`:
-  - `enabled` - enables/disables [Versioning Plugin](..#versioning-plugin)
   
 ### Generating baselines
 It is possible to generate baseline for every quality tool available in the project.

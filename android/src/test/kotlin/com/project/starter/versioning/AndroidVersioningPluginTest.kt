@@ -36,9 +36,11 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
                         }
                         
                         tasks.register("printVersion") {
+                            def versionCode = android.defaultConfig.versionCode
+                            def versionName = android.defaultConfig.versionName
                             doLast {
-                                println("version_code=" + android.defaultConfig.versionCode)
-                                println("version_name=" + android.defaultConfig.versionName)
+                                println("version_code=" + versionCode)
+                                println("version_name=" + versionName)
                            }
                         }
                         """.trimIndent()
@@ -50,14 +52,7 @@ internal class AndroidVersioningPluginTest : WithGradleProjectTest() {
 
     @Test
     internal fun `sets android application version`() {
-        rootDirectory.resolve("build.gradle").writeText(
-            // language=groovy
-            """
-            plugins {
-                id 'com.starter.versioning'
-            }
-            """.trimIndent(),
-        )
+        applySettingsPlugins("com.starter.versioning")
         val git = setupGit()
         git.commit("contains 1.2.3 features")
         git.tag("v1.2.3")

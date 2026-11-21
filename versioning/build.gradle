@@ -7,9 +7,6 @@ plugins {
 }
 
 dependencies {
-    compileOnly libs.agp.gradle.api
-    implementation project(":config")
-
     testImplementation project(":testing")
 
     testRuntimeOnly(libs.junit.platform.launcher)
